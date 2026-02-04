@@ -32,12 +32,26 @@ namespace CraterSprite
             instance = this;
         }
         
+        /**
+         * <summary>Register an action-based callback</summary>
+         * <param name="actionName">Name of the action, from the project input map</param>
+         * <param name="type">Type of event to listen to</param>
+         * <param name="callback">Callback method to activate when event is triggered. Strength will be 1 when pressed, and 0 when released</param>
+         * <param name="owner">Node that is listening for this event. Required so InputManager can automatically unregister the callback</param>
+         */
         public void RegisterCallback(string actionName, InputEventType type, Action<float> callback, Node owner)
         {
             GetMapForKeyType(type).RegisterCallback(actionName, callback);
             owner.TreeExited += () => RemoveCallback(actionName, type, callback);
         }
         
+        /**
+         * <summary>Register an action-based axis callback</summary>
+         * <param name="positive">Name of the positive input action, from the project input map</param>
+         * <param name="negative">Name of the negative input action</param>
+         * <param name="callback">Callback method to activate when the axis value changes</param>
+         * <param name="owner">Node that is listening for this event. Required so InputManager can automatically unregister the callback</param>
+         */
         public void RegisterAxisChangedCallback(string positive, string negative, Action<float> callback, Node owner)
         {
             var axis = new InputAxis(positive, negative);

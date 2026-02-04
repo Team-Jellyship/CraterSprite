@@ -1,21 +1,22 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://c83pd3o4q13fs"]
 
-[ext_resource type="Texture2D" uid="uid://cc78vfhedal1o" path="res://Characters/Sprites/Sp_DogBoy_Walking.png" id="1_g3yug"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_awg6r"]
+load_path = "res://.godot/imported/Sp_DogBoy_Walking.png-1d77fd33586ccb792dbfa4618e053b32.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vw1dt"]
-atlas = ExtResource("1_g3yug")
+atlas = SubResource("CompressedTexture2D_awg6r")
 region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m8bym"]
-atlas = ExtResource("1_g3yug")
+atlas = SubResource("CompressedTexture2D_awg6r")
 region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_enf1g"]
-atlas = ExtResource("1_g3yug")
+atlas = SubResource("CompressedTexture2D_awg6r")
 region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0mjkg"]
-atlas = ExtResource("1_g3yug")
+atlas = SubResource("CompressedTexture2D_awg6r")
 region = Rect2(0, 0, 64, 64)
 
 [resource]
