@@ -1,0 +1,44 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://c83pd3o4q13fs"]
+
+[ext_resource type="Texture2D" uid="uid://cc78vfhedal1o" path="res://Characters/Sprites/Sp_DogBoy_Walking.png" id="1_g3yug"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vw1dt"]
+atlas = ExtResource("1_g3yug")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m8bym"]
+atlas = ExtResource("1_g3yug")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enf1g"]
+atlas = ExtResource("1_g3yug")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0mjkg"]
+atlas = ExtResource("1_g3yug")
+region = Rect2(0, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vw1dt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m8bym")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_enf1g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0mjkg")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}]
