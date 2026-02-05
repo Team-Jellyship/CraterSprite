@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using Godot;
 
 namespace CraterSprite;
 public abstract class CraterMath
@@ -22,5 +23,32 @@ public abstract class CraterMath
         }
 
         return input + (T.IsNegative(delta) ? -rate : rate);
+    }
+
+    public static T ClampTowards<T>(T input, T min, T max, T rate)
+        where T : ISignedNumber<T>, IComparable<T>
+    {
+        if (input.CompareTo(max) > 0)
+        {
+            var delta = input - max;
+            if (delta.CompareTo(rate) < 0)
+            {
+                return max;
+            }
+
+            return input - rate;
+        }
+        if (input.CompareTo(min) < 0)
+        {
+            var delta = input - min;
+            if (delta.CompareTo(-rate) > 0)
+            {
+                return min;
+            }
+
+            return input + rate;
+        }
+
+        return input;
     }
 }

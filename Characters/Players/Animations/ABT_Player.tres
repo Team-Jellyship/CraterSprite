@@ -1,3 +1,19 @@
 [gd_resource type="AnimationNodeBlendTree" format=3 uid="uid://btf2rg88m5jdc"]
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fkk7c"]
+animation = &"walkLeft"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ujcrh"]
+animation = &"walkRight"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_efgmg"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_fkk7c")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_ujcrh")
+blend_point_1/pos = 1.0
+
 [resource]
+graph_offset = Vector2(-481, 19)
+nodes/walk_direction/node = SubResource("AnimationNodeBlendSpace1D_efgmg")
+nodes/walk_direction/position = Vector2(-140, 140)
+node_connections = [&"output", 0, &"walk_direction"]

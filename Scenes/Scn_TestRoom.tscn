@@ -1,9 +1,14 @@
 [gd_scene format=3 uid="uid://c1emph2w8faox"]
 
 [ext_resource type="PackedScene" uid="uid://cuq4hb7diqckf" path="res://Characters/Players/Player.tscn" id="1_2lscm"]
+[ext_resource type="Shader" uid="uid://csdxvr6rx5rjk" path="res://Shared/Shaders/Sh_WorldSpaceTexture.gdshader" id="2_5w25o"]
+[ext_resource type="Texture2D" uid="uid://bdqbta7j8iypg" path="res://Shared/Sprites/check16.png" id="2_l2rra"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l2rra"]
-size = Vector2(362, 20)
+size = Vector2(320, 32)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ui78"]
+shader = ExtResource("2_5w25o")
 
 [sub_resource type="QuadMesh" id="QuadMesh_2lscm"]
 
@@ -13,11 +18,14 @@ size = Vector2(362, 20)
 position = Vector2(512, 288)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=930945557]
-position = Vector2(491, 321)
+position = Vector2(512, 320)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=587062176]
 shape = SubResource("RectangleShape2D_l2rra")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="StaticBody2D" unique_id=81709436]
-scale = Vector2(361.99997, 20)
+texture_repeat = 2
+material = SubResource("ShaderMaterial_5ui78")
+scale = Vector2(320, 32)
 mesh = SubResource("QuadMesh_2lscm")
+texture = ExtResource("2_l2rra")

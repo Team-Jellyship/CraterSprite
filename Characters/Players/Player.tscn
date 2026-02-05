@@ -1,31 +1,116 @@
 [gd_scene format=3 uid="uid://cuq4hb7diqckf"]
 
-[ext_resource type="SpriteFrames" uid="uid://c83pd3o4q13fs" path="res://Characters/Players/Animations/SF_DogBoy_Walking.tres" id="1_n0mv8"]
 [ext_resource type="Script" uid="uid://bsfdycg3wydrv" path="res://Characters/Scripts/KinematicCharacter.cs" id="1_v58vf"]
+[ext_resource type="Texture2D" uid="uid://b6ltmkwpn20aw" path="res://Characters/Players/Sprites/Sp_DogBoy_Walking.png" id="2_1fpnh"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://btf2rg88m5jdc" path="res://Characters/Players/Animations/ABT_Player.tres" id="2_v58vf"]
 [ext_resource type="Script" uid="uid://bcijaprypmkpb" path="res://Characters/Players/Scripts/PlayerController.cs" id="4_1fpnh"]
+[ext_resource type="Script" uid="uid://b2v40725rdn8b" path="res://Characters/Scripts/ToggleableHitbox.cs" id="4_ht06l"]
+[ext_resource type="Script" uid="uid://c74blvexl5qt5" path="res://Characters/Scripts/CharacterAnimationTree.cs" id="5_7kb7x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1fpnh"]
 size = Vector2(14, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7kb7x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ybv78"]
+size = Vector2(20, 11)
+
+[sub_resource type="Animation" id="Animation_7kb7x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ht06l"]
+resource_name = "walkLeft"
+length = 0.25
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_ybv78"]
+resource_name = "walkRight"
+length = 0.25
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dhh5l"]
+_data = {
+&"RESET": SubResource("Animation_7kb7x"),
+&"walkLeft": SubResource("Animation_ht06l"),
+&"walkRight": SubResource("Animation_ybv78")
+}
+
 [node name="Player" type="CharacterBody2D" unique_id=2076774000]
+collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_v58vf")
 _acceleration = 500.0
 _maxSpeed = 100.0
+_crouchedMaxSpeed = 50.0
 _maxAirSpeedHorizontal = 150.0
 _jumpTime = 0.1
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1924232188]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2117321767]
 position = Vector2(0, -32)
-sprite_frames = ExtResource("1_n0mv8")
-animation = &"right"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D" unique_id=1065891037]
-root_node = NodePath("../..")
-
-[node name="AnimationTree" type="AnimationTree" parent="AnimatedSprite2D" unique_id=39323085]
-root_node = NodePath("../..")
-tree_root = ExtResource("2_v58vf")
+texture = ExtResource("2_1fpnh")
+hframes = 6
 
 [node name="KinematicBox" type="CollisionShape2D" parent="." unique_id=1005347515]
 position = Vector2(0, -10)
@@ -37,3 +122,34 @@ zoom = Vector2(4, 4)
 [node name="Controller" type="Node" parent="." unique_id=505377627 node_paths=PackedStringArray("_character")]
 script = ExtResource("4_1fpnh")
 _character = NodePath("..")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=60656270 node_paths=PackedStringArray("_onHitbox", "_offHitbox")]
+collision_layer = 16
+collision_mask = 8
+script = ExtResource("4_ht06l")
+_onHitbox = NodePath("StandingHurtbox")
+_offHitbox = NodePath("CrouchedHurtbox")
+
+[node name="StandingHurtbox" type="CollisionShape2D" parent="Hurtbox" unique_id=1747679365]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_7kb7x")
+debug_color = Color(0, 0.64773154, 0.21145341, 0.41960785)
+
+[node name="CrouchedHurtbox" type="CollisionShape2D" parent="Hurtbox" unique_id=40574811]
+position = Vector2(0, -5.5)
+shape = SubResource("RectangleShape2D_ybv78")
+disabled = true
+debug_color = Color(0, 0.64773154, 0.21145341, 0.41960785)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1065891037]
+libraries/ = SubResource("AnimationLibrary_dhh5l")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=39323085]
+tree_root = ExtResource("2_v58vf")
+anim_player = NodePath("../AnimationPlayer")
+parameters/walk_direction/blend_position = 0.0
+script = ExtResource("5_7kb7x")
+
+[connection signal="MoveSpeedChanged" from="." to="AnimationTree" method="SetWalkSpeed"]
+[connection signal="OnCrouched" from="." to="Hurtbox" method="SetOff"]
+[connection signal="OnUncrouched" from="." to="Hurtbox" method="SetOn"]

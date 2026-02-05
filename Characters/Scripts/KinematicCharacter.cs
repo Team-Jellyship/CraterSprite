@@ -15,6 +15,10 @@ namespace CraterSprite
 		[Export(PropertyHint.None, "suffix:px/s")]
 		private float _maxSpeed = 5.0f;
 
+		[Export(PropertyHint.None, "suffix:px/s")]
+		private float _crouchedMaxSpeed = 5.0f;
+
+		[Export] private bool _isCrouched = false;
 		
 		[ExportGroup("Aerial")]
 		[Export(PropertyHint.None, "suffix:px/s")]
@@ -43,6 +47,10 @@ namespace CraterSprite
 		[Export(PropertyHint.Range, "0,5,suffix:s")]
 		private float _coyoteTime = 0.5f;
 
+		[Signal] public delegate void MoveSpeedChangedEventHandler(float moveSpeed);
+		[Signal] public delegate void OnCrouchedEventHandler();
+		[Signal] public delegate void OnUncrouchedEventHandler();
+		
 		private float _moveInput;
 		private bool _isJumping;
 		private Timer _jumpTimer = new();
@@ -64,6 +72,12 @@ namespace CraterSprite
 		public void SetMoveInput(float input)
 		{
 			_moveInput = Math.Clamp(input, -1.0f, 1.0f);
+
+			if (input == 0.0f)
+			{
+				return;
+			}
+			EmitSignal(SignalName.MoveSpeedChanged, _moveInput);
 		}
 
 		public override void _PhysicsProcess(double delta)
@@ -71,12 +85,24 @@ namespace CraterSprite
 			var currentVelocity = Velocity;
 			if (_moveInput == 0.0f)
 			{
-				//if (IsOnFloor())
+				currentVelocity.X = CraterMath.MoveTo(currentVelocity.X, 0.0f, GetAcceleration() * (float)delta);
+			}
+			// If the character is not moving at max speed
+			else if (Math.Abs(currentVelocity.X) < GetMaxHorizontalSpeed())
+			{
+				// Don't allow the input based acceleration to push character beyond the max speed
+				var newHorizontalSpeed = currentVelocity.X + _moveInput * GetAcceleration() * (float)delta;
+				if (Math.Abs(newHorizontalSpeed) > GetMaxHorizontalSpeed())
 				{
-					currentVelocity.X = CraterMath.MoveTo(currentVelocity.X, 0.0f, GetAcceleration() * (float)delta);
+					currentVelocity.X = GetMaxHorizontalSpeed() * Math.Sign(currentVelocity.X);
+				}
+				else
+				{
+					currentVelocity.X = newHorizontalSpeed;
 				}
 			}
-			else
+			// character is trying to push back, let them influence acceleration
+			else if (Math.Sign(currentVelocity.X) != Math.Sign(_moveInput))
 			{
 				currentVelocity.X += _moveInput * GetAcceleration() * (float)delta;
 			}
@@ -91,7 +117,7 @@ namespace CraterSprite
 			}
 			
 			var maxSpeed = GetMaxHorizontalSpeed();
-			currentVelocity.X = Math.Clamp(currentVelocity.X, -maxSpeed, maxSpeed);
+			currentVelocity.X = CraterMath.ClampTowards(currentVelocity.X, -maxSpeed, maxSpeed, GetAcceleration() * (float) delta);
 			if (IsOnFloor())
 			{
 				currentVelocity.Y = Math.Clamp(currentVelocity.Y, -_maxAirSpeedVertical, _maxAirSpeedVertical);
@@ -145,6 +171,19 @@ namespace CraterSprite
 			_isJumping = false;
 		}
 
+		public void Crouch()
+		{
+			_isCrouched = true;
+
+			EmitSignal(SignalName.OnCrouched);
+		}
+
+		public void Uncrouch()
+		{
+			_isCrouched = false;
+			EmitSignal(SignalName.OnUncrouched);
+		}
+
 		private bool CanJump()
 		{
 			return _numJumpsRemaining > 0;
@@ -152,7 +191,8 @@ namespace CraterSprite
 
 		private float GetMaxHorizontalSpeed()
 		{
-			return IsOnFloor() ? _maxSpeed : _maxAirSpeedHorizontal;
+			return IsOnFloor() ? (_isCrouched ? _crouchedMaxSpeed : _maxSpeed) :
+				_maxAirSpeedHorizontal;
 		}
 
 		private float GetAcceleration()

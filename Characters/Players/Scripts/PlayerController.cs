@@ -16,6 +16,9 @@ namespace CraterSprite
             
             InputManager.instance.RegisterCallback("jump", InputEventType.Pressed, _ => _character.StartJumping(), this);
             InputManager.instance.RegisterCallback("jump", InputEventType.Released, _ => _character.StopJumping(), this);
+            
+            InputManager.instance.RegisterCallback("crouch", InputEventType.Pressed, _ => _character.Crouch(), this);
+            InputManager.instance.RegisterCallback("crouch", InputEventType.Released, _ => _character.Uncrouch(), this);
         }
     }
 }
