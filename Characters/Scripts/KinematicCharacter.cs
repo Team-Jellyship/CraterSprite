@@ -135,6 +135,13 @@ namespace CraterSprite
 			{
 				LeavePlatform();
 			}
+			
+			QueueRedraw();
+		}
+
+		public override void _Draw()
+		{
+			DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, GetVelocity() * 0.25f, new Color(1.0f, 0.0f, 0.0f));
 		}
 
 		private void Land()
