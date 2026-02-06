@@ -2,9 +2,9 @@
 
 namespace CraterSprite;
 
-public class CraterFunctions
+public static class CraterFunctions
 {
-    static T GetNodeByClass<T>(Node parent)
+    public static T GetNodeByClass<T>(Node parent)
         where T : Node
     {
         foreach (var child in parent.GetChildren())
@@ -18,17 +18,31 @@ public class CraterFunctions
         return null;
     }
 
-    static T GetNodeByClassFromParent<T>(Node self)
+    public static T GetNodeByClassFromParent<T>(Node self)
         where T : Node
     {
         var parent = self.GetParent();
         return parent == null ? null : GetNodeByClass<T>(parent);
     }
 
-    static T GetNodeByClassFromRoot<T>(Node self)
+    public static T GetNodeByClassFromRoot<T>(Node self)
         where T : Node
     {
         var root = self.Owner;
         return root == null ? null : GetNodeByClass<T>(root);
+    }
+
+    public static T CreateInstance<T>(Node rootContext, PackedScene prefab, Vector2 position)
+        where T : Node2D
+    {
+        if (prefab == null)
+        {
+            return null;
+        }
+
+        var newInstance = prefab.Instantiate<T>();
+        rootContext.GetTree().GetRoot().AddChild(newInstance);
+        newInstance.SetGlobalPosition(position);
+        return newInstance;
     }
 }

@@ -13,6 +13,7 @@ namespace CraterSprite
             InputManager.instance.RegisterAxisChangedCallback("walk_right", "walk_left", strength =>
             {
                 _character.SetMoveInput(strength);
+                _gun.SetLookHorizontal(strength);
             }, this);
             
             InputManager.instance.RegisterCallback("jump", InputEventType.Pressed, _ => _character.StartJumping(), this);

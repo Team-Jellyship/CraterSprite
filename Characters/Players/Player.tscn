@@ -104,6 +104,7 @@ _data = {
 z_index = 1
 collision_layer = 4
 collision_mask = 3
+input_pickable = true
 script = ExtResource("1_v58vf")
 _acceleration = 500.0
 _maxSpeed = 100.0
@@ -111,9 +112,14 @@ _crouchedMaxSpeed = 50.0
 _maxAirSpeedHorizontal = 150.0
 _jumpTime = 0.1
 
-[node name="Gun" type="Node2D" parent="." unique_id=590104627]
+[node name="Gun" type="Node2D" parent="." unique_id=590104627 node_paths=PackedStringArray("_kinematicOwner")]
+position = Vector2(0, -16)
 script = ExtResource("2_dhh5l")
 _projectile = ExtResource("3_570sx")
+_projectileSpeed = 100.0
+_kinematicOwner = NodePath("..")
+_offset = 16.0
+facingDirection = Vector2(2, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2117321767]
 position = Vector2(0, -32)
@@ -159,9 +165,10 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/walk_direction/blend_position = 0.0
 script = ExtResource("5_7kb7x")
 
-[node name="Node" type="Node" parent="." unique_id=410689954]
+[node name="PlayerStats" type="Node" parent="." unique_id=410689954]
 script = ExtResource("9_570sx")
 
 [connection signal="MoveSpeedChanged" from="." to="AnimationTree" method="SetWalkSpeed"]
+[connection signal="OnClicked" from="." to="PlayerStats" method="ToggleShowStats"]
 [connection signal="OnCrouched" from="." to="Hurtbox" method="SetOff"]
 [connection signal="OnUncrouched" from="." to="Hurtbox" method="SetOn"]

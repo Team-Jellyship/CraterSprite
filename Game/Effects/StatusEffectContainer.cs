@@ -28,7 +28,7 @@ public class StatusEffectContainer
         {
             // Create the stack in our dictionary, and invoke the event for a new stack here
             // if the event exists. Assume no one has subscribed if the event does not exist
-            effectList = [instance];
+            effectList = new StatusEntry(instance.effect, 0.0f);
             _statusEffects.Add(instance.effect, effectList);
             _onStatusEffectAppliedMap.TriggerEvent(instance.effect);
         }
@@ -108,6 +108,23 @@ public class StatusEffectContainer
 
         return _statusEffects.Aggregate(result, (current, statusEffect)
             => current + $"{statusEffect.Key.ResourceName}: '{statusEffect.Value.count}'");
+    }
+
+    public float GetValue(StatusEffect effect)
+    {
+        return !_statusEffects.TryGetValue(effect, out var effectList) ? 0.0f : effectList.Accumulate();
+    }
+
+    public void AddBaseValue(StatusEffect effect, float delta)
+    {
+        if (_statusEffects.TryGetValue(effect, out var effectList))
+        {
+            effectList.baseValue += delta;
+            _onStatusEffectStacksChangedMap.TriggerEvent(effect, effectList.count, effectList.Accumulate());
+            return;
+        }
+        
+        SetBaseValue(effect, delta);
     }
 
     public Dictionary<StatusEffect, StatusEntry>.Enumerator GetEnumerator()

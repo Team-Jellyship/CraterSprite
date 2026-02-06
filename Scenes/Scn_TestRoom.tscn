@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cuq4hb7diqckf" path="res://Characters/Players/Player.tscn" id="1_2lscm"]
 [ext_resource type="Shader" uid="uid://csdxvr6rx5rjk" path="res://Shared/Shaders/Sh_WorldSpaceTexture.gdshader" id="2_5w25o"]
 [ext_resource type="Texture2D" uid="uid://bdqbta7j8iypg" path="res://Shared/Sprites/check16.png" id="2_l2rra"]
+[ext_resource type="PackedScene" uid="uid://bc63xk2i2ivxt" path="res://Characters/Enemies/TestEnemy.tscn" id="4_5ui78"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l2rra"]
 size = Vector2(320, 32)
@@ -29,3 +30,6 @@ material = SubResource("ShaderMaterial_5ui78")
 scale = Vector2(320, 32)
 mesh = SubResource("QuadMesh_2lscm")
 texture = ExtResource("2_l2rra")
+
+[node name="TestEnemy" parent="." unique_id=1547651322 instance=ExtResource("4_5ui78")]
+position = Vector2(416, 288)

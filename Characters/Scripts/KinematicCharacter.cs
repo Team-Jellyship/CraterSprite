@@ -50,6 +50,8 @@ namespace CraterSprite
 		[Signal] public delegate void MoveSpeedChangedEventHandler(float moveSpeed);
 		[Signal] public delegate void OnCrouchedEventHandler();
 		[Signal] public delegate void OnUncrouchedEventHandler();
+
+		[Signal] public delegate void OnClickedEventHandler();
 		
 		private float _moveInput;
 		private bool _isJumping;
@@ -67,6 +69,14 @@ namespace CraterSprite
 			_coyoteTimer.SetName("CoyoteTimer");
 			_coyoteTimer.OneShot = true;
 			_coyoteTimer.Timeout += () => { if (_numJumpsRemaining > 0) {--_numJumpsRemaining;} };
+
+			InputEvent += (_, @event, _) =>
+			{
+				if (@event is InputEventMouseButton { Pressed: true })
+				{
+					EmitSignalOnClicked();
+				}
+			};
 		}
 
 		public void SetMoveInput(float input)
@@ -77,7 +87,7 @@ namespace CraterSprite
 			{
 				return;
 			}
-			EmitSignal(SignalName.MoveSpeedChanged, _moveInput);
+			EmitSignalMoveSpeedChanged(_moveInput);
 		}
 
 		public override void _PhysicsProcess(double delta)

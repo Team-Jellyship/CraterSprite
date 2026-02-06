@@ -2,7 +2,7 @@
 
 namespace CraterSprite;
 
-public partial class ToggleableHitbox : Node
+public partial class ToggleableHitbox : Area2D
 {
     [Export] private CollisionShape2D _onHitbox;
     [Export] private CollisionShape2D _offHitbox;

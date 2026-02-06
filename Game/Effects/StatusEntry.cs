@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace CraterSprite.Effects;
 
-public struct StatusEntry : IEnumerable<StatusEffectInstance>
+public class StatusEntry : IEnumerable<StatusEffectInstance>
 {
     public List<StatusEffectInstance> instances;
     public float baseValue;

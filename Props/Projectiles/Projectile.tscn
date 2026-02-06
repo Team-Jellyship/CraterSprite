@@ -1,10 +1,24 @@
 [gd_scene format=3 uid="uid://kgj0kkgcwle3"]
 
+[ext_resource type="Script" uid="uid://cjxelv1wmdsss" path="res://Props/Projectiles/Scripts/Projectile.cs" id="1_he73d"]
+
 [sub_resource type="SphereMesh" id="SphereMesh_o6bxk"]
+radius = 0.05
+height = 0.1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_he73d"]
 
 [node name="Projectile" type="Node2D" unique_id=1015776207]
+script = ExtResource("1_he73d")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=949882656]
 position = Vector2(0, 7.6293945e-06)
 scale = Vector2(74.083916, 74.08392)
 mesh = SubResource("SphereMesh_o6bxk")
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1884249992]
+collision_layer = 8
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1264524978]
+shape = SubResource("CircleShape2D_he73d")
