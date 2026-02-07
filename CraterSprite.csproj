@@ -8,4 +8,7 @@
   <ItemGroup>
     <PackageReference Include="ImGui.NET" Version="1.91.0.1" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Game\Effects\_effects.md" />
+  </ItemGroup>
 </Project>
