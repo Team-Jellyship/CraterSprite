@@ -1,9 +1,25 @@
 [gd_resource type="Resource" script_class="Match3RecipeTable" format=3 uid="uid://dcgv05px7xufn"]
 
 [ext_resource type="Script" uid="uid://cq5y6qgvw6i4j" path="res://Game/Match3/Match3RecipeTable.cs" id="1_7au66"]
-[ext_resource type="Resource" uid="uid://bcnidwqk7myow" path="res://Game/Match3/Recipes/M3r_Test.tres" id="1_24f5s"]
+[ext_resource type="Script" uid="uid://cgtmaxm7qx01f" path="res://Game/Match3/Match3Recipe.cs" id="1_24f5s"]
+[ext_resource type="PackedScene" uid="uid://bc63xk2i2ivxt" path="res://Characters/Enemies/TestEnemy.tscn" id="1_rsm47"]
+
+[sub_resource type="Resource" id="Resource_rsm47"]
+script = ExtResource("1_24f5s")
+type1 = 1
+type2 = 1
+type3 = 1
+enemy = ExtResource("1_rsm47")
+metadata/_custom_type_script = "uid://cgtmaxm7qx01f"
+
+[sub_resource type="Resource" id="Resource_24f5s"]
+script = ExtResource("1_24f5s")
+type1 = 1
+type2 = 1
+type3 = 2
+metadata/_custom_type_script = "uid://cgtmaxm7qx01f"
 
 [resource]
 script = ExtResource("1_7au66")
-recipes = Array[Object]([ExtResource("1_24f5s"), null])
+recipes = Array[Object]([SubResource("Resource_rsm47"), SubResource("Resource_24f5s")])
 metadata/_custom_type_script = "uid://cq5y6qgvw6i4j"

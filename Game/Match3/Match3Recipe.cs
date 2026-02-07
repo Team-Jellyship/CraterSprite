@@ -11,8 +11,9 @@ public partial class Match3Recipe : Resource
     {
         _recipe = [MatchType.None, MatchType.None, MatchType.None];
     }
-    public Match3Recipe(MatchType type1, MatchType type2, MatchType type3)
+    public Match3Recipe(PackedScene enemy, MatchType type1, MatchType type2, MatchType type3)
     {
+        this.enemy = enemy;
         _recipe = [type1, type2, type3];
     }
     
@@ -33,8 +34,9 @@ public partial class Match3Recipe : Resource
         private set => _recipe[2] = value;
         get => _recipe[2];
     }
-
-    private readonly List<MatchType> _recipe = [MatchType.None, MatchType.None, MatchType.None];
+    
+    [Export] public PackedScene enemy { get; private set; }
+    private readonly List<MatchType> _recipe;
     
     public bool CanMake(List<MatchType> ingredients)
     {

@@ -20,19 +20,17 @@ public partial class GameMode : Node
         statusEffects = ResourceLoader.Load<StatusEffectList>("res://Game/Effects/SL_Effects.tres");
         recipes = ResourceLoader.Load<Match3RecipeTable>("res://Game/Match3/Recipes/M3t_Default.tres");
         ImGuiGodot.ImGuiGD.ToolInit();
-
-        /*
-        var recipe = new Match3Recipe(MatchType.Fire, MatchType.Fire, MatchType.Fire);
+        
         var ingredients0 = new List<MatchType> { MatchType.Fire, MatchType.Fire };
         var ingredients1 = new List<MatchType> { MatchType.Fire, MatchType.Water };
+        var ingredients2 = new List<MatchType> { MatchType.Fire, MatchType.Fire, MatchType.Fire };
+        var ingredients3 = new List<MatchType> { MatchType.Fire, MatchType.Fire, MatchType.Fire, MatchType.Fire };
 
-        if (recipe.CanMake(ingredients0))
-        {
-            GD.Print("Can make recipe 0!");
-        }
-        if (recipe.CanMake(ingredients1))
-        {
-            GD.Print("Can make recipe 1!");
-        }*/
+        GD.Print($"Loaded {recipes.count} recipes.");
+        
+        GD.Print($"Make recipe '{string.Join(", ", ingredients0)}': {recipes.GetEnemy(ingredients0)}");
+        GD.Print($"Make recipe '{string.Join(", ", ingredients1)}': {recipes.GetEnemy(ingredients1)}");
+        GD.Print($"Make recipe '{string.Join(", ", ingredients2)}': {recipes.GetEnemy(ingredients2)}");
+        GD.Print($"Make recipe '{string.Join(", ", ingredients3)}': {recipes.GetEnemy(ingredients3)}");
     }
 }
