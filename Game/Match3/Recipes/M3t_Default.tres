@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Match3RecipeTable" format=3 uid="uid://dcgv05px7xufn"]
+
+[ext_resource type="Script" uid="uid://cq5y6qgvw6i4j" path="res://Game/Match3/Match3RecipeTable.cs" id="1_7au66"]
+[ext_resource type="Resource" uid="uid://bcnidwqk7myow" path="res://Game/Match3/Recipes/M3r_Test.tres" id="1_24f5s"]
+
+[resource]
+script = ExtResource("1_7au66")
+recipes = Array[Object]([ExtResource("1_24f5s"), null])
+metadata/_custom_type_script = "uid://cq5y6qgvw6i4j"

@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://bcijaprypmkpb" path="res://Characters/Players/Scripts/PlayerController.cs" id="4_1fpnh"]
 [ext_resource type="Script" uid="uid://b2v40725rdn8b" path="res://Characters/Scripts/ToggleableHitbox.cs" id="4_ht06l"]
 [ext_resource type="Script" uid="uid://c74blvexl5qt5" path="res://Characters/Scripts/CharacterAnimationTree.cs" id="5_7kb7x"]
-[ext_resource type="Script" uid="uid://cyhvlrad5psho" path="res://Characters/Scripts/CharacterStats.cs" id="9_570sx"]
+[ext_resource type="Script" uid="uid://u3cmil3kdff0" path="res://Characters/Players/Scripts/PlayerState.cs" id="9_570sx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1fpnh"]
 size = Vector2(14, 20)

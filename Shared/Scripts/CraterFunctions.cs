@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System.Collections.Generic;
+using Godot;
 
 namespace CraterSprite;
 
@@ -44,5 +45,19 @@ public static class CraterFunctions
         rootContext.GetTree().GetRoot().AddChild(newInstance);
         newInstance.SetGlobalPosition(position);
         return newInstance;
+    }
+
+    public static List<T> ConvertArray<[MustBeVariant] T>(Godot.Collections.Array<T> array)
+    {
+        var rawArray = new T[array.Count];
+        array.CopyTo(rawArray, 0);
+        return [..rawArray];
+    }
+
+    public static Godot.Collections.Array<T> ConvertToGodotArray<[MustBeVariant] T>(List<T> list)
+    {
+        Godot.Collections.Array<T> godotArray = [];
+        godotArray.AddRange(list);
+        return godotArray;
     }
 }
