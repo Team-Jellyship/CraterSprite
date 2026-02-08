@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 namespace CraterSprite
 {
@@ -19,16 +20,50 @@ namespace CraterSprite
     
     public partial class InputManager : Node
     {
+        private const bool TreatControllerAsSecondDevice = true;
         public static InputManager instance { get; private set; }
 
-        private readonly SparseEventMap<string, float> _keyPressedEventMap = new();
-        private readonly SparseEventMap<string, float> _keyReleasedEventMap = new();
-        private readonly SparseEventMap<string, float> _keyChangedEventMap = new();
-        private readonly SparseEventMap<InputAxis, float> _axisChangedEventMap = new();
+        private readonly SparseEventMap<Tuple<string, int>, float> _keyPressedEventMap = new();
+        private readonly SparseEventMap<Tuple<string, int>, float> _keyReleasedEventMap = new();
+        private readonly SparseEventMap<Tuple<string, int>, float> _keyChangedEventMap = new();
+        private readonly SparseEventMap<Tuple<InputAxis, int>, float> _axisChangedEventMap = new();
+
+        private readonly Dictionary<Key, string> _keyActionMap = new();
+        private readonly Dictionary<JoyAxis, string> _gamepadAxisMap = new();
+        private readonly Dictionary<JoyButton, string> _gamepadButtonMap = new();
+
+        private readonly Dictionary<Tuple<string, int>, float> _actionDeviceValueMap = new();
 
         public override void _Ready()
         {
             instance = this;
+            
+            // Steal godot's existing action editor, so I don't have to write one
+            foreach (var action in InputMap.GetActions())
+            {
+                if (action.ToString().StartsWith("ui_"))
+                {
+                    continue;
+                }
+                
+                foreach (var inputEvent in InputMap.ActionGetEvents(action))
+                {
+                    switch (inputEvent)
+                    {
+                        case InputEventJoypadButton joypadEvent:
+                            _gamepadButtonMap.Add(joypadEvent.ButtonIndex, action);
+                            continue;
+                        
+                        case InputEventJoypadMotion joypadMotion:
+                            _gamepadAxisMap[joypadMotion.Axis] = action;
+                            continue;
+                        
+                        case InputEventKey key:
+                            _keyActionMap.Add(key.PhysicalKeycode, action);
+                            continue;
+                    }
+                }
+            }
         }
         
         /**
@@ -36,12 +71,13 @@ namespace CraterSprite
          * <param name="actionName">Name of the action, from the project input map</param>
          * <param name="type">Type of event to listen to</param>
          * <param name="callback">Callback method to activate when event is triggered. Strength will be 1 when pressed, and 0 when released</param>
+         * <param name="deviceId">Device id to listen for. -1 listens for all devices</param>
          * <param name="owner">Node that is listening for this event. Required so InputManager can automatically unregister the callback</param>
          */
-        public void RegisterCallback(string actionName, InputEventType type, Action<float> callback, Node owner)
+        public void RegisterCallback(string actionName, InputEventType type, Action<float> callback, int deviceId, Node owner)
         {
-            GetMapForKeyType(type).RegisterCallback(actionName, callback);
-            owner.TreeExited += () => RemoveCallback(actionName, type, callback);
+            GetMapForKeyType(type).RegisterCallback(new Tuple<string, int>(actionName, deviceId), callback);
+            owner.TreeExited += () => RemoveCallback(actionName, type, deviceId, callback);
         }
         
         /**
@@ -49,13 +85,16 @@ namespace CraterSprite
          * <param name="positive">Name of the positive input action, from the project input map</param>
          * <param name="negative">Name of the negative input action</param>
          * <param name="callback">Callback method to activate when the axis value changes</param>
+         * <param name="deviceId">Device id to listen for. -1 listens for all devices</param>
          * <param name="owner">Node that is listening for this event. Required so InputManager can automatically unregister the callback</param>
          */
-        public void RegisterAxisChangedCallback(string positive, string negative, Action<float> callback, Node owner)
+        public void RegisterAxisChangedCallback(string positive, string negative, Action<float> callback, int deviceId, Node owner)
         {
+            GD.Print($"Registered 1D axis callback from action '{positive}' and '{negative}' on index {deviceId}");
             var axis = new InputAxis(positive, negative);
-            _axisChangedEventMap.RegisterCallback(axis, callback);
-            owner.TreeExited += () => _axisChangedEventMap.RemoveCallback(axis, callback);
+            var input = new Tuple<InputAxis, int>(axis, deviceId);
+            _axisChangedEventMap.RegisterCallback(input, callback);
+            owner.TreeExited += () => _axisChangedEventMap.RemoveCallback(input, callback);
         }
 
         public override void _Input(InputEvent @event)
@@ -65,51 +104,59 @@ namespace CraterSprite
             {
                 return;
             }
-            
-            foreach (var axis in _axisChangedEventMap.GetMappedEvents())
+
+            var deviceId = @event.Device;
+            if (TreatControllerAsSecondDevice)
             {
-                if (!@event.IsAction(axis.negative) && !@event.IsAction(axis.positive))
+                if (@event is InputEventJoypadButton or InputEventJoypadMotion)
+                {
+                    ++deviceId;
+                }
+            }
+
+            if (!GetActionFromEvent(@event, out var action, out var strength))
+            {
+                return;
+            }
+            
+            GD.Print($"action '{action}' pressed with strength '{strength}' for device {deviceId}");
+
+            var key = new Tuple<string, int>(action, deviceId);
+            if (_actionDeviceValueMap.TryGetValue(key, out var oldStrength) && Math.Abs(oldStrength - strength) < 0.0001f)
+            {
+                return;
+            }
+            
+            _actionDeviceValueMap[key] = strength;
+            
+            foreach (var (axis, requestedDeviceId) in _axisChangedEventMap.GetMappedEvents())
+            {
+                if (axis.negative != action && axis.positive != action)
                 {
                     continue;
                 }
 
-                var strength = Input.GetActionStrength(axis.positive) - Input.GetActionStrength(axis.negative);
-                _axisChangedEventMap.TriggerEvent(axis, strength);
+                _actionDeviceValueMap.TryGetValue(new Tuple<string, int>(axis.negative, deviceId), out var negative);
+                _actionDeviceValueMap.TryGetValue(new Tuple<string, int>(axis.positive, deviceId), out var positive);
+                _axisChangedEventMap.TriggerEvent(new Tuple<InputAxis, int>(axis, deviceId) , positive - negative);
                 break;
             }
             
-
-            var inputMap = GetMapForKeyType(inputEventType);
-            if (inputMap == null)
-            {
-                return;
-            }
-
             if (inputEventType is InputEventType.Pressed or InputEventType.Released)
             {
-                foreach (var action in _keyChangedEventMap.GetMappedEvents())
-                {
-                    if (!@event.IsAction(action)) { continue; }
-                    _keyChangedEventMap.TriggerEvent(action, Input.GetActionStrength(action));
-                    break;
-                }
+                _keyChangedEventMap.TriggerEvent(key, _actionDeviceValueMap[key]);
             }
             
-            foreach (var action in inputMap.GetMappedEvents())
-            {
-                if (!@event.IsAction(action)) { continue; }
-                inputMap.TriggerEvent(action, Input.GetActionStrength(action));
-                break;
-            }
+            GetMapForKeyType(inputEventType)?.TriggerEvent(key, strength);
         }
 
-        private void RemoveCallback(string actionName, InputEventType type, Action<float> callback)
+        private void RemoveCallback(string actionName, InputEventType type, int deviceId, Action<float> callback)
         {
-            GetMapForKeyType(type).RemoveCallback(actionName, callback);
+            GetMapForKeyType(type).RemoveCallback(new Tuple<string, int>(actionName, deviceId), callback);
             GD.Print($"Unregistered '{type}' callback from action '{actionName}'");
         }
 
-        private SparseEventMap<string, float> GetMapForKeyType(InputEventType type)
+        private SparseEventMap<Tuple<string, int>, float> GetMapForKeyType(InputEventType type)
         {
             return type switch
             {
@@ -138,6 +185,32 @@ namespace CraterSprite
             }
 
             return InputEventType.Changed;
+        }
+
+        private bool GetActionFromEvent(InputEvent @event, out string action, out float strength)
+        {
+            switch (@event)
+            {
+                case InputEventJoypadButton joypadEvent:
+                    strength = joypadEvent.Pressed ? 1.0f : 0.0f;
+                    return _gamepadButtonMap.TryGetValue(joypadEvent.ButtonIndex, out action);
+                        
+                case InputEventJoypadMotion joypadMotion:
+                    strength = joypadMotion.AxisValue;
+                    if (strength < 0.2f)
+                    {
+                        strength = 0.0f;
+                    }
+                    return _gamepadAxisMap.TryGetValue(joypadMotion.Axis, out action);
+                        
+                case InputEventKey key:
+                    strength = key.Pressed ? 1.0f : 0.0f;
+                    return _keyActionMap.TryGetValue(key.Keycode, out action);
+            }
+
+            strength = 0.0f;
+            action = "";
+            return false;
         }
     }
 }
