@@ -4,3 +4,4 @@
 addons/*
 !addons/.editorconfig
 .addons/*
+addons/imgui-godot/*

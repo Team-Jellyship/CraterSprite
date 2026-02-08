@@ -10,5 +10,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game\Effects\_effects.md" />
+    <Content Include="Game\Input\_input.md" />
   </ItemGroup>
 </Project>

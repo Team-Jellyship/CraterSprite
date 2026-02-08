@@ -12,7 +12,7 @@ namespace CraterSprite
         Changed
     }
 
-    public struct InputAxis(string positive, string negative)
+    public struct InputAxis1D(string positive, string negative)
     {
         public readonly string negative = negative;
         public readonly string positive = positive;
@@ -26,7 +26,7 @@ namespace CraterSprite
         private readonly SparseEventMap<Tuple<string, int>, float> _keyPressedEventMap = new();
         private readonly SparseEventMap<Tuple<string, int>, float> _keyReleasedEventMap = new();
         private readonly SparseEventMap<Tuple<string, int>, float> _keyChangedEventMap = new();
-        private readonly SparseEventMap<Tuple<InputAxis, int>, float> _axisChangedEventMap = new();
+        private readonly SparseEventMap<Tuple<InputAxis1D, int>, float> _axisChangedEventMap = new();
 
         private readonly Dictionary<Key, string> _keyActionMap = new();
         private readonly Dictionary<JoyAxis, string> _gamepadAxisMap = new();
@@ -90,9 +90,9 @@ namespace CraterSprite
          */
         public void RegisterAxisChangedCallback(string positive, string negative, Action<float> callback, int deviceId, Node owner)
         {
-            GD.Print($"Registered 1D axis callback from action '{positive}' and '{negative}' on index {deviceId}");
-            var axis = new InputAxis(positive, negative);
-            var input = new Tuple<InputAxis, int>(axis, deviceId);
+            GD.Print($"[InputManager] Registered 1D axis callback from action '{positive}' and '{negative}' on index {deviceId}");
+            var axis = new InputAxis1D(positive, negative);
+            var input = new Tuple<InputAxis1D, int>(axis, deviceId);
             _axisChangedEventMap.RegisterCallback(input, callback);
             owner.TreeExited += () => _axisChangedEventMap.RemoveCallback(input, callback);
         }
@@ -138,7 +138,7 @@ namespace CraterSprite
 
                 _actionDeviceValueMap.TryGetValue(new Tuple<string, int>(axis.negative, deviceId), out var negative);
                 _actionDeviceValueMap.TryGetValue(new Tuple<string, int>(axis.positive, deviceId), out var positive);
-                _axisChangedEventMap.TriggerEvent(new Tuple<InputAxis, int>(axis, deviceId) , positive - negative);
+                _axisChangedEventMap.TriggerEvent(new Tuple<InputAxis1D, int>(axis, deviceId) , positive - negative);
                 break;
             }
             
