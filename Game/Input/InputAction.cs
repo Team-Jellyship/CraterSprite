@@ -3,11 +3,9 @@ using Godot;
 
 namespace CraterSprite.Input;
 
-using InputVariant = Variant<Key, JoyAxis, JoyButton>;
-
-public class InputAction
+public class InputAction(string name)
 {
-    private string name;
+    public readonly string name = name;
 
-    public List<InputAxisMappingType> mappedButtons;
+    public readonly List<InputAccumulator> accumulators = [];
 }

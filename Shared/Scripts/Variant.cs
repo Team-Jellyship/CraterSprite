@@ -16,6 +16,11 @@ internal sealed class VariantHolder<T>(T item) : IVariantHolder
     public bool Is<TU>() => typeof(TU) == typeof(T);
 
     public object Get() => item;
+
+    public override string ToString()
+    {
+        return item.ToString();
+    }
 }
 
 public sealed class Variant<T1, T2, T3>
@@ -73,4 +78,9 @@ public sealed class Variant<T1, T2, T3>
     }
     
     public override int GetHashCode() => Get().GetHashCode();
+
+    public override string ToString()
+    {
+        return _variant.ToString();
+    }
 }

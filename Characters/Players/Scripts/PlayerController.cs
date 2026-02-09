@@ -13,7 +13,7 @@ namespace CraterSprite
         
         public override void _Ready()
         {
-            InputManager.instance.RegisterAxisChangedCallback("walk_right", "walk_left", strength =>
+            InputManager.instance.RegisterCallback("walk", InputEventType.Changed, strength =>
             {
                 _character.SetMoveInput(strength);
             }, _controllerId, this);
