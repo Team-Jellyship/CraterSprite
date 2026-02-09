@@ -8,7 +8,7 @@ vec2 GetScaleMatrix(mat4 matrix){
 
 void vertex() {
 	// UV = (MODEL_MATRIX * vec4(VERTEX, 0.0f, 1.0f)).xy / 32.0f;
-	UV = VERTEX * GetScaleMatrix(MODEL_MATRIX) / 32.0f - vec2(0.5f);
+	UV = VERTEX * GetScaleMatrix(MODEL_MATRIX) / 32.0f - vec2(0.5f, 1.0f);
 }
 
 void fragment() {

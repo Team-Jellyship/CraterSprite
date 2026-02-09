@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using ImGuiNET;
 
 namespace CraterSprite.Input
 {
@@ -198,10 +199,46 @@ namespace CraterSprite.Input
 
         public override void _Process(double delta)
         {
-            /*foreach (var device in _devices)
+            // Preprocessor guards aren't working right now
+// #if IMGUI
+            for (var i = 0; i < _devices.Count; ++i)
             {
-                device.DrawActions();
-            }*/
+                _devices[i].DrawActions(i);
+            }
+
+            DrawInputActions();
+// #endif
+        }
+
+// #if IMGUI
+        public void DrawInputActions()
+        {
+            if (ImGui.Begin("InputActions"))
+            {
+                foreach (var action in _actions)
+                {
+                    if (ImGui.TreeNodeEx(action.name, ImGuiTreeNodeFlags.DefaultOpen))
+                    {
+                        foreach (var accumulator in action.accumulators)
+                        {
+                            ImGui.Text($"{GetInputVariantAsString(accumulator.input)} : {accumulator.mappingType}");
+                        }
+                        ImGui.TreePop();
+                    }
+                }
+            }
+            ImGui.End();
+        }
+// #endif
+
+        public static string GetInputVariantAsString(InputVariant inputVariant)
+        {
+            return inputVariant.index switch
+            {
+                0 => $"Key {inputVariant}",
+                1 or 2 => $"Gamepad {inputVariant}",
+                _ => "Err"
+            };
         }
     }
 }

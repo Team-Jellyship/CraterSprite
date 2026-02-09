@@ -52,9 +52,9 @@ public class InputDevice
         };
     }
 
-    public void DrawActions()
+    public void DrawActions(int deviceId)
     {
-        if (ImGui.Begin($"Inputdevice"))
+        if (ImGui.Begin($"Input Device: {deviceId}"))
         {
             foreach (var action in InputManager.instance._actions)
             {

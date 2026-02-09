@@ -18,7 +18,7 @@ shader = ExtResource("2_5w25o")
 size = Vector2(32, 128)
 
 [sub_resource type="QuadMesh" id="QuadMesh_2yfc4"]
-size = Vector2(32, 128)
+size = Vector2(32, 32)
 
 [node name="ScnTestRoom" type="Node2D" unique_id=2033458556]
 
@@ -48,7 +48,7 @@ _controllerId = 1
 root_node = NodePath("../../Player2")
 
 [node name="Wall" type="StaticBody2D" parent="." unique_id=1431298936]
-position = Vector2(448, 256)
+position = Vector2(336, 272)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall" unique_id=983092068]
 shape = SubResource("RectangleShape2D_20dgb")
@@ -56,11 +56,12 @@ shape = SubResource("RectangleShape2D_20dgb")
 [node name="MeshInstance2D" type="MeshInstance2D" parent="Wall" unique_id=1307838899]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_5ui78")
+scale = Vector2(1, 4)
 mesh = SubResource("QuadMesh_2yfc4")
 texture = ExtResource("4_fcfrf")
 
 [node name="Wall2" type="StaticBody2D" parent="." unique_id=1312921766]
-position = Vector2(688, 256)
+position = Vector2(688, 272)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2" unique_id=273760901]
 shape = SubResource("RectangleShape2D_20dgb")
@@ -68,6 +69,7 @@ shape = SubResource("RectangleShape2D_20dgb")
 [node name="MeshInstance2D" type="MeshInstance2D" parent="Wall2" unique_id=594011790]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_5ui78")
+scale = Vector2(1, 4)
 mesh = SubResource("QuadMesh_2yfc4")
 texture = ExtResource("4_fcfrf")
 
