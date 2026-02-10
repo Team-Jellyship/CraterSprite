@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://c1emph2w8faox"]
 
-[ext_resource type="PackedScene" uid="uid://cuq4hb7diqckf" path="res://Characters/Players/Player.tscn" id="1_2lscm"]
 [ext_resource type="Shader" uid="uid://csdxvr6rx5rjk" path="res://Shared/Shaders/Sh_WorldSpaceTexture.gdshader" id="2_5w25o"]
 [ext_resource type="Texture2D" uid="uid://bdqbta7j8iypg" path="res://Shared/Sprites/check16.png" id="2_l2rra"]
 [ext_resource type="PackedScene" uid="uid://bc63xk2i2ivxt" path="res://Characters/Enemies/TestEnemy.tscn" id="4_5ui78"]
 [ext_resource type="Texture2D" uid="uid://c2g84k6v3iajs" path="res://Shared/Sprites/wallTex.png" id="4_fcfrf"]
+[ext_resource type="Script" uid="uid://dbsjfkw53mpjv" path="res://Game/SpawnLocation.cs" id="5_fcfrf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l2rra"]
 size = Vector2(320, 32)
@@ -22,9 +22,6 @@ size = Vector2(32, 32)
 
 [node name="ScnTestRoom" type="Node2D" unique_id=2033458556]
 
-[node name="Player" parent="." unique_id=2076774000 instance=ExtResource("1_2lscm")]
-position = Vector2(512, 288)
-
 [node name="Floor" type="StaticBody2D" parent="." unique_id=930945557]
 position = Vector2(512, 320)
 
@@ -37,15 +34,6 @@ material = SubResource("ShaderMaterial_5ui78")
 scale = Vector2(320, 32)
 mesh = SubResource("QuadMesh_2lscm")
 texture = ExtResource("2_l2rra")
-
-[node name="Player2" parent="." unique_id=2049028600 instance=ExtResource("1_2lscm")]
-position = Vector2(608, 288)
-
-[node name="Controller" parent="Player2" index="4" unique_id=505377627]
-_controllerId = 1
-
-[node name="AnimationPlayer" parent="Player2" index="6" unique_id=1065891037]
-root_node = NodePath("../../Player2")
 
 [node name="Wall" type="StaticBody2D" parent="." unique_id=1431298936]
 position = Vector2(336, 272)
@@ -76,4 +64,10 @@ texture = ExtResource("4_fcfrf")
 [node name="TestEnemy" parent="." unique_id=1547651322 instance=ExtResource("4_5ui78")]
 position = Vector2(416, 288)
 
-[editable path="Player2"]
+[node name="SpawnLocation1" type="Node2D" parent="." unique_id=1783809333]
+position = Vector2(384, 288)
+script = ExtResource("5_fcfrf")
+
+[node name="SpawnLocation2" type="Node2D" parent="." unique_id=1836631604]
+position = Vector2(608, 288)
+script = ExtResource("5_fcfrf")

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
 using Godot;
 
@@ -50,5 +51,10 @@ public abstract class CraterMath
         }
 
         return input;
+    }
+
+    public static T ChooseRandom<T>(List<T> items)
+    {
+        return items[GD.RandRange(0, items.Count - 1)];
     }
 }
