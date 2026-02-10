@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="GameModeSettings" format=3 uid="uid://wg3jrqrqqqr2"]
+
+[ext_resource type="PackedScene" uid="uid://cuq4hb7diqckf" path="res://Characters/Players/Player.tscn" id="1_17y4m"]
+[ext_resource type="Script" uid="uid://biq0rnlq4cvem" path="res://Game/GameModeSettings.cs" id="1_o5yew"]
+
+[resource]
+script = ExtResource("1_o5yew")
+player = ExtResource("1_17y4m")
+metadata/_custom_type_script = "uid://biq0rnlq4cvem"

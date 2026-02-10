@@ -46,6 +46,20 @@ public static class CraterFunctions
         newInstance.SetGlobalPosition(position);
         return newInstance;
     }
+    
+    public static T CreateInstanceDeferred<T>(Node rootContext, PackedScene prefab, Vector2 position)
+        where T : Node2D
+    {
+        if (prefab == null)
+        {
+            return null;
+        }
+
+        var newInstance = prefab.Instantiate<T>();
+        rootContext.GetTree().GetRoot().CallDeferred("add_child", newInstance);
+        newInstance.SetGlobalPosition(position);
+        return newInstance;
+    }
 
     public static List<T> ConvertArray<[MustBeVariant] T>(Godot.Collections.Array<T> array)
     {
