@@ -168,6 +168,8 @@ script = ExtResource("5_7kb7x")
 
 [node name="PlayerStats" type="Node" parent="." unique_id=410689954]
 script = ExtResource("9_570sx")
+_showingStats = true
+characterTeam = 1
 
 [node name="CameraAttach" type="RemoteTransform2D" parent="." unique_id=1538334504]
 

@@ -19,6 +19,7 @@ public partial class PlayerCamera : Camera2D
     public override void _Ready()
     {
         _target = GameMode.instance.players[(int)_playerIndex];
+        _target.TreeExiting += () => { _target = null; };
         _horizontalPosition = _target.GlobalPosition.X;
         _floorHeight = _target.GlobalPosition.Y;
         GlobalPosition = _target.GlobalPosition;
@@ -32,8 +33,11 @@ public partial class PlayerCamera : Camera2D
 
     public override void _PhysicsProcess(double delta)
     {
-        var deltaF = (float)delta;
-
+        if (_target == null)
+        {
+            return;
+        }
+        
         SetGlobalPosition(new Vector2(_horizontalPosition, Mathf.Min(_target.GlobalPosition.Y, _floorHeight)));
     }
 

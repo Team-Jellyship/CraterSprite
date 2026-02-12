@@ -1,30 +1,25 @@
 using Godot;
 using System;
 using CraterSprite.Effects;
+using CraterSprite.Teams;
 using ImGuiNET;
 
 namespace CraterSprite;
-
-public enum Team
-{
-    Left,
-    Right,
-    Enemy,
-    Unaffiliated
-}
-
 
 /**
  * Class for holding relevant character stats information
  */
 public partial class CharacterStats : Node
 {
-    private readonly StatusEffectContainer _effects = new();
-
     [Export] private bool _showingStats;
+
+    [Export] public Team characterTeam { private set; get; }
     
     [Signal] public delegate void OnDeathEventHandler();
 
+    private readonly StatusEffectContainer _effects = new();
+    
+    
     public override void _Ready()
     {
         _effects.SetBaseValue(GameMode.instance.statusEffects.health, 15);
@@ -52,7 +47,7 @@ public partial class CharacterStats : Node
      * and triggers the OnDeath signal if the damage causes this character to die
      * </summary>
      */
-    public void TakeDamage(float damageAmount)
+    public void TakeDamage(float damageAmount, CharacterStats source = null)
     {
         var healthEffect = GameMode.instance.statusEffects.health;
         if (!(_effects.AddBaseValue(healthEffect, -damageAmount) <= 0.0f))

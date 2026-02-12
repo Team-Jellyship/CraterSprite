@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bc63xk2i2ivxt" path="res://Characters/Enemies/TestEnemy.tscn" id="4_5ui78"]
 [ext_resource type="Texture2D" uid="uid://c2g84k6v3iajs" path="res://Shared/Sprites/wallTex.png" id="4_fcfrf"]
 [ext_resource type="Script" uid="uid://dbsjfkw53mpjv" path="res://Game/SpawnLocation.cs" id="5_fcfrf"]
+[ext_resource type="Script" uid="uid://5yfgyni1c342" path="res://Shared/Scripts/DamageZone2D.cs" id="6_20dgb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l2rra"]
 size = Vector2(1024, 32)
@@ -19,6 +20,8 @@ size = Vector2(32, 128)
 
 [sub_resource type="QuadMesh" id="QuadMesh_2yfc4"]
 size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2yfc4"]
 
 [node name="ScnTestRoom" type="Node2D" unique_id=2033458556]
 
@@ -71,3 +74,15 @@ script = ExtResource("5_fcfrf")
 [node name="SpawnLocation2" type="Node2D" parent="." unique_id=1836631604]
 position = Vector2(608, 288)
 script = ExtResource("5_fcfrf")
+
+[node name="DamageZone" type="Area2D" parent="." unique_id=675202379]
+position = Vector2(480, 288)
+collision_layer = 8
+collision_mask = 16
+script = ExtResource("6_20dgb")
+_filter = 3
+_damage = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageZone" unique_id=143744657]
+shape = SubResource("RectangleShape2D_2yfc4")
+debug_color = Color(0.9486061, 2.695322e-06, 0.5798672, 0.41960785)
