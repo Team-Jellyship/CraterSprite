@@ -73,6 +73,7 @@ public partial class GameMode : Node
             var spawnLocation = remainingSpawnLocations[chosenSpawnIndex];
             var playerInstance = _settings.player.Instantiate<Node2D>();
             playerInstance.SetGlobalPosition(spawnLocation.GlobalPosition);
+            playerInstance.Name = $"Player{i}";
             spawnLocation.Owner.AddChild(playerInstance);
             remainingSpawnLocations.RemoveAt(chosenSpawnIndex);
             

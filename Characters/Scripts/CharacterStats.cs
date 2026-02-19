@@ -13,6 +13,7 @@ public partial class CharacterStats : Node
 {
 
     [Signal] public delegate void OnDeathEventHandler();
+    [Signal] public delegate void OnTakeDamageEventHandler(float damage);
     [Signal] public delegate void OnStunnedEventHandler();
     [Signal] public delegate void OnStunEndEventHandler();
 
@@ -57,7 +58,14 @@ public partial class CharacterStats : Node
      */
     public void TakeDamage(float damageAmount, CharacterStats source = null)
     {
+        if (_effects.HasEffect(GameMode.instance.statusEffects.invulnerability))
+        {
+            GD.Print($"[CharacterStats] '{Owner.Name}' took damage, but was invulnerable so damage was discarded.");
+            return;
+        }
+        
         GD.Print($"[CharacterStats] '{Owner.Name}' took '{damageAmount}' damage.");
+        EmitSignalOnTakeDamage(damageAmount);
         var healthEffect = GameMode.instance.statusEffects.health;
         if (!(_effects.AddBaseValue(healthEffect, -damageAmount) <= 0.0f))
         {
@@ -81,7 +89,7 @@ public partial class CharacterStats : Node
 
     private void DrawImGui()
     {
-        if (ImGui.Begin($"{GetName()} Status###HealthComponent{GetName()}"))
+        if (ImGui.Begin($"{Owner.GetName()} Status###HealthComponent{Owner.GetName()}"))
         {
             ImGui.Text($"Health: {_effects.GetValue(GameMode.instance.statusEffects.health)} / {_effects.GetValue(GameMode.instance.statusEffects.maxHealth)}");
             foreach (var item in _effects)

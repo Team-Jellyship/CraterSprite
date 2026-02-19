@@ -95,7 +95,16 @@ public partial class KinematicCharacter : CharacterBody2D
 
 	// If true, the character will always get at least one jump back when hitting a wall
 	[Export] private bool _restoreJumpOnHitWall = true; 
+	
+	// KNOCKBACK
+	[ExportGroup("Knockback")]
+	// The angle the character is knocked back. 0 is directly back, 90 is directly up.
+	[Export(PropertyHint.Range, "0,90,1,suffix:\\u00b0")]
+	private float _knockbackAngle = 45.0f;
 
+	[Export(PropertyHint.None, "suffix:px/s")]
+	private float _defaultKnockbackStrength = 200.0f;
+	
 	[Signal] public delegate void MoveSpeedChangedEventHandler(float moveSpeed);
 	[Signal] public delegate void OnCrouchedEventHandler();
 	[Signal] public delegate void OnUncrouchedEventHandler();
@@ -105,9 +114,12 @@ public partial class KinematicCharacter : CharacterBody2D
 	public CraterEvent onHitFloor = new();
 	
 	public float moveInput { get; private set; }
+
+	private int _direction;
 	private bool _isJumping;
 	private Timer _jumpTimer = new();
 	private Timer _coyoteTimer = new();
+	private Vector2 _pendingImpulses;
 
 	public override void _Ready()
 	{
@@ -177,6 +189,12 @@ public partial class KinematicCharacter : CharacterBody2D
 			currentVelocity.Y = CraterMath.MoveTo(currentVelocity.Y, _maxWallSlideSpeed,
 				_wallFriction * (float)delta);
 		}
+
+		var pendingImpulses = ConsumeImpulses();
+		if (pendingImpulses != Vector2.Zero)
+		{
+			currentVelocity = pendingImpulses;
+		}
 		
 		SetVelocity(currentVelocity);
 
@@ -228,6 +246,7 @@ public partial class KinematicCharacter : CharacterBody2D
 		{
 			return;
 		}
+		_direction = Mathf.Sign(moveInput);
 		EmitSignalMoveSpeedChanged(moveInput);
 	}
 	
@@ -282,6 +301,33 @@ public partial class KinematicCharacter : CharacterBody2D
 	{
 		_isCrouched = false;
 		EmitSignal(SignalName.OnUncrouched);
+	}
+
+	/**
+	 * <summary>Add a directional impulse to the character, in px/s. Will be applied on the next tick</summary>
+	 */
+	public void AddImpulse(Vector2 impulse)
+	{
+		_pendingImpulses += impulse;
+	}
+
+	/**
+	 * <summary>Add a knockback impulse. Automatically assigns direction.</summary>
+	 */
+	public void ApplyKnockback(float velocity)
+	{
+		var directionVector = CraterMath.VectorFromAngle(_knockbackAngle);
+		directionVector.X *= -_direction;
+		directionVector *= velocity;
+		AddImpulse(directionVector);
+	}
+
+	/**
+	 * <summary>Add a knockback impulse with default strength. Automatically assigns direction.</summary>
+	 */
+	public void ApplyKnockbackDefault(float damage)
+	{
+		ApplyKnockback(_defaultKnockbackStrength);
 	}
 
 	/**
@@ -355,5 +401,12 @@ public partial class KinematicCharacter : CharacterBody2D
 		// godot uses -y up for *reasons*, so invert the angle
 		var rads = Mathf.DegToRad(-_wallJumpAngle);
 		return new Vector2(Mathf.Cos(rads), Mathf.Sin(rads));
+	}
+
+	private Vector2 ConsumeImpulses()
+	{
+		var result = _pendingImpulses;
+		_pendingImpulses = Vector2.Zero;
+		return result;
 	}
 }

@@ -29,7 +29,6 @@ texture = ExtResource("1_4n4gg")
 
 [node name="Stats" type="Node" parent="." unique_id=802010356]
 script = ExtResource("2_30rjw")
-_showingStats = true
 matchType = 1
 _defaultHealth = 3.0
 
@@ -40,13 +39,12 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=118484821]
 shape = SubResource("CircleShape2D_8nvh5")
 
-[node name="Hitbox" type="Area2D" parent="." unique_id=829474099 node_paths=PackedStringArray("_owner")]
+[node name="Hitbox" type="Area2D" parent="." unique_id=829474099]
 collision_layer = 8
 collision_mask = 16
 script = ExtResource("3_7yner")
 _filter = 3
 _damage = 1.0
-_owner = NodePath("")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=35476914]
 shape = SubResource("RectangleShape2D_dq4fg")

@@ -224,3 +224,4 @@ position = Vector2(96, 0)
 [connection signal="OnUncrouched" from="." to="Hurtbox" method="SetOn"]
 [connection signal="OnStunEnd" from="PlayerStats" to="Hurtbox" method="Enable"]
 [connection signal="OnStunned" from="PlayerStats" to="Hurtbox" method="Disable"]
+[connection signal="OnTakeDamage" from="PlayerStats" to="." method="ApplyKnockbackDefault"]

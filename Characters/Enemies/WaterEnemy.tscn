@@ -29,7 +29,6 @@ texture = ExtResource("3_dtm15")
 
 [node name="Stats" type="Node" parent="." unique_id=802010356]
 script = ExtResource("4_hnjf8")
-_showingStats = true
 characterTeam = 3
 matchType = 2
 _defaultHealth = 3.0
