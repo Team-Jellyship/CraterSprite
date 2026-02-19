@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://fjgqtatonlq6" path="res://Characters/Enemies/FireEnemy.tscn" id="5_20dgb"]
 [ext_resource type="Script" uid="uid://dbsjfkw53mpjv" path="res://Game/SpawnLocation.cs" id="5_fcfrf"]
 [ext_resource type="PackedScene" uid="uid://f3ftmbq455dv" path="res://Characters/Enemies/WaterEnemy.tscn" id="6_2yfc4"]
+[ext_resource type="PackedScene" uid="uid://o4xe28btcjdf" path="res://Props/Pickups/Gem.tscn" id="7_2yfc4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l2rra"]
 size = Vector2(1024, 32)
@@ -87,3 +88,6 @@ position = Vector2(544, 288)
 
 [node name="WaterEnemy3" parent="." unique_id=1066074866 instance=ExtResource("6_2yfc4")]
 position = Vector2(512, 288)
+
+[node name="Gem" parent="." unique_id=1587296199 instance=ExtResource("7_2yfc4")]
+position = Vector2(448, 224)

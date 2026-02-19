@@ -16,6 +16,8 @@ public partial class PlayerState : CharacterStats
     [Export] private float _maxSuperMoveCharge;
 
     [Export] public Match3Spawner match3Spawner { private set; get; }
+
+    public CraterEvent<float> onSuperChargeChanged = new();
     
     public readonly Match3Container container = new();
 
@@ -33,5 +35,12 @@ public partial class PlayerState : CharacterStats
     public override void KilledEnemy(CharacterStats enemy)
     {
         container.AddOrb(enemy.matchType);
+    }
+
+    public void AddSuperCharge(float chargeAmount)
+    {
+        _superMoveCharge += chargeAmount;
+        onSuperChargeChanged.Invoke(_superMoveCharge);
+        GD.Print($"[PlayerState] supercharge increased to '{_superMoveCharge}'");
     }
 }

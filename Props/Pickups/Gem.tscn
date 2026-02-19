@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://o4xe28btcjdf"]
+
+[ext_resource type="Script" uid="uid://djhw83e3kvyov" path="res://Props/Scripts/Gem.cs" id="1_18bmh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_15qqv"]
+radius = 32.0
+
+[node name="Gem" type="Area2D" unique_id=1587296199]
+collision_layer = 2
+collision_mask = 16
+script = ExtResource("1_18bmh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=526088919]
+shape = SubResource("CircleShape2D_15qqv")
