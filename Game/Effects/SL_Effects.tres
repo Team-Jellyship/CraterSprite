@@ -2,10 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dmcn1bh3aixww" path="res://Game/Effects/StatusEffectList.cs" id="1_6w5i2"]
 [ext_resource type="Resource" uid="uid://b4e4305x18xeo" path="res://Game/Effects/SE_Health.res" id="1_pwvye"]
+[ext_resource type="Resource" uid="uid://y7jrrsxdwek6" path="res://Game/Effects/SE_Invulnerability.res" id="2_0jvwg"]
 [ext_resource type="Resource" uid="uid://gh4ydfsvyq3i" path="res://Game/Effects/SE_MaxHealth.res" id="2_s4jvx"]
 
 [resource]
 script = ExtResource("1_6w5i2")
 health = ExtResource("1_pwvye")
 maxHealth = ExtResource("2_s4jvx")
+invulnerability = ExtResource("2_0jvwg")
 metadata/_custom_type_script = "uid://dmcn1bh3aixww"

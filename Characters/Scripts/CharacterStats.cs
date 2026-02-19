@@ -13,20 +13,25 @@ public partial class CharacterStats : Node
 {
 
     [Signal] public delegate void OnDeathEventHandler();
+    [Signal] public delegate void OnStunnedEventHandler();
+    [Signal] public delegate void OnStunEndEventHandler();
 
-    private readonly StatusEffectContainer _effects = new();
     [Export] private bool _showingStats;
-
     [Export] public Team characterTeam { private set; get; }
-
     [Export] public MatchType matchType { private set; get; }
-
     [Export] private float _defaultHealth = 15;
+    [Export] private float _invulnerabilityTime = 0.0f;
+    
+    
+    private readonly StatusEffectContainer _effects = new();
     
     public override void _Ready()
     {
         _effects.SetBaseValue(GameMode.instance.statusEffects.health, _defaultHealth);
         _effects.SetBaseValue(GameMode.instance.statusEffects.maxHealth, _defaultHealth);
+        
+        _effects.RegisterEffectAppliedCallback(GameMode.instance.statusEffects.invulnerability, EmitSignalOnStunned, this);
+        _effects.RegisterEffectRemovedCallback(GameMode.instance.statusEffects.invulnerability, EmitSignalOnStunEnd, this);
     }
 
     public override void _Process(double delta)
@@ -52,9 +57,14 @@ public partial class CharacterStats : Node
      */
     public void TakeDamage(float damageAmount, CharacterStats source = null)
     {
+        GD.Print($"[CharacterStats] '{Owner.Name}' took '{damageAmount}' damage.");
         var healthEffect = GameMode.instance.statusEffects.health;
         if (!(_effects.AddBaseValue(healthEffect, -damageAmount) <= 0.0f))
         {
+            if (_invulnerabilityTime > 0.0f)
+            {
+                _effects.ApplyStatusEffectInstance(new StatusEffectInstance(GameMode.instance.statusEffects.invulnerability, this, _invulnerabilityTime));
+            }
             return;
         }
 

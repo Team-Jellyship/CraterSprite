@@ -80,7 +80,11 @@ public static class CraterFunctions
         }
 
         var newInstance = prefab.Instantiate<T>();
-        GameMode.instance.worldRoot.CallDeferred("add_child", newInstance);
+        Callable.From(() =>
+        {
+            GameMode.instance.worldRoot.AddChild(newInstance);
+        }).CallDeferred();
+        
         newInstance.SetGlobalPosition(position);
         return newInstance;
     }
