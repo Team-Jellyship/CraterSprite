@@ -63,6 +63,22 @@ public partial class GameMode : Node
         _locations.Insert((int)location.defaultIndex, location);
     }
 
+    public PlayerState GetPlayerState(int playerIndex)
+    {
+        if (playerIndex >= 0 && playerIndex < _playerStates.Count)
+        {
+            return _playerStates[playerIndex];
+        }
+        
+        GD.PrintErr("[GameMode] Attempted to access a player state from an out of bounds index.");
+        return null;
+    }
+
+    public void NotifyGemDestroyed(int destroyerPlayerIndex)
+    {
+        
+    }
+
     private void SpawnPlayers()
     {
         var remainingSpawnLocations = new List<SpawnLocation>(_locations);
@@ -92,6 +108,7 @@ public partial class GameMode : Node
             var i1 = i;
             playerState.container.onSpawnSingleRequested.AddListener(orb => SpawnEnemyFromSingleType(i1, orb));
             playerState.container.onSpawnRequested.AddListener(orbs => SpawnEnemyFromMatch3(i1, orbs));
+            playerState.index = i;
         }
     }
 

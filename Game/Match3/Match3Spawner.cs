@@ -4,7 +4,7 @@ using Godot;
 
 namespace CraterSprite.Game.Match3;
 
-public partial class Match3Spawner : Node
+public partial class Match3Spawner : Node2D
 {
     private Queue<PackedScene> _pendingSpawns = [];
     private List<EnemySpawner> _enemySpawners = [];
@@ -27,6 +27,13 @@ public partial class Match3Spawner : Node
         }
         
         spawner.SpawnEnemy(enemySpawn);
+    }
+
+    public void QueueRelativeSpawn(PackedScene spawn, Vector2 offset)
+    {
+        var newOffset = offset;
+        newOffset.X *= -1.0f;
+        CraterFunctions.CreateInstance<Node2D>(this, spawn, GlobalPosition + newOffset);
     }
 
     private EnemySpawner GetRandomAvailableSpawner()

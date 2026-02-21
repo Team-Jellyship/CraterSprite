@@ -1,5 +1,6 @@
 using CraterSprite.Effects;
 using CraterSprite.Match3;
+using CraterSprite.Shared.Scripts;
 using CraterSprite.Teams;
 using Godot;
 using ImGuiNET;
@@ -9,7 +10,7 @@ namespace CraterSprite;
 /**
  * Class for holding relevant character stats information
  */
-public partial class CharacterStats : Node
+public partial class CharacterStats : Node, IDamageListener
 {
 
     [Signal] public delegate void OnDeathEventHandler();
@@ -56,7 +57,7 @@ public partial class CharacterStats : Node
      *     and triggers the OnDeath signal if the damage causes this character to die
      * </summary>
      */
-    public void TakeDamage(float damageAmount, CharacterStats source = null)
+    public void TakeDamage(float damageAmount, CharacterStats source)
     {
         if (_effects.HasEffect(GameMode.instance.statusEffects.invulnerability))
         {

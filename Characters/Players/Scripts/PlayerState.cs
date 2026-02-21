@@ -14,12 +14,14 @@ public partial class PlayerState : CharacterStats
     private float _superMoveCharge;
     
     [Export] private float _maxSuperMoveCharge;
-
     [Export] public Match3Spawner match3Spawner { private set; get; }
-
-    public CraterEvent<float> onSuperChargeChanged = new();
+    
+    
+    public readonly CraterEvent<float> onSuperChargeChanged = new();
     
     public readonly Match3Container container = new();
+
+    public int index;
 
     public override void _Ready()
     {
