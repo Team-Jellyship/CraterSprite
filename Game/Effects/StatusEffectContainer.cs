@@ -28,7 +28,7 @@ public class StatusEffectContainer
         {
             // Create the stack in our dictionary, and invoke the event for a new stack here
             // if the event exists. Assume no one has subscribed if the event does not exist
-            effectList = new StatusEntry(instance.effect, 0.0f);
+            effectList = new StatusEntry(instance.effect, 0.0f) { instance };
             _statusEffects.Add(instance.effect, effectList);
             _onStatusEffectAppliedMap.TriggerEvent(instance.effect);
         }

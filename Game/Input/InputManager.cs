@@ -28,10 +28,10 @@ namespace CraterSprite.Input
 
         // Map our keys to action strings
         private readonly Dictionary<InputVariant, InputAction> _keyActionMap = new();
-        public readonly List<InputAction> _actions = [];
+        public readonly List<InputAction> actions = [];
         private readonly List<InputDevice> _devices = [new(), new()];
 
-        private bool _showDebug = false;
+        private bool _showDebug;
 
         public override void _Ready()
         {
@@ -53,7 +53,7 @@ namespace CraterSprite.Input
                 }
             }
             
-            GD.Print($"[Input Manager] Parsed {_actions.Count} unique actions from {actionCount} in the action map.");
+            GD.Print($"[Input Manager] Parsed {actions.Count} unique actions from {actionCount} in the action map.");
         }
 
         public override void _Input(InputEvent @event)
@@ -119,6 +119,12 @@ namespace CraterSprite.Input
             return InputEventType.Changed;
         }
 
+        /**
+         * <summary>Get the InputAction associated with a Godot InputEvent, and its strength</summary>
+         * <param name="event">Godot InputEvent</param>
+         * <param name="action">Action associated with event. Null if no action is associated with this event</param>
+         * <param name="strength">Input strength. 0.0f if there is no associated strength</param>
+         */
         private bool GetActionFromEvent(InputEvent @event, out InputAction action, out float strength)
         {
             switch (@event)
@@ -158,20 +164,20 @@ namespace CraterSprite.Input
 
         private bool TryGetAction(string actionName, out InputAction action)
         {
-            action = _actions.Find((inputAction => inputAction.name == actionName));
+            action = actions.Find((inputAction => inputAction.name == actionName));
             return action != null;
         }
 
         private InputAction CreateOrGetAction(string actionName)
         {
-            var existingAction = _actions.Find((inputAction => inputAction.name == actionName));
+            var existingAction = actions.Find((inputAction => inputAction.name == actionName));
             if (existingAction != null)
             {
                 return existingAction;
             }
 
             var action = new InputAction(actionName);
-            _actions.Add(action);
+            actions.Add(action);
             return action;
         }
 
@@ -227,7 +233,7 @@ namespace CraterSprite.Input
         {
             if (ImGui.Begin("InputActions"))
             {
-                foreach (var action in _actions)
+                foreach (var action in actions)
                 {
                     if (ImGui.TreeNodeEx(action.name, ImGuiTreeNodeFlags.DefaultOpen))
                     {
@@ -243,6 +249,11 @@ namespace CraterSprite.Input
         }
 // #endif
 
+        /**
+         * <summary>
+         * Convert an InputVariant into a human-readable string
+         * </summary>
+         */
         public static string GetInputVariantAsString(InputVariant inputVariant)
         {
             return inputVariant.index switch

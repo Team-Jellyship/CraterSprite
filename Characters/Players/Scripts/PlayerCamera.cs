@@ -6,9 +6,14 @@ public partial class PlayerCamera : Camera2D
 {
     [Export] private uint _playerIndex;
     
+    private Node2D _target;
     public override void _Ready()
     {
-        CraterFunctions.FindNodeByClass<RemoteTransform2D>(GameMode.instance.players[(int)_playerIndex]).SetRemoteNode(GetPath());
+        var player = GameMode.instance.players[(int)_playerIndex];
+
+        var cameraAttachmentPoint = CraterFunctions.FindNodeByClass<PlayerCameraAttachmentPoint>(player);
+        cameraAttachmentPoint?.SetRemoteNode(GetPath());
+
         ResetSmoothing();
     }
 }

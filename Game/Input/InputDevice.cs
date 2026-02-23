@@ -56,7 +56,7 @@ public class InputDevice
     {
         if (ImGui.Begin($"Input Device: {deviceId}"))
         {
-            foreach (var action in InputManager.instance._actions)
+            foreach (var action in InputManager.instance.actions)
             {
                 var accumulatedValue = Accumulate(action);
                 if (ImGui.TreeNode($"{action.name}: {accumulatedValue}###{action.name}"))

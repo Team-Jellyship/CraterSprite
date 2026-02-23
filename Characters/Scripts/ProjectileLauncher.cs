@@ -13,10 +13,7 @@ public partial class ProjectileLauncher : Node2D
     [Export]
     public Vector2 facingDirection
     {
-        set
-        {
-            _facingDirection = value.Normalized();
-        }
+        set => _facingDirection = value.Normalized();
         get => _facingDirection;
     }
     private Vector2 _facingDirection;

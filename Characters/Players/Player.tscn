@@ -9,6 +9,10 @@
 [ext_resource type="Script" uid="uid://b2v40725rdn8b" path="res://Characters/Scripts/ToggleableHitbox.cs" id="4_ht06l"]
 [ext_resource type="Script" uid="uid://c74blvexl5qt5" path="res://Characters/Scripts/CharacterAnimationTree.cs" id="5_7kb7x"]
 [ext_resource type="Script" uid="uid://u3cmil3kdff0" path="res://Characters/Players/Scripts/PlayerState.cs" id="9_570sx"]
+[ext_resource type="Script" uid="uid://c6kd0fuula6g3" path="res://Characters/Players/Scripts/PlayerCameraAttachmentPoint.cs" id="10_vv1l6"]
+[ext_resource type="Script" uid="uid://5yfgyni1c342" path="res://Shared/Scripts/DamageZone2D.cs" id="11_7id01"]
+[ext_resource type="Script" uid="uid://b36fhs0k2brbr" path="res://Game/Match3/Match3Spawner.cs" id="12_tkb72"]
+[ext_resource type="PackedScene" uid="uid://bos83ttcvikwk" path="res://Characters/Players/Match3SpawnerRegion.tscn" id="13_tkb72"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1fpnh"]
 size = Vector2(14, 20)
@@ -100,6 +104,9 @@ _data = {
 &"walkRight": SubResource("Animation_ybv78")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ebcvw"]
+size = Vector2(192, 20)
+
 [node name="Player" type="CharacterBody2D" unique_id=2076774000]
 z_index = 1
 collision_layer = 4
@@ -168,10 +175,54 @@ script = ExtResource("5_7kb7x")
 
 [node name="PlayerStats" type="Node" parent="." unique_id=410689954]
 script = ExtResource("9_570sx")
+_maxSupercharge = 100.0
+_showingStats = true
+characterTeam = 1
+_invulnerabilityTime = 2.0
 
 [node name="CameraAttach" type="RemoteTransform2D" parent="." unique_id=1538334504]
+script = ExtResource("10_vv1l6")
+
+[node name="CameraKillZone" type="Area2D" parent="CameraAttach" unique_id=716764710]
+collision_layer = 8
+collision_mask = 16
+script = ExtResource("11_7id01")
+_filter = 3
+_damage = 99.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraAttach/CameraKillZone" unique_id=1671477932]
+position = Vector2(0, 96)
+shape = SubResource("RectangleShape2D_ebcvw")
+debug_color = Color(0.9470236, 3.5616756e-06, 0.5873681, 0.41960785)
+
+[node name="Spawner" type="Node2D" parent="CameraAttach" unique_id=1995583679]
+position = Vector2(0, -96)
+script = ExtResource("12_tkb72")
+
+[node name="Region0" parent="CameraAttach/Spawner" unique_id=474231788 instance=ExtResource("13_tkb72")]
+position = Vector2(-96, 0)
+
+[node name="Region1" parent="CameraAttach/Spawner" unique_id=507030908 instance=ExtResource("13_tkb72")]
+position = Vector2(-64, 0)
+
+[node name="Region2" parent="CameraAttach/Spawner" unique_id=1718867035 instance=ExtResource("13_tkb72")]
+position = Vector2(-32, 0)
+
+[node name="Region3" parent="CameraAttach/Spawner" unique_id=1987165230 instance=ExtResource("13_tkb72")]
+
+[node name="Region4" parent="CameraAttach/Spawner" unique_id=770040365 instance=ExtResource("13_tkb72")]
+position = Vector2(32, 0)
+
+[node name="Region5" parent="CameraAttach/Spawner" unique_id=1169281093 instance=ExtResource("13_tkb72")]
+position = Vector2(64, 0)
+
+[node name="Region6" parent="CameraAttach/Spawner" unique_id=1484543971 instance=ExtResource("13_tkb72")]
+position = Vector2(96, 0)
 
 [connection signal="MoveSpeedChanged" from="." to="AnimationTree" method="SetWalkSpeed"]
 [connection signal="OnClicked" from="." to="PlayerStats" method="ToggleShowStats"]
 [connection signal="OnCrouched" from="." to="Hurtbox" method="SetOff"]
 [connection signal="OnUncrouched" from="." to="Hurtbox" method="SetOn"]
+[connection signal="OnStunEnd" from="PlayerStats" to="Hurtbox" method="Enable"]
+[connection signal="OnStunned" from="PlayerStats" to="Hurtbox" method="Disable"]
+[connection signal="OnTakeDamage" from="PlayerStats" to="." method="ApplyKnockbackDefault"]
