@@ -12,8 +12,9 @@
 [ext_resource type="Script" uid="uid://c6kd0fuula6g3" path="res://Characters/Players/Scripts/PlayerCameraAttachmentPoint.cs" id="10_vv1l6"]
 [ext_resource type="Script" uid="uid://5yfgyni1c342" path="res://Shared/Scripts/DamageZone2D.cs" id="11_7id01"]
 [ext_resource type="Script" uid="uid://b36fhs0k2brbr" path="res://Game/Match3/Match3Spawner.cs" id="12_tkb72"]
-[ext_resource type="Resource" uid="uid://crq8ungls07wu" path="res://Game/SpawnTable/ST_DefaultSpawns.tres" id="13_mcxtw"]
+[ext_resource type="Resource" uid="uid://crq8ungls07wu" path="res://Game/SpawnTable/Tables/DefaultEnemySpawnTable/St_DefaultEnemy.tres" id="13_mcxtw"]
 [ext_resource type="PackedScene" uid="uid://bos83ttcvikwk" path="res://Characters/Players/Match3SpawnerRegion.tscn" id="13_tkb72"]
+[ext_resource type="Resource" uid="uid://cx2r71cixu2uo" path="res://Game/SpawnTable/Tables/PickupSpawnTable/St_Pickups.tres" id="14_7s676"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1fpnh"]
 size = Vector2(14, 20)
@@ -200,6 +201,8 @@ debug_color = Color(0.9470236, 3.5616756e-06, 0.5873681, 0.41960785)
 position = Vector2(0, -96)
 script = ExtResource("12_tkb72")
 _enemySpawnTable = ExtResource("13_mcxtw")
+_maxEnemyCount = 2
+_otherSpawnTable = ExtResource("14_7s676")
 
 [node name="Region0" parent="CameraAttach/Spawner" unique_id=474231788 instance=ExtResource("13_tkb72")]
 position = Vector2(-96, 0)

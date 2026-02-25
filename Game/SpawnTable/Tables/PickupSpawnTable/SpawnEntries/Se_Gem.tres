@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SpawnEntry" format=3 uid="uid://d3l3q7vp4aj67"]
+
+[ext_resource type="Script" uid="uid://cmhp0o8rvai1x" path="res://Game/SpawnTable/SpawnEntry.cs" id="1_6b4o1"]
+[ext_resource type="PackedScene" uid="uid://o4xe28btcjdf" path="res://Props/Pickups/Gem.tscn" id="1_6w2gl"]
+
+[resource]
+script = ExtResource("1_6b4o1")
+prefab = ExtResource("1_6w2gl")
+spawnChance = 1.0
+metadata/_custom_type_script = "uid://cmhp0o8rvai1x"

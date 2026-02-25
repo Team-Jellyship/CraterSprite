@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SpawnTable" format=3 uid="uid://crq8ungls07wu"]
+
+[ext_resource type="Resource" uid="uid://bcbxjdsraojm3" path="res://Game/SpawnTable/Tables/DefaultEnemySpawnTable/SpawnEntries/Se_FireEnemy.tres" id="1_l4kj2"]
+[ext_resource type="Resource" uid="uid://crtjwcti4phvi" path="res://Game/SpawnTable/Tables/DefaultEnemySpawnTable/SpawnEntries/Se_WaterEnemy.tres" id="2_glxuq"]
+[ext_resource type="Resource" uid="uid://8gct3wyvopqm" path="res://Game/SpawnTable/Tables/DefaultEnemySpawnTable/SpawnEntries/Se_WindEnemy.tres" id="3_aevpf"]
+[ext_resource type="Script" uid="uid://c6tsxm0wph8bw" path="res://Game/SpawnTable/SpawnTable.cs" id="4_27sw0"]
+
+[resource]
+script = ExtResource("4_27sw0")
+entries = Array[Object]([ExtResource("1_l4kj2"), ExtResource("2_glxuq"), ExtResource("3_aevpf")])
+metadata/_custom_type_script = "uid://c6tsxm0wph8bw"

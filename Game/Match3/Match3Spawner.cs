@@ -6,22 +6,31 @@ namespace CraterSprite.Game.Match3;
 
 public partial class Match3Spawner : Node2D
 {
+    [Export] public bool enabled = true;
     
+    [ExportGroup("Enemy Spawns")]
     // Spawn table for enemies only
     [Export] private SpawnTable.SpawnTable _enemySpawnTable;
     
     // How long it takes to spawn a new enemy
-    [Export] private float enemySpawnTime = 10.0f;
+    [Export] private float _enemySpawnTime = 10.0f;
 
     [Export] private uint _maxEnemyCount = 5;
     [Export] private uint _currentEnemyCount = 0;
     
-    private Queue<PackedScene> _pendingSpawns = [];
+    [ExportGroup("Other spawns")]
+    [Export] private SpawnTable.SpawnTable _otherSpawnTable;
+    [Export] private float _otherSpawnTime = 15.0f;
+    
     // Pending enemy spawns is a separate queue, because we'll register the death callback once the enemies spawn
     private Queue<PackedScene> _pendingEnemySpawns = [];
+    private Queue<PackedScene> _pendingSpawns = [];
+    
+    private float _currentEnemySpawnTime = 0.0f;
+    private float _currentOtherSpawnTime = 0.0f;
+    
     private List<EnemySpawner> _enemySpawners = [];
 
-    private float _currentEnemySpawnTime = 0.0f;
 
     public override void _Ready()
     {
@@ -31,6 +40,11 @@ public partial class Match3Spawner : Node2D
 
     public override void _Process(double delta)
     {
+        if (!enabled)
+        {
+            return;
+        }
+        
         var deltaTime = (float)delta;
 
         UpdateEnemySpawns(deltaTime);
@@ -92,7 +106,7 @@ public partial class Match3Spawner : Node2D
         for (var i = 0; i < _enemySpawners.Count; ++i)
         {
             var chosenSpawner = CraterMath.ChooseRandom(pendingSpawners);
-            if (chosenSpawner.CanSpawn())
+            if (chosenSpawner != null && chosenSpawner.CanSpawn())
             {
                 return chosenSpawner;
             }
@@ -111,17 +125,25 @@ public partial class Match3Spawner : Node2D
         
         _currentEnemySpawnTime += deltaTime;
 
-        if (_currentEnemySpawnTime < enemySpawnTime)
+        if (_currentEnemySpawnTime < _enemySpawnTime)
         {
             return;
         }
         
         QueueEnemySpawn(_enemySpawnTable.GetRandomEntry());
-        _currentEnemySpawnTime -= enemySpawnTime;
+        _currentEnemySpawnTime -= _enemySpawnTime;
     }
 
     private void UpdatePickupSpawns(float deltaTime)
     {
+        _currentOtherSpawnTime += deltaTime;
+
+        if (_currentOtherSpawnTime < _otherSpawnTime)
+        {
+            return;
+        }
         
+        QueueSpawn(_otherSpawnTable.GetRandomEntry());
+        _currentOtherSpawnTime -= _otherSpawnTime;
     }
 }

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SpawnTable" format=3 uid="uid://cx2r71cixu2uo"]
+
+[ext_resource type="Resource" uid="uid://d3l3q7vp4aj67" path="res://Game/SpawnTable/Tables/PickupSpawnTable/SpawnEntries/Se_Gem.tres" id="1_bde8e"]
+[ext_resource type="Script" uid="uid://c6tsxm0wph8bw" path="res://Game/SpawnTable/SpawnTable.cs" id="1_n1w5x"]
+
+[resource]
+script = ExtResource("1_n1w5x")
+entries = Array[Object]([ExtResource("1_bde8e")])
+metadata/_custom_type_script = "uid://c6tsxm0wph8bw"
