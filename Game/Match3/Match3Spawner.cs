@@ -7,6 +7,9 @@ namespace CraterSprite.Game.Match3;
 public partial class Match3Spawner : Node2D
 {
     [Export] public bool enabled = true;
+    [Export(PropertyHint.Range, "0,10,0.1f,suffix:x")] private float _spawnMultiplier = 1.0f;
+    // How quickly the spawn multiplier increases over time, in units/s
+    [Export(PropertyHint.None, "suffix:x/s")] private float _spawnMultiplierIncrease = 0.01f;
     
     [ExportGroup("Enemy Spawns")]
     // Spawn table for enemies only
@@ -47,8 +50,9 @@ public partial class Match3Spawner : Node2D
         
         var deltaTime = (float)delta;
 
+        _spawnMultiplier += _spawnMultiplierIncrease * deltaTime;
         UpdateEnemySpawns(deltaTime);
-        UpdatePickupSpawns(deltaTime);
+        UpdatePickupSpawns(deltaTime * _spawnMultiplier);
     }
 
     public void QueueSpawn(PackedScene enemySpawn)

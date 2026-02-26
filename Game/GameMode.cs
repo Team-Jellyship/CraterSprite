@@ -28,7 +28,7 @@ public partial class GameMode : Node
     
     // Current player state objects. These are where the relevant attributes
     // and other things that persist beyond the player's death go
-    private readonly List<PlayerState> _playerStates = [];
+    private readonly List<WeakReference<PlayerState>> _playerStates = [];
     
     // Because of the weird split-screen setup, objects should refer to this
     // when they are spawning into the world, rather than using the current
@@ -86,7 +86,8 @@ public partial class GameMode : Node
     {
         if (playerIndex >= 0 && playerIndex < _playerStates.Count)
         {
-            return _playerStates[playerIndex];
+            _playerStates[playerIndex].TryGetTarget(out var playerState);
+            return playerState;
         }
         
         GD.PrintErr("[GameMode] Attempted to access a player state from an out of bounds index.");
@@ -94,8 +95,8 @@ public partial class GameMode : Node
     }
 
     public void NotifyGemDestroyed(int destroyerPlayerIndex, Vector2 offset)
-    {
-        _playerStates[GetRivalIndex(destroyerPlayerIndex)].match3Spawner.QueueRelativeSpawn(_settings.gem, offset);
+    { 
+        GetPlayerState(GetRivalIndex(destroyerPlayerIndex))?.match3Spawner.QueueRelativeSpawn(_settings.gem, offset);
     }
 
     private void SpawnPlayers()
@@ -123,7 +124,7 @@ public partial class GameMode : Node
                 continue;
             }
             
-            _playerStates.Add(playerState);
+            _playerStates.Add(new WeakReference<PlayerState>(playerState));
             var i1 = i;
             playerState.container.onSpawnSingleRequested.AddListener(orb => SpawnEnemyFromSingleType(i1, orb));
             playerState.container.onSpawnRequested.AddListener(orbs => SpawnEnemyFromMatch3(i1, orbs));
@@ -133,7 +134,7 @@ public partial class GameMode : Node
 
     private void SpawnEnemyFromMatch3(int ownerIndex, List<MatchType> orbElements)
     {
-        var spawner = _playerStates[GetRivalIndex(ownerIndex)].match3Spawner;
+        var spawner = GetPlayerState(GetRivalIndex(ownerIndex)).match3Spawner;
         // spawner.QueueSpawn();
     }
 
@@ -145,7 +146,7 @@ public partial class GameMode : Node
             return;
         }
         
-        _playerStates[GetRivalIndex(ownerIndex)].match3Spawner.QueueSpawn(enemyInstance);
+        GetPlayerState(GetRivalIndex(ownerIndex))?.match3Spawner.QueueSpawn(enemyInstance);
     }
 
     private static int GetRivalIndex(int playerIndex)
