@@ -87,7 +87,7 @@ public partial class GameMode : Node
         if (playerIndex >= 0 && playerIndex < _playerStates.Count)
         {
             _playerStates[playerIndex].TryGetTarget(out var playerState);
-            return playerState;
+            return IsInstanceValid(playerState) ? playerState : null;
         }
         
         GD.PrintErr("[GameMode] Attempted to access a player state from an out of bounds index.");
@@ -95,7 +95,7 @@ public partial class GameMode : Node
     }
 
     public void NotifyGemDestroyed(int destroyerPlayerIndex, Vector2 offset)
-    { 
+    {
         GetPlayerState(GetRivalIndex(destroyerPlayerIndex))?.match3Spawner.QueueRelativeSpawn(_settings.gem, offset);
     }
 

@@ -180,6 +180,7 @@ script = ExtResource("9_570sx")
 _maxSupercharge = 100.0
 _showingStats = true
 characterTeam = 1
+_defaultHealth = 5.0
 _invulnerabilityTime = 2.0
 
 [node name="CameraAttach" type="RemoteTransform2D" parent="." unique_id=1538334504]
