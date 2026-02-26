@@ -1,7 +1,11 @@
 [gd_scene format=3 uid="uid://o4xe28btcjdf"]
 
 [ext_resource type="Script" uid="uid://djhw83e3kvyov" path="res://Props/Pickups/Gem.cs" id="1_18bmh"]
+[ext_resource type="Script" uid="uid://dbhpuo55en487" path="res://Props/Pickups/KinematicPickup.cs" id="1_o606r"]
 [ext_resource type="Shader" uid="uid://cg3uln3xwrvyj" path="res://Shared/Shaders/Sh_SpriteColor.gdshader" id="2_15qqv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o606r"]
+radius = 16.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_15qqv"]
 radius = 16.0
@@ -14,7 +18,12 @@ shader_parameter/color = Vector4(0.5, 0, 0.4, 1)
 radius = 8.0
 height = 32.0
 
-[node name="Gem" type="Node2D" unique_id=2100040273]
+[node name="Gem" type="StaticBody2D" unique_id=857553323]
+collision_layer = 2
+script = ExtResource("1_o606r")
+
+[node name="KinematicBox" type="CollisionShape2D" parent="." unique_id=151516574]
+shape = SubResource("CircleShape2D_o606r")
 
 [node name="Gem Hitbox" type="Area2D" parent="." unique_id=1587296199]
 collision_layer = 18

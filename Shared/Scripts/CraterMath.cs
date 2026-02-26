@@ -64,4 +64,11 @@ public abstract class CraterMath
         var rads = Mathf.DegToRad(angle);
         return new Vector2(Mathf.Cos(rads), -Mathf.Sin(rads));
     }
+
+    public static Vector2 RandomDirection(float negativeBounds = -MathF.PI, float positiveBounds = MathF.PI)
+    {
+        var angle = (float)GD.RandRange(negativeBounds, positiveBounds);
+        return new Vector2(MathF.Cos(angle), MathF.Sin(angle));
+    }
+
 }

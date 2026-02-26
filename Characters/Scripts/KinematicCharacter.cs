@@ -5,7 +5,7 @@ namespace CraterSprite;
 
 public partial class KinematicCharacter : CharacterBody2D
 {
-	private const float GravityConstant = 32.0f * 9.8f;
+	public const float GravityConstant = 32.0f * 9.8f;
 	private const float DefaultMaxFallSpeed = 1000.0f;
 	private const float NegativeKillY = 1000.0f;
 

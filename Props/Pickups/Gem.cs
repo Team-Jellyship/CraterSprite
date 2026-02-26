@@ -21,7 +21,7 @@ public partial class Gem : Area2D, IDamageListener
             GD.Print($"[Gem] Gem '{Name}' was destroyed by player {playerState.index} with relative position {offset}");
         }
         
-        QueueFree();
+        Owner.QueueFree();
     }
 
     private void Overlap(Area2D area)
@@ -33,6 +33,6 @@ public partial class Gem : Area2D, IDamageListener
         }
         
         playerState.AddSuperCharge(_chargeAmount);
-        QueueFree();
+        Owner.QueueFree();
     }
 }

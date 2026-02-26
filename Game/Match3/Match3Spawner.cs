@@ -65,8 +65,11 @@ public partial class Match3Spawner : Node2D
             _pendingSpawns.Enqueue(enemySpawn);
             return;
         }
-        
-        spawner.SpawnEnemy(enemySpawn);
+
+        if (spawner.SpawnEnemy(enemySpawn) is KinematicPickup pickup)
+        {
+            pickup.AddImpulse(CraterMath.RandomDirection() * 50.0f);
+        }
     }
 
     private void QueueEnemySpawn(PackedScene enemySpawn)
