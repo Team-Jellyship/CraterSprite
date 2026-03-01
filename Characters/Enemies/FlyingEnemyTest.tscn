@@ -5,19 +5,22 @@
 [ext_resource type="Script" uid="uid://bhiokieshedwe" path="res://Characters/Enemies/AI/FlyingController.cs" id="2_g2wum"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_06fqe"]
-radius = 16.0
+radius = 8.0
 
 [node name="FlyingEnemyTest" type="CharacterBody2D" unique_id=1812670657]
 collision_layer = 4
+collision_mask = 0
 script = ExtResource("1_w3jey")
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1453853052]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_06fqe")
+_maxSpeed = 64.0
+_acceleration = 200.0
 
 [node name="KinematicShape" type="CollisionShape2D" parent="." unique_id=328264790]
 shape = SubResource("CircleShape2D_06fqe")
 
-[node name="AIController" type="Node" parent="." unique_id=1030418830 node_paths=PackedStringArray("_character")]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1453853052]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_06fqe")
+
+[node name="AIController" type="Node2D" parent="." unique_id=2064783572 node_paths=PackedStringArray("_character")]
 script = ExtResource("2_g2wum")
 _character = NodePath("..")

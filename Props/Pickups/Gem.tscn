@@ -21,6 +21,7 @@ height = 32.0
 [node name="Gem" type="StaticBody2D" unique_id=857553323]
 collision_layer = 2
 script = ExtResource("1_o606r")
+_minimumYVelocity = 5.0
 
 [node name="KinematicBox" type="CollisionShape2D" parent="." unique_id=151516574]
 shape = SubResource("CircleShape2D_o606r")
