@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using CraterSprite.Match3;
+using CraterSprite.Game.GameMode;
 using Godot;
 
-namespace CraterSprite;
+namespace CraterSprite.Game.GameMode;
 
 public abstract class GameState
 {

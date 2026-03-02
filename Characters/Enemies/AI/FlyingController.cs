@@ -1,5 +1,6 @@
 using System;
 using CraterSprite.Characters.Scripts;
+using CraterSprite.Game.GameMode;
 using Godot;
 
 namespace CraterSprite.Characters.Enemies.AI.Scripts;

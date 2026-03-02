@@ -4,7 +4,7 @@ using CraterSprite.Effects;
 using CraterSprite.Match3;
 using Godot;
 
-namespace CraterSprite;
+namespace CraterSprite.Game.GameMode;
 
 /**
  * This class represents the rules of the game
@@ -31,6 +31,10 @@ public partial class GameMode : Node
 	
 	private GameState _currentGameState;
 	private VersusGameState versusGameState { get; } = new();
+	
+	// Transition table
+	private Dictionary<Tuple<GameState, GameModeCommand>, GameState> _transitions;
+
 
 	public override void _EnterTree()
 	{
@@ -78,6 +82,11 @@ public partial class GameMode : Node
 	public void NotifyGemDestroyed(int destroyerPlayerIndex, Vector2 offset)
 	{
 		_currentGameState.NotifyGemDestroyed(this, destroyerPlayerIndex, offset);
+	}
+
+	public void Command(GameModeCommand command)
+	{
+		
 	}
 
 	public static int GetRivalIndex(int playerIndex)
