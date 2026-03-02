@@ -17,6 +17,7 @@ public class VersusGameState : GameState
 {
     public override void EnterState(GameMode mode)
     {
+        SpawnPlayers(mode);
     }
 
     public override void ExitState()
