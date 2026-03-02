@@ -5,13 +5,16 @@ using Godot;
 
 namespace CraterSprite.Game.GameMode;
 
-public abstract class GameState
+public class GameState
 {
-    public abstract void EnterState(GameMode mode);
+    public virtual void EnterState(GameMode mode) {}
 
-    public abstract void ExitState();
-    
-    public abstract void NotifyGemDestroyed(GameMode mode, int destroyerPlayerIndex, Vector2 offset);
+    public virtual void ExitState() {}
+
+    public virtual void NotifyGemDestroyed(GameMode mode, int destroyerPlayerIndex, Vector2 offset) {}
+
+    public float transitionTime = 0.0f;
+    public string stateName;
 }
 
 public class VersusGameState : GameState

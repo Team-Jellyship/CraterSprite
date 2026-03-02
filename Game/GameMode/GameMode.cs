@@ -28,12 +28,30 @@ public partial class GameMode : Node
 	
 	public readonly List<SpawnLocation> spawnLocations = [];
 	public readonly List<PlayerState> playerStates = [];
+
+	private Timer _transitionTimer = new();
 	
+	
+	// Game States
 	private GameState _currentGameState;
-	private VersusGameState versusGameState { get; } = new();
+
+	private GameState warmupState { get; } = new()
+	{
+		stateName = "Warmup",
+		transitionTime = 2.0f
+	};
+	private VersusGameState versusGameState { get; } = new()
+	{
+		stateName = "Versus"
+	};
+	private GameState victoryGameState { get; } = new()
+	{
+		stateName = "Victory",
+		transitionTime = 5.0f
+	};
 	
 	// Transition table
-	private Dictionary<Tuple<GameState, GameModeCommand>, GameState> _transitions;
+	private readonly Dictionary<Tuple<GameState, GameModeCommand>, GameState> _transitions = new();
 
 
 	public override void _EnterTree()
@@ -43,16 +61,20 @@ public partial class GameMode : Node
 
 	public override void _Ready()
 	{
+		ImGuiGodot.ImGuiGD.ToolInit();
+		
 		statusEffects = ResourceLoader.Load<StatusEffectList>("res://Game/Effects/SL_Effects.tres");
 		recipes = ResourceLoader.Load<Match3RecipeTable>("res://Game/Match3/Recipes/M3t_Default.tres");
-		ImGuiGodot.ImGuiGD.ToolInit();
-
 		settings = ResourceLoader.Load<GameModeSettings>("res://Game/DefaultSettings.tres");
 
+		SetupTimer();
 		_currentGameState = versusGameState;
-		versusGameState.EnterState(this);
+		_currentGameState.EnterState(this);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(versusGameState, GameModeCommand.Victory), victoryGameState);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(warmupState, GameModeCommand.Timeout), versusGameState);
 
 		worldRoot = spawnLocations[0].Owner;
+		
 	}
 
     /**
@@ -86,7 +108,24 @@ public partial class GameMode : Node
 
 	public void Command(GameModeCommand command)
 	{
+		if (!_transitions.TryGetValue(new Tuple<GameState, GameModeCommand>(_currentGameState, command), out var newState))
+		{
+			return;
+		}
 		
+		GD.Print($"[GameMode] Transitioning to new game state '{newState.stateName}'");
+		_currentGameState.ExitState();
+		_currentGameState = newState;
+		_currentGameState.EnterState(this);
+
+		if (_currentGameState.transitionTime <= 0.0f)
+		{
+			_transitionTimer.Stop();
+		}
+		else
+		{
+			_transitionTimer.Start(_currentGameState.transitionTime);
+		}
 	}
 
 	public static int GetRivalIndex(int playerIndex)
@@ -97,5 +136,14 @@ public partial class GameMode : Node
 			1 => 0,
 			_ => throw new NotImplementedException()
 		};
+	}
+
+	private void SetupTimer()
+	{
+		AddChild(_transitionTimer);
+		_transitionTimer.SetName("TransitionTimer");
+		_transitionTimer.OneShot = true;
+		_transitionTimer.Paused = false;
+		_transitionTimer.Timeout += () => Command(GameModeCommand.Timeout);
 	}
 }
