@@ -48,6 +48,7 @@ position_smoothing_enabled = true
 script = ExtResource("2_87bac")
 
 [node name="ScnTestRoom" parent="HBoxContainer/LeftScreen/LeftViewport" unique_id=2033458556 instance=ExtResource("1_d6ufi")]
+position = Vector2(2, -5)
 
 [node name="ColorRect" type="ColorRect" parent="HBoxContainer" unique_id=238917213]
 custom_minimum_size = Vector2(128, 0)
