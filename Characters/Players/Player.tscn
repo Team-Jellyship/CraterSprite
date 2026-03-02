@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cuq4hb7diqckf"]
 
 [ext_resource type="Script" uid="uid://bsfdycg3wydrv" path="res://Characters/Scripts/KinematicCharacter.cs" id="1_v58vf"]
-[ext_resource type="Texture2D" uid="uid://b6ltmkwpn20aw" path="res://Characters/Players/Sprites/Sp_DogBoy_Walking.png" id="2_1fpnh"]
 [ext_resource type="Script" uid="uid://r6asvyfexakk" path="res://Characters/Scripts/ProjectileLauncher.cs" id="2_dhh5l"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://btf2rg88m5jdc" path="res://Characters/Players/Animations/ABT_Player.tres" id="2_v58vf"]
 [ext_resource type="PackedScene" uid="uid://kgj0kkgcwle3" path="res://Props/Projectiles/Projectile.tscn" id="3_570sx"]
@@ -15,6 +14,7 @@
 [ext_resource type="Resource" uid="uid://crq8ungls07wu" path="res://Game/SpawnTable/Tables/DefaultEnemySpawnTable/St_DefaultEnemy.tres" id="13_mcxtw"]
 [ext_resource type="PackedScene" uid="uid://bos83ttcvikwk" path="res://Characters/Players/Match3SpawnerRegion.tscn" id="13_tkb72"]
 [ext_resource type="Resource" uid="uid://cx2r71cixu2uo" path="res://Game/SpawnTable/Tables/PickupSpawnTable/St_Pickups.tres" id="14_7s676"]
+[ext_resource type="SpriteFrames" uid="uid://c83pd3o4q13fs" path="res://Characters/Players/Animations/SF_DogBoy_Walking.tres" id="15_7s676"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1fpnh"]
 size = Vector2(14, 20)
@@ -25,30 +25,43 @@ size = Vector2(14, 20)
 size = Vector2(20, 11)
 
 [sub_resource type="Animation" id="Animation_7kb7x"]
-length = 0.001
+length = 0.125
+step = 0.125
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("AnimatedSprite2D:flip_h")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [false]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:flip_h")
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [&"left"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_ht06l"]
@@ -59,10 +72,22 @@ step = 0.125
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"left"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.125),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
@@ -77,26 +102,26 @@ step = 0.125
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("AnimatedSprite2D:flip_h")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.125),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0, 1]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:flip_h")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dhh5l"]
@@ -135,11 +160,6 @@ _projectileSpeed = 200.0
 _kinematicOwner = NodePath("..")
 _offset = 16.0
 facingDirection = Vector2(2, 0)
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2117321767]
-position = Vector2(0, -32)
-texture = ExtResource("2_1fpnh")
-hframes = 6
 
 [node name="KinematicBox" type="CollisionShape2D" parent="." unique_id=1005347515]
 position = Vector2(0, -10)
@@ -226,6 +246,11 @@ position = Vector2(64, 0)
 
 [node name="Region6" parent="CameraAttach/Spawner" unique_id=1484543971 instance=ExtResource("13_tkb72")]
 position = Vector2(96, 0)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1309789832]
+sprite_frames = ExtResource("15_7s676")
+animation = &"left"
+offset = Vector2(0, -32)
 
 [connection signal="MoveSpeedChanged" from="." to="AnimationTree" method="SetWalkSpeed"]
 [connection signal="OnClicked" from="." to="PlayerStats" method="ToggleShowStats"]
