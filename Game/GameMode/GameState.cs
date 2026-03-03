@@ -12,9 +12,12 @@ public class GameState
     public virtual void ExitState() {}
 
     public virtual void NotifyGemDestroyed(GameMode mode, int destroyerPlayerIndex, Vector2 offset) {}
+    
+    public virtual void SetWinner(GameMode mode, int playerIndex) {}
 
     public float transitionTime = 0.0f;
     public string stateName;
+    public bool canSetWinner = false;
 }
 
 public class VersusGameState : GameState
@@ -30,7 +33,7 @@ public class VersusGameState : GameState
 
     public override void NotifyGemDestroyed(GameMode mode, int destroyerPlayerIndex, Vector2 offset)
     {
-        mode.GetPlayerState(GameMode.GetRivalIndex(destroyerPlayerIndex)).match3Spawner.QueueRelativeSpawn(mode.settings.gem, offset);
+        mode.GetPlayerState(GameMode.GetRivalIndex(destroyerPlayerIndex))?.match3Spawner.QueueRelativeSpawn(mode.settings.gem, offset);
     }
     
     private void SpawnPlayers(GameMode mode)

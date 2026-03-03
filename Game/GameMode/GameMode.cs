@@ -30,7 +30,8 @@ public partial class GameMode : Node
 	public readonly List<PlayerState> playerStates = [];
 
 	private Timer _transitionTimer = new();
-	
+
+	public int lastWinner { get; private set; }
 	
 	// Game States
 	private GameState _currentGameState;
@@ -42,7 +43,8 @@ public partial class GameMode : Node
 	};
 	private VersusGameState versusGameState { get; } = new()
 	{
-		stateName = "Versus"
+		stateName = "Versus",
+		canSetWinner = true
 	};
 	private GameState victoryGameState { get; } = new()
 	{
@@ -126,6 +128,18 @@ public partial class GameMode : Node
 		{
 			_transitionTimer.Start(_currentGameState.transitionTime);
 		}
+	}
+
+	public void SetWinner(int playerIndex)
+	{
+		if (!_currentGameState.canSetWinner)
+		{
+			return;
+		}
+
+		GD.Print($"[GameMode] Player {playerIndex} won!");
+		lastWinner = playerIndex;
+		Command(GameModeCommand.Victory);
 	}
 
 	public static int GetRivalIndex(int playerIndex)
