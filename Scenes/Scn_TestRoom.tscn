@@ -62,7 +62,7 @@ mesh = SubResource("QuadMesh_2yfc4")
 texture = ExtResource("4_fcfrf")
 
 [node name="TestEnemy" parent="." unique_id=1547651322 instance=ExtResource("4_5ui78")]
-position = Vector2(434, 229)
+position = Vector2(438, 282)
 
 [node name="SpawnLocation1" type="Node2D" parent="." unique_id=1783809333]
 position = Vector2(384, 288)
