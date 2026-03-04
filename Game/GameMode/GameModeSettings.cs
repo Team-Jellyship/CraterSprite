@@ -9,4 +9,5 @@ public partial class GameModeSettings : Resource
     [Export] public uint playerCount = 2;
     // Remove this later
     [Export] public PackedScene gem;
+    [Export] public PackedScene defaultLevel;
 }

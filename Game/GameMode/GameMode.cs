@@ -29,9 +29,13 @@ public partial class GameMode : Node
 	public readonly List<SpawnLocation> spawnLocations = [];
 	public readonly List<PlayerState> playerStates = [];
 
-	private Timer _transitionTimer = new();
-
 	public int lastWinner { get; private set; }
+
+	private PackedScene _nextLevel;
+	
+	private Timer _transitionTimer = new();
+	private Node _sceneEntryPoint;
+
 	
 	// Game States
 	private GameState _currentGameState;
@@ -68,6 +72,17 @@ public partial class GameMode : Node
 		statusEffects = ResourceLoader.Load<StatusEffectList>("res://Game/Effects/SL_Effects.tres");
 		recipes = ResourceLoader.Load<Match3RecipeTable>("res://Game/Match3/Recipes/M3t_Default.tres");
 		settings = ResourceLoader.Load<GameModeSettings>("res://Game/DefaultSettings.tres");
+
+		var currentScene = GetTree().GetCurrentScene();
+		_sceneEntryPoint = currentScene.GetNode("%WorldRoot");
+
+		if (_sceneEntryPoint == null)
+		{
+			GD.PrintErr("[GameMode] Could not find a valid world root node.");
+			return;
+		}
+		
+		LoadLevel(settings.defaultLevel);
 
 		SetupTimer();
 		_currentGameState = versusGameState;
@@ -150,6 +165,26 @@ public partial class GameMode : Node
 			1 => 0,
 			_ => throw new NotImplementedException()
 		};
+	}
+
+	// Cleanup level contextual objects
+	private void UnloadLevel()
+	{
+		worldRoot.QueueFree();
+		players.Clear();
+		// I might move player states into separate objects that live outside the level,
+		// and instead give players a pointer-type node
+		playerStates.Clear();
+		spawnLocations.Clear();
+	}
+
+	/**
+	 * <summary>Load a level, and place it correctly in the splitscreen world</summary>
+	 */
+	private void LoadLevel(PackedScene levelScene)
+	{
+		worldRoot = levelScene.Instantiate();
+		_sceneEntryPoint.AddChild(worldRoot);
 	}
 
 	private void SetupTimer()
