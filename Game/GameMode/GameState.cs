@@ -82,7 +82,6 @@ public class VersusGameState : GameState
         {
             return;
         }
-        var spawner = mode.GetPlayerState(GameMode.GetRivalIndex(ownerIndex)).match3Spawner;
-        spawner.QueueSpawn(enemyInstance);
+        mode.GetPlayerState(GameMode.GetRivalIndex(ownerIndex))?.match3Spawner?.QueueSpawn(enemyInstance);
     }
 }

@@ -105,6 +105,7 @@ public partial class KinematicCharacter : CharacterBody2D
 	[Export(PropertyHint.None, "suffix:px/s")]
 	private float _defaultKnockbackStrength = 200.0f;
 	
+	[Signal] public delegate void MoveDirectionChangedEventHandler(float moveDirection);
 	[Signal] public delegate void MoveSpeedChangedEventHandler(float moveSpeed);
 	[Signal] public delegate void OnCrouchedEventHandler();
 	[Signal] public delegate void OnUncrouchedEventHandler();
@@ -240,6 +241,15 @@ public partial class KinematicCharacter : CharacterBody2D
 	 */
 	public void SetMoveInput(float input)
 	{
+		if (moveInput != 0.0f && input == 0.0f)
+		{
+			EmitSignalMoveSpeedChanged(0.0f);
+		}
+		else if (moveInput == 0.0f && input != 0.0f)
+		{
+			EmitSignalMoveSpeedChanged(1.0f);
+		}
+		
 		moveInput = Math.Clamp(input, -1.0f, 1.0f);
 
 		if (input == 0.0f)
@@ -247,7 +257,7 @@ public partial class KinematicCharacter : CharacterBody2D
 			return;
 		}
 		_direction = Mathf.Sign(moveInput);
-		EmitSignalMoveSpeedChanged(moveInput);
+		EmitSignalMoveDirectionChanged(moveInput);
 	}
 	
 	/**

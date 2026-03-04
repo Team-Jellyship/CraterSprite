@@ -180,7 +180,8 @@ libraries/ = SubResource("AnimationLibrary_dhh5l")
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=39323085]
 tree_root = ExtResource("2_v58vf")
 anim_player = NodePath("../AnimationPlayer")
-parameters/walk_direction/blend_position = 0.0
+parameters/state_machine/walking/walk_direction/blend_position = 1.0
+parameters/state_machine/walking/walk_speed/scale = 1.0
 script = ExtResource("5_7kb7x")
 
 [node name="PlayerStats" type="Node" parent="." unique_id=410689954]
@@ -239,6 +240,7 @@ animation = &"walk"
 frame = 1
 offset = Vector2(0, -32)
 
+[connection signal="MoveDirectionChanged" from="." to="AnimationTree" method="SetWalkDirection"]
 [connection signal="MoveSpeedChanged" from="." to="AnimationTree" method="SetWalkSpeed"]
 [connection signal="OnClicked" from="." to="PlayerStats" method="ToggleShowStats"]
 [connection signal="OnCrouched" from="." to="Hurtbox" method="SetOff"]

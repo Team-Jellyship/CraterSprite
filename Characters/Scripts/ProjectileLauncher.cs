@@ -30,7 +30,7 @@ public partial class ProjectileLauncher : Node2D
         _characterStats = CraterFunctions.GetNodeByClassFromRoot<CharacterStats>(this);
         if (_kinematicOwner != null)
         {
-            _kinematicOwner.MoveSpeedChanged += speed => { _facingDirection.X = Mathf.Sign(speed); };
+            _kinematicOwner.MoveDirectionChanged += speed => { _facingDirection.X = Mathf.Sign(speed); };
         }
     }
 
