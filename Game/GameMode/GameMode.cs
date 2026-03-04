@@ -31,7 +31,7 @@ public partial class GameMode : Node
 
 	public int lastWinner { get; private set; }
 
-	private PackedScene _nextLevel;
+	public PackedScene nextLevel;
 	
 	private Timer _transitionTimer = new();
 	private Node _sceneEntryPoint;
@@ -40,6 +40,10 @@ public partial class GameMode : Node
 	// Game States
 	private GameState _currentGameState;
 
+	private LoadingGameState loadingState { get; } = new()
+	{
+		stateName = "Loading"
+	};
 	private GameState warmupState { get; } = new()
 	{
 		stateName = "Warmup",
@@ -53,7 +57,7 @@ public partial class GameMode : Node
 	private GameState victoryGameState { get; } = new()
 	{
 		stateName = "Victory",
-		transitionTime = 5.0f
+		transitionTime = 2.0f
 	};
 	
 	// Transition table
@@ -82,16 +86,14 @@ public partial class GameMode : Node
 			return;
 		}
 		
-		LoadLevel(settings.defaultLevel);
-
 		SetupTimer();
-		_currentGameState = versusGameState;
-		_currentGameState.EnterState(this);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(loadingState, GameModeCommand.Loaded), versusGameState);
 		_transitions.Add(new Tuple<GameState, GameModeCommand>(versusGameState, GameModeCommand.Victory), victoryGameState);
-		_transitions.Add(new Tuple<GameState, GameModeCommand>(warmupState, GameModeCommand.Timeout), versusGameState);
-
-		worldRoot = spawnLocations[0].Owner;
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(victoryGameState, GameModeCommand.Timeout), loadingState);
 		
+		
+		_currentGameState = loadingState;
+		_currentGameState.EnterState(this);
 	}
 
     /**
@@ -157,6 +159,12 @@ public partial class GameMode : Node
 		Command(GameModeCommand.Victory);
 	}
 
+	public void LoadLevel()
+	{
+		UnloadLevel();
+		LoadLevel(nextLevel);
+	}
+
 	public static int GetRivalIndex(int playerIndex)
 	{
 		return playerIndex switch
@@ -170,7 +178,7 @@ public partial class GameMode : Node
 	// Cleanup level contextual objects
 	private void UnloadLevel()
 	{
-		worldRoot.QueueFree();
+		worldRoot?.QueueFree();
 		players.Clear();
 		// I might move player states into separate objects that live outside the level,
 		// and instead give players a pointer-type node

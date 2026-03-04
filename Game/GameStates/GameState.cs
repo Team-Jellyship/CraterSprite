@@ -66,6 +66,11 @@ public class VersusGameState : GameState
             playerState.container.onSpawnSingleRequested.AddListener(orb => SpawnEnemyFromSingleType(mode, i1, orb));
             playerState.container.onSpawnRequested.AddListener(orbs => SpawnEnemyFromMatch3(mode, i1, orbs));
             playerState.index = i;
+            playerState.OnDeath += () =>
+            {
+                mode.SetWinner(GameMode.GetRivalIndex(i1));
+                mode.Command(GameModeCommand.Victory);
+            };
         }
     }
     

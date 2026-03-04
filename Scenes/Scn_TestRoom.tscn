@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://fjgqtatonlq6" path="res://Characters/Enemies/FireEnemy.tscn" id="5_20dgb"]
 [ext_resource type="Script" uid="uid://dbsjfkw53mpjv" path="res://Game/SpawnLocation.cs" id="5_fcfrf"]
 [ext_resource type="PackedScene" uid="uid://f3ftmbq455dv" path="res://Characters/Enemies/WaterEnemy.tscn" id="6_2yfc4"]
+[ext_resource type="Script" uid="uid://chcnkhnc35ofv" path="res://Props/Scripts/VictoryRegion.cs" id="8_opeqa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l2rra"]
 size = Vector2(1024, 32)
@@ -32,6 +33,9 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_fcfrf")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2yfc4"]
+size = Vector2(1024, 64)
 
 [node name="ScnTestRoom" type="Node2D" unique_id=2033458556]
 
@@ -135,3 +139,12 @@ position = Vector2(664, 80)
 
 [node name="WaterEnemy6" parent="TileMap" unique_id=2045083923 instance=ExtResource("6_2yfc4")]
 position = Vector2(784, 176)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=664018790]
+position = Vector2(512, 0)
+collision_layer = 8
+collision_mask = 16
+script = ExtResource("8_opeqa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=456904429]
+shape = SubResource("RectangleShape2D_2yfc4")
