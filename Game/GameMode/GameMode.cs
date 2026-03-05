@@ -20,16 +20,12 @@ public partial class GameMode : Node
 
 	public CraterEvent<int, Node2D> onPlayerSpawned = new ();
 	public Node worldRoot { get; private set; }
-	public readonly List<Node2D> players = [];
 	
 	// Serialized settings, because this is a singleton
 	public GameModeSettings settings { get; private set; }
-	
-	
-	public readonly List<SpawnLocation> spawnLocations = [];
-	public readonly List<PlayerState> playerStates = [];
 
-	public int lastWinner { get; private set; }
+	public readonly List<PlayerData> playerData = [new(), new()];
+	public readonly List<SpawnLocation> spawnLocations = [];
 
 	public PackedScene nextLevel;
 	
@@ -110,14 +106,18 @@ public partial class GameMode : Node
      */
     public PlayerState GetPlayerState(int playerIndex)
     {
-        if (playerIndex >= 0 && playerIndex < playerStates.Count)
-        {
-            var playerState = playerStates[playerIndex];
-            return IsInstanceValid(playerState) ? playerState : null;
-        }
-        
-        GD.PrintErr("[GameMode] Attempted to access a player state from an out of bounds index.");
-        return null;
+	    return GetPlayerData(playerIndex)?.playerState;
+    }
+
+    public PlayerData GetPlayerData(int playerIndex)
+    {
+	    if (playerIndex >= 0 && playerIndex < playerData.Count)
+	    {
+		    return playerData[playerIndex];
+	    }
+	    
+	    GD.PrintErr("[GameMode] Attempted to access player data from an out of bounds index.");
+	    return null;
     }
 
 	public void NotifyGemDestroyed(int destroyerPlayerIndex, Vector2 offset)
@@ -155,7 +155,7 @@ public partial class GameMode : Node
 		}
 
 		GD.Print($"[GameMode] Player {playerIndex} won!");
-		lastWinner = playerIndex;
+		playerData[playerIndex].IncreaseScore();
 		Command(GameModeCommand.Victory);
 	}
 
@@ -179,10 +179,6 @@ public partial class GameMode : Node
 	private void UnloadLevel()
 	{
 		worldRoot?.QueueFree();
-		players.Clear();
-		// I might move player states into separate objects that live outside the level,
-		// and instead give players a pointer-type node
-		playerStates.Clear();
 		spawnLocations.Clear();
 	}
 

@@ -50,10 +50,9 @@ public class VersusGameState : GameState
             spawnLocation.Owner.AddChild(playerInstance);
             remainingSpawnLocations.RemoveAt(chosenSpawnIndex);
 			
-            mode.players.Add(playerInstance);
+            mode.onPlayerSpawned.Invoke(i, playerInstance);
             CraterFunctions.GetNodeByClass<PlayerController>(playerInstance)?.BindInput(i);
 
-            mode.onPlayerSpawned.Invoke(i, playerInstance);
 
             var playerState = CraterFunctions.GetNodeByClass<PlayerState>(playerInstance);
             if (playerState == null)
@@ -61,7 +60,6 @@ public class VersusGameState : GameState
                 continue;
             }
 			
-            mode.playerStates.Add(playerState);
             var i1 = i;
             playerState.container.onSpawnSingleRequested.AddListener(orb => SpawnEnemyFromSingleType(mode, i1, orb));
             playerState.container.onSpawnRequested.AddListener(orbs => SpawnEnemyFromMatch3(mode, i1, orbs));
@@ -71,6 +69,8 @@ public class VersusGameState : GameState
                 mode.SetWinner(GameMode.GetRivalIndex(i1));
                 mode.Command(GameModeCommand.Victory);
             };
+            
+            mode.playerData[i].SetPlayer(playerInstance, playerState);
         }
     }
     

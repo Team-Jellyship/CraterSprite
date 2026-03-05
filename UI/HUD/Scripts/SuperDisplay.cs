@@ -2,7 +2,7 @@
 
 namespace CraterSprite.UI.HUD.Scripts;
 
-public partial class ScoreDisplay : AutobindUiElement
+public partial class SuperDisplay : AutobindUiElement
 {
     [Export] private ProgressBar _progressBar;
 
