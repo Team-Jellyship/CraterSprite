@@ -142,8 +142,8 @@ position = Vector2(784, 176)
 
 [node name="Area2D" type="Area2D" parent="." unique_id=664018790]
 position = Vector2(512, 0)
-collision_layer = 8
-collision_mask = 16
+collision_layer = 2
+collision_mask = 32
 script = ExtResource("8_opeqa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=456904429]

@@ -24,6 +24,9 @@ size = Vector2(14, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ybv78"]
 size = Vector2(20, 11)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7s676"]
+size = Vector2(16, 16)
+
 [sub_resource type="Animation" id="Animation_7kb7x"]
 length = 0.125
 step = 0.125
@@ -174,6 +177,15 @@ shape = SubResource("RectangleShape2D_ybv78")
 disabled = true
 debug_color = Color(0, 0.64773154, 0.21145341, 0.41960785)
 
+[node name="PickupRegion" type="Area2D" parent="." unique_id=280701384]
+position = Vector2(0, -8)
+collision_layer = 32
+collision_mask = 32
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRegion" unique_id=365786605]
+shape = SubResource("RectangleShape2D_7s676")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1065891037]
 libraries/ = SubResource("AnimationLibrary_dhh5l")
 
@@ -197,7 +209,7 @@ script = ExtResource("10_vv1l6")
 
 [node name="CameraKillZone" type="Area2D" parent="CameraAttach" unique_id=716764710]
 collision_layer = 8
-collision_mask = 16
+collision_mask = 32
 script = ExtResource("11_7id01")
 _filter = 3
 _damage = 99.0
