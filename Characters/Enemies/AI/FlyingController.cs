@@ -5,23 +5,12 @@ using Godot;
 
 namespace CraterSprite.Characters.Enemies.AI.Scripts;
 
-public partial class FlyingController : Node2D
+public partial class FlyingController : AiController
 {
     [Export] private KinematicFlyer _character;
-    [Export] private Node2D _target;
     
     private Vector2 _flyingOffset;
     private float _offsetTime;
-
-    public override void _EnterTree()
-    {
-        GameMode.instance.onPlayerSpawned.AddListener(PlayerSpawned);
-    }
-
-    public override void _ExitTree()
-    {
-        GameMode.instance.onPlayerSpawned.RemoveListener(PlayerSpawned);
-    }
 
     public override void _Ready()
     {
@@ -33,7 +22,7 @@ public partial class FlyingController : Node2D
         _offsetTime += (float)delta;
         _flyingOffset.Y = Mathf.Sin(_offsetTime * 2.0f) * 32.0f - 16.0f;
         
-        if (_target == null)
+        if (target == null)
         {
             return;
         }
@@ -48,34 +37,18 @@ public partial class FlyingController : Node2D
         DrawCircle(GetTargetLocation() - GlobalPosition, 8.0f, new Color(0.0f, 1.0f, 0.0f, 0.25f));
     }
 
-    private void PlayerSpawned(int i, Node2D player)
+    protected override void OnTargetDeath()
     {
-        // I'll probably move this hook somewhere else
-        if (i != 0)
-        {
-            return;
-        }
-
-        SetTarget(player);
-    }
-
-    private void SetTarget(Node2D player)
-    {
-        _target = player;
-        player.TreeExited += () =>
-        {
-            _target = null;
-            _character.SetMoveInput(Vector2.Zero);
-        };
+        _character.SetMoveInput(Vector2.Zero);
     }
 
     private Vector2 GetTargetLocation()
     {
-        if (_target == null)
+        if (target == null)
         {
             return _character.GlobalPosition;
         }
 
-        return _target.GlobalPosition + _flyingOffset;
+        return target.GlobalPosition + _flyingOffset;
     }
 }

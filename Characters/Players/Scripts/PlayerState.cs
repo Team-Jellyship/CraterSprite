@@ -31,7 +31,10 @@ public partial class PlayerState : CharacterStats
 		if (match3Spawner == null)
 		{
 			GD.PrintErr($"[PlayerState] Player{index} Could not find valid Match3Spawner.");
+			return;
 		}
+		
+		match3Spawner.playerIndex = index;
 	}
 
 	public override void _Process(double delta)

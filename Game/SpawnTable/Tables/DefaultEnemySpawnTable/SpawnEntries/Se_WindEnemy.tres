@@ -6,5 +6,4 @@
 [resource]
 script = ExtResource("2_by8st")
 prefab = ExtResource("1_8mfvy")
-spawnChance = 1.0
 metadata/_custom_type_script = "uid://cmhp0o8rvai1x"

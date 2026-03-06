@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CraterSprite.Characters.Enemies.AI.Scripts;
 using CraterSprite.Props;
 using Godot;
 
@@ -28,6 +29,8 @@ public partial class Match3Spawner : Node2D
     // Pending enemy spawns is a separate queue, because we'll register the death callback once the enemies spawn
     private Queue<PackedScene> _pendingEnemySpawns = [];
     private Queue<PackedScene> _pendingSpawns = [];
+
+    public int playerIndex;
     
     private float _currentEnemySpawnTime = 0.0f;
     private float _currentOtherSpawnTime = 0.0f;
@@ -66,7 +69,8 @@ public partial class Match3Spawner : Node2D
             return;
         }
 
-        if (spawner.SpawnEnemy(enemySpawn) is KinematicPickup pickup)
+        var spawnedObject = spawner.SpawnEnemy(enemySpawn);
+        if (spawnedObject is KinematicPickup pickup)
         {
             pickup.AddImpulse(CraterMath.RandomDirection() * 50.0f);
         }
@@ -91,6 +95,9 @@ public partial class Match3Spawner : Node2D
         {
             return;
         }
+        
+        var controller = CraterFunctions.GetNodeByClass<AiController>(spawnedEnemy);
+        controller?.SetTarget(GameMode.GameMode.instance.GetPlayerData(playerIndex)?.player);
 
         spawnedEnemy.TreeExited += () =>
         { if (_currentEnemyCount > 0)
