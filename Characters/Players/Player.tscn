@@ -123,7 +123,7 @@ _gravity = 5.0
 _jumpStrength = 325.0
 _jumpTime = 0.1
 _wallFriction = 1200.0
-_wallJumpStrength = 600.0
+_wallJumpStrength = 400.0
 _wallJumpAngle = 35.0
 
 [node name="Gun" type="Node2D" parent="." unique_id=590104627 node_paths=PackedStringArray("_kinematicOwner")]
