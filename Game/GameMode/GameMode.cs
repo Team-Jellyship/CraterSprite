@@ -178,7 +178,7 @@ public partial class GameMode : Node
 	// Cleanup level contextual objects
 	private void UnloadLevel()
 	{
-		worldRoot?.QueueFree();
+		worldRoot?.Free();
 		spawnLocations.Clear();
 	}
 

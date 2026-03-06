@@ -57,6 +57,7 @@ public class VersusGameState : GameState
             var playerState = CraterFunctions.GetNodeByClass<PlayerState>(playerInstance);
             if (playerState == null)
             {
+                GD.PrintErr($"[GameState] Could not find player state for Player{i}");
                 continue;
             }
 			
@@ -87,6 +88,22 @@ public class VersusGameState : GameState
         {
             return;
         }
-        mode.GetPlayerState(GameMode.GetRivalIndex(ownerIndex))?.match3Spawner?.QueueSpawn(enemyInstance);
+
+        var index = GameMode.GetRivalIndex(ownerIndex);
+        GD.Print($"[GameState] Requesting spawn of enemy '{enemyInstance.GetPath()} for Player{index}");
+        var playerState = mode.GetPlayerState(index);
+        if (playerState == null)
+        {
+            GD.PrintErr($"[GameState] Failed so spawn enemy. Could not find player state for Player{index}");
+            return;
+        }
+        
+        var spawner = playerState.match3Spawner;
+        if (spawner == null)
+        {
+            GD.PrintErr($"[GameState] Failed to spawn enemy. Could not find spawner for Player{index}");
+            return;
+        }
+        spawner.QueueSpawn(enemyInstance);
     }
 }

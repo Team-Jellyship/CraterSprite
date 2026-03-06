@@ -14,7 +14,7 @@ public class PlayerData
     {
         player = playerNode;
         playerState = state;
-        player.TreeExited += () =>
+        player.TreeExiting += () =>
         { 
             player = null;
             playerState = null;

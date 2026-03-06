@@ -30,7 +30,7 @@ public partial class PlayerState : CharacterStats
 		match3Spawner = CraterFunctions.FindNodeByClass<Match3Spawner>(GetOwner());
 		if (match3Spawner == null)
 		{
-			GD.PrintErr("[PlayerState] Could not find valid Match3Spawner.");
+			GD.PrintErr($"[PlayerState] Player{index} Could not find valid Match3Spawner.");
 		}
 	}
 
