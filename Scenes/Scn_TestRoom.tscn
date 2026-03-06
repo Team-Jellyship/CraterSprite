@@ -148,3 +148,8 @@ script = ExtResource("8_opeqa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=456904429]
 shape = SubResource("RectangleShape2D_2yfc4")
+disabled = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" unique_id=931691837]
+position = Vector2(0, -4640)
+shape = SubResource("RectangleShape2D_2yfc4")
