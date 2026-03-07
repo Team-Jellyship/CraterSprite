@@ -39,20 +39,31 @@ namespace CraterSprite
 		
 		private float _facingDirection = 1.0f;
 		
-		public float moveInput { get; private set; }
+		private RayCast2D rayCast;
+		private RayCast2D groundCast;
+		private Timer attackTimer;
+		private Timer waitTimer;
+		private ProjectileLauncher gun;
+		
+		public override void _Ready()
+		{
+			rayCast = GetNode<RayCast2D>("PlayerRay");
+			groundCast = GetNode<RayCast2D>("GroundRay");
+			attackTimer = GetNode<Timer>("AttackTimer");
+			waitTimer = GetNode<Timer>("WaitTimer");
+			gun = GetNode<ProjectileLauncher>("Gun");
+		}
+		
 		
 		public override void _PhysicsProcess(double delta)
 		{
-			var rayCast = GetNode<RayCast2D>("PlayerRay");
-			var groundCast = GetNode<RayCast2D>("GroundRay");
-			var attackTimer = GetNode<Timer>("AttackTimer");
-			//rayCast.CollideWithAreas = true;
-			//Variable used to store the Velocity
+			//gun.FireProjectile();
 			var currentVelocity = Velocity;
 			//Code that turns the enemy around
 			if(IsOnWall())
 			{
 				_facingDirection = -_facingDirection;
+				gun.SetLookHorizontal(_facingDirection);
 				if(_facingDirection < 0){
 					rayCast.SetTargetPosition(new Vector2(-50,0));
 					groundCast.SetTargetPosition(new Vector2(-20,20));
@@ -95,12 +106,17 @@ namespace CraterSprite
 
 			Object enemyInMySight = rayCast.GetCollider();
 			if(enemyInMySight is Node collidedNode){
-				if(string.Equals(collidedNode.GetParent().Name, "Player")){
-					currentVelocity.X = 0;
-				}
-				//Fuck my stupid chungus life this feels so Pirate Software Coded
-				if(string.Equals(collidedNode.GetParent().Name, "@CharacterBody2D@5")){
-					currentVelocity.X = 0;
+				if(string.Equals(collidedNode.GetParent().Name, "Player") || string.Equals(collidedNode.GetParent().Name, "@CharacterBody2D@5")){
+					if(attackTimer.GetTimeLeft() == 0.0 && waitTimer.GetTimeLeft() == 0.0){
+						attackTimer.Start();
+						waitTimer.Start();
+						currentVelocity.X = 0;
+						gun.FireProjectile();
+					}
+					else if (attackTimer.GetTimeLeft() != 0.0 && waitTimer.GetTimeLeft() != 0.0){
+						currentVelocity.X = 0;
+						GD.Print(attackTimer.GetTimeLeft().ToString("F2"));
+					}
 				}
 			}
 
@@ -112,15 +128,9 @@ namespace CraterSprite
 			MoveAndSlide();
 		}
 		
-		public void SetMoveInput(float input)
-		{
-			moveInput = Math.Clamp(input, -1.0f, 1.0f);
-		}
-		
 		
 		public override void _Draw()
 		{
-			//var temp = GetVelocity();
 			DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, GetNode<RayCast2D>("PlayerRay").GetTargetPosition(), new Color(1.0f, 0.0f, 0.0f));
 			DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, GetNode<RayCast2D>("GroundRay").GetTargetPosition(), new Color(1.0f, 0.0f, 1.0f));
 		}

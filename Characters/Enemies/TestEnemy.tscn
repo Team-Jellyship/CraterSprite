@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://bfe3l0yi65fuw" path="res://Characters/Enemies/KinematicEnemy.cs" id="1_0y5hg"]
 [ext_resource type="Texture2D" uid="uid://y5v8tto8fygj" path="res://Characters/Players/Sprites/TestSprites/EnemySprite.png" id="1_dq4fg"]
 [ext_resource type="Script" uid="uid://cyhvlrad5psho" path="res://Characters/Scripts/CharacterStats.cs" id="2_0y5hg"]
+[ext_resource type="Script" uid="uid://r6asvyfexakk" path="res://Characters/Scripts/ProjectileLauncher.cs" id="2_ve3cf"]
+[ext_resource type="PackedScene" uid="uid://kgj0kkgcwle3" path="res://Props/Projectiles/Projectile.tscn" id="3_uc7fb"]
 [ext_resource type="Script" uid="uid://beyklarjb46ti" path="res://Characters/Enemies/Hurtbox.cs" id="4_8nvh5"]
 [ext_resource type="Script" uid="uid://wu7lthcoh3wr" path="res://Characters/Enemies/PlayerRay.cs" id="5_owphe"]
 
@@ -13,6 +15,14 @@ size = Vector2(26, 26)
 
 [node name="TestEnemy" type="CharacterBody2D" unique_id=1975847372]
 script = ExtResource("1_0y5hg")
+
+[node name="Gun" type="Node2D" parent="." unique_id=747628752 node_paths=PackedStringArray("_kinematicOwner")]
+script = ExtResource("2_ve3cf")
+_projectile = ExtResource("3_uc7fb")
+_projectileSpeed = 100.0
+_kinematicOwner = NodePath("..")
+_offset = 16.0
+facingDirection = Vector2(2, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1044185337]
 scale = Vector2(0.2, 0.2)
@@ -35,7 +45,7 @@ shape = SubResource("CircleShape2D_8nvh5")
 
 [node name="PlayerRay" type="RayCast2D" parent="." unique_id=700272292]
 target_position = Vector2(50, 0)
-collision_mask = 25
+collision_mask = 16
 collide_with_areas = true
 script = ExtResource("5_owphe")
 
@@ -43,4 +53,9 @@ script = ExtResource("5_owphe")
 target_position = Vector2(20, 20)
 
 [node name="AttackTimer" type="Timer" parent="." unique_id=1377251859]
+wait_time = 2.0
+one_shot = true
+
+[node name="WaitTimer" type="Timer" parent="." unique_id=424142877]
 wait_time = 8.0
+one_shot = true
