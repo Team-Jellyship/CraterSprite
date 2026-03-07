@@ -1,4 +1,5 @@
 using CraterSprite.Game.Match3;
+using CraterSprite.Game.GameMode;
 using Godot;
 
 namespace CraterSprite;
@@ -16,6 +17,10 @@ public partial class PlayerState : CharacterStats
 	[Export] private float _maxSupercharge;
 	[Export] public Match3Spawner match3Spawner { private set; get; }
 	
+	// Special stuff. This should all be moved to another data class
+	[Export] private PackedScene _specialScene;
+	[Export] private uint _specialCost = 50;
+	[Export] private uint _numMeteors = 5;
 	
 	public readonly CraterEvent<float, float> onSuperchargeChanged = new();
 	
@@ -54,5 +59,27 @@ public partial class PlayerState : CharacterStats
 		_supercharge += chargeAmount;
 		onSuperchargeChanged.Invoke(_supercharge, _maxSupercharge);
 		// GD.Print($"[PlayerState] supercharge increased to '{_supercharge}'");
+	}
+
+	// I don't want the implementation of specials to be inside here,
+	// ideally it should be as data-defined as we can make it, but for testing purposes,
+	// this is fine
+	public void ExecuteSpecial()
+	{
+		if (superMoveCharge < _specialCost)
+		{
+			return;
+		}
+
+		superMoveCharge -= _specialCost;
+		var rivalCamera = GameMode.instance.GetRivalPlayerData(index).camera;
+		var cameraRect = rivalCamera.GetCameraBounds();
+		for (var i = 0; i < _numMeteors; ++i)
+		{
+			var targetPosition = new Vector2(cameraRect.Position.X + cameraRect.Size.X * GD.Randf() * 0.5f, cameraRect.Position.Y);
+			var meteor = CraterFunctions.CreateInstance<Projectile>(this, _specialScene, targetPosition);
+			meteor.velocity = CraterMath.VectorFromAngle(-45.0f) * 64.0f;
+			meteor.SetOwner(this);
+		}
 	}
 }

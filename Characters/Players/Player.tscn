@@ -3,10 +3,11 @@
 [ext_resource type="Script" uid="uid://bsfdycg3wydrv" path="res://Characters/Scripts/KinematicCharacter.cs" id="1_v58vf"]
 [ext_resource type="Script" uid="uid://r6asvyfexakk" path="res://Characters/Scripts/ProjectileLauncher.cs" id="2_dhh5l"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://btf2rg88m5jdc" path="res://Characters/Players/Animations/ABT_Player.tres" id="2_v58vf"]
-[ext_resource type="PackedScene" uid="uid://kgj0kkgcwle3" path="res://Props/Projectiles/Projectile.tscn" id="3_570sx"]
+[ext_resource type="PackedScene" uid="uid://kgj0kkgcwle3" path="res://Props/Projectiles/P_Projectile.tscn" id="3_570sx"]
 [ext_resource type="Script" uid="uid://bcijaprypmkpb" path="res://Characters/Players/Scripts/PlayerController.cs" id="4_1fpnh"]
 [ext_resource type="Script" uid="uid://b2v40725rdn8b" path="res://Characters/Scripts/ToggleableHitbox.cs" id="4_ht06l"]
 [ext_resource type="Script" uid="uid://c74blvexl5qt5" path="res://Characters/Scripts/CharacterAnimationTree.cs" id="5_7kb7x"]
+[ext_resource type="PackedScene" uid="uid://duiw5cd28iech" path="res://Props/Specials/P_SpecialTest.tscn" id="9_2x3uh"]
 [ext_resource type="Script" uid="uid://u3cmil3kdff0" path="res://Characters/Players/Scripts/PlayerState.cs" id="9_570sx"]
 [ext_resource type="Script" uid="uid://c6kd0fuula6g3" path="res://Characters/Players/Scripts/PlayerCameraAttachmentPoint.cs" id="10_vv1l6"]
 [ext_resource type="Script" uid="uid://5yfgyni1c342" path="res://Shared/Scripts/DamageZone2D.cs" id="11_7id01"]
@@ -141,6 +142,12 @@ _wallFriction = 1200.0
 _wallJumpStrength = 600.0
 _wallJumpAngle = 35.0
 
+[node name="Controller" type="Node" parent="." unique_id=505377627 node_paths=PackedStringArray("_character", "_playerState", "_gun")]
+script = ExtResource("4_1fpnh")
+_character = NodePath("..")
+_playerState = NodePath("../PlayerStats")
+_gun = NodePath("../Gun")
+
 [node name="Gun" type="Node2D" parent="." unique_id=590104627 node_paths=PackedStringArray("_kinematicOwner")]
 position = Vector2(0, -16)
 script = ExtResource("2_dhh5l")
@@ -153,11 +160,6 @@ facingDirection = Vector2(2, 0)
 [node name="KinematicBox" type="CollisionShape2D" parent="." unique_id=1005347515]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_1fpnh")
-
-[node name="Controller" type="Node" parent="." unique_id=505377627 node_paths=PackedStringArray("_character", "_gun")]
-script = ExtResource("4_1fpnh")
-_character = NodePath("..")
-_gun = NodePath("../Gun")
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=60656270 node_paths=PackedStringArray("_onHitbox", "_offHitbox")]
 collision_layer = 16
@@ -196,9 +198,12 @@ parameters/state_machine/walking/walk_direction/blend_position = 1.0
 parameters/state_machine/walking/walk_speed/scale = 1.0
 script = ExtResource("5_7kb7x")
 
-[node name="PlayerStats" type="Node" parent="." unique_id=410689954]
+[node name="PlayerStats" type="Node" parent="." unique_id=410689954 node_paths=PackedStringArray("match3Spawner")]
 script = ExtResource("9_570sx")
 _maxSupercharge = 100.0
+match3Spawner = NodePath("../CameraAttach/Spawner")
+_specialScene = ExtResource("9_2x3uh")
+_specialCost = 10
 _showingStats = true
 characterTeam = 1
 _defaultHealth = 5.0

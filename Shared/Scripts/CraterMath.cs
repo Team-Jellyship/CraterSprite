@@ -59,6 +59,10 @@ public abstract class CraterMath
         return items[GD.RandRange(0, items.Count - 1)];
     }
 
+    /**
+     * <summary>Helper function to get a direction vector from an angle</summary>
+     * <param name="angle">Angle in degrees</param>
+     */
     public static Vector2 VectorFromAngle(float angle)
     {
         var rads = Mathf.DegToRad(angle);

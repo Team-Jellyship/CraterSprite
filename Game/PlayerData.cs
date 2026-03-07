@@ -8,7 +8,9 @@ public class PlayerData
     public PlayerState playerState { get; private set; }
     public Node2D player { get; private set; }
 
-    public CraterEvent<uint> onScoreChanged = new();
+    public readonly CraterEvent<uint> onScoreChanged = new();
+
+    public PlayerCamera camera;
 
     public void SetPlayer(Node2D playerNode, PlayerState state)
     {

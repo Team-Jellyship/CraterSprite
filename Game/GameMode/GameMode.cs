@@ -18,7 +18,7 @@ public partial class GameMode : Node
 	
 	public Match3RecipeTable recipes { get; private set; }
 
-	public CraterEvent<int, Node2D> onPlayerSpawned = new ();
+	public readonly CraterEvent<int, Node2D> onPlayerSpawned = new ();
 	public Node worldRoot { get; private set; }
 	
 	// Serialized settings, because this is a singleton
@@ -118,6 +118,12 @@ public partial class GameMode : Node
 	    
 	    GD.PrintErr("[GameMode] Attempted to access player data from an out of bounds index.");
 	    return null;
+    }
+
+    // Just a convenience method for players
+    public PlayerData GetRivalPlayerData(int selfPlayerIndex)
+    {
+	    return GetPlayerData(GetRivalIndex(selfPlayerIndex));
     }
 
 	public void NotifyGemDestroyed(int destroyerPlayerIndex, Vector2 offset)
