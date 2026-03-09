@@ -26,7 +26,7 @@ public partial class PlayerState : CharacterStats
 	
 	public readonly Match3Container container = new();
 
-	public int index;
+	public int playerIndex { get; private set; }
 
 	public override void _Ready()
 	{
@@ -35,11 +35,8 @@ public partial class PlayerState : CharacterStats
 		match3Spawner = CraterFunctions.FindNodeByClass<Match3Spawner>(GetOwner());
 		if (match3Spawner == null)
 		{
-			GD.PrintErr($"[PlayerState] Player{index} Could not find valid Match3Spawner.");
-			return;
+			GD.PrintErr($"[PlayerState] Player{playerIndex} Could not find valid Match3Spawner.");
 		}
-		
-		match3Spawner.playerIndex = index;
 	}
 
 	public override void _Process(double delta)
@@ -52,6 +49,13 @@ public partial class PlayerState : CharacterStats
 	public override void KilledEnemy(CharacterStats enemy)
 	{
 		container.AddOrb(enemy.matchType);
+	}
+
+	public void SetPlayerIndex(int index)
+	{
+		playerIndex = index;
+		GD.Print($"[PlayerState] Assigning player index '{index}' to match3 spawner");
+		match3Spawner.playerIndex = index;
 	}
 
 	public void AddSuperCharge(float chargeAmount)
@@ -72,7 +76,7 @@ public partial class PlayerState : CharacterStats
 		}
 
 		superMoveCharge -= _specialCost;
-		var rivalCamera = GameMode.instance.GetRivalPlayerData(index).camera;
+		var rivalCamera = GameMode.instance.GetRivalPlayerData(playerIndex).camera;
 		var cameraRect = rivalCamera.GetCameraBounds();
 		for (var i = 0; i < _numMeteors; ++i)
 		{

@@ -18,8 +18,8 @@ public partial class Gem : Area2D, IDamageListener
         if (source is PlayerState playerState)
         {
             var offset = GlobalPosition - playerState.match3Spawner.GlobalPosition;
-            GameMode.instance.NotifyGemDestroyed(playerState.index, offset);
-            GD.Print($"[Gem] Gem '{Name}' was destroyed by player {playerState.index} with relative position {offset}");
+            GameMode.instance.NotifyGemDestroyed(playerState.playerIndex, offset);
+            GD.Print($"[Gem] Gem '{Name}' was destroyed by player {playerState.playerIndex} with relative position {offset}");
         }
         
         Owner.QueueFree();
