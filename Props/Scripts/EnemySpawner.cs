@@ -4,9 +4,9 @@ namespace CraterSprite.Props;
 
 public partial class EnemySpawner : Area2D
 {
-    public void SpawnEnemy(PackedScene packedScene)
+    public Node2D SpawnEnemy(PackedScene packedScene)
     {
-        CraterFunctions.CreateInstanceDeferred<Node2D>(this, packedScene, GlobalPosition);
+        return CraterFunctions.CreateInstanceDeferred<Node2D>(this, packedScene, GlobalPosition);
     }
 
     public bool CanSpawn()

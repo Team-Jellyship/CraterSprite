@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://ul4qeudj8sbq"]
+
+[ext_resource type="Script" uid="uid://dtpwycy3o0baf" path="res://Characters/Scripts/KinematicFlyer.cs" id="1_w3jey"]
+[ext_resource type="Texture2D" uid="uid://c765qygv0kp8i" path="res://icon.svg" id="2_06fqe"]
+[ext_resource type="Script" uid="uid://bhiokieshedwe" path="res://Characters/Enemies/AI/FlyingController.cs" id="2_g2wum"]
+[ext_resource type="Script" uid="uid://5yfgyni1c342" path="res://Shared/Scripts/DamageZone2D.cs" id="4_o184k"]
+[ext_resource type="Script" uid="uid://cyhvlrad5psho" path="res://Characters/Scripts/CharacterStats.cs" id="5_h8sk2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_06fqe"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g2wum"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o184k"]
+
+[node name="FlyingEnemyTest" type="CharacterBody2D" unique_id=1812670657]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_w3jey")
+_maxSpeed = 64.0
+_acceleration = 200.0
+
+[node name="KinematicShape" type="CollisionShape2D" parent="." unique_id=328264790]
+shape = SubResource("CircleShape2D_06fqe")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1453853052]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_06fqe")
+
+[node name="AIController" type="Node2D" parent="." unique_id=2064783572 node_paths=PackedStringArray("_character")]
+script = ExtResource("2_g2wum")
+_character = NodePath("..")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=928461173]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=171965668]
+shape = SubResource("CircleShape2D_g2wum")
+debug_color = Color(0, 0.64651567, 0.24259588, 0.41960785)
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1028069767 node_paths=PackedStringArray("_owner")]
+collision_layer = 8
+collision_mask = 16
+script = ExtResource("4_o184k")
+_filter = 3
+_damage = 1.0
+_owner = NodePath("../EnemyStats")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=2046364644]
+shape = SubResource("CircleShape2D_o184k")
+debug_color = Color(0.96104735, 0, 0.5153212, 0.41960785)
+
+[node name="EnemyStats" type="Node" parent="." unique_id=1328299037]
+script = ExtResource("5_h8sk2")
+characterTeam = 3
+matchType = 3
+_defaultHealth = 2.0

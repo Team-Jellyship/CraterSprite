@@ -9,6 +9,9 @@ public partial class ProjectileLauncher : Node2D
     [Export(PropertyHint.None, "suffix:px/s")] private float _projectileSpeed;
     [Export] private KinematicCharacter _kinematicOwner;
     [Export(PropertyHint.None, "suffix:px")] private float _offset = 0.0f;
+    
+    // Should this projectile launcher include the parent velocity of its kinematic owner
+    [Export] private bool _inheritVelocity = false;
 
     [Export]
     public Vector2 facingDirection
@@ -27,7 +30,7 @@ public partial class ProjectileLauncher : Node2D
         _characterStats = CraterFunctions.GetNodeByClassFromRoot<CharacterStats>(this);
         if (_kinematicOwner != null)
         {
-            _kinematicOwner.MoveSpeedChanged += speed => { _facingDirection.X = Mathf.Sign(speed); };
+            _kinematicOwner.MoveDirectionChanged += speed => { _facingDirection.X = Mathf.Sign(speed); };
         }
     }
 
@@ -51,7 +54,11 @@ public partial class ProjectileLauncher : Node2D
 
         projectile.SetOwner(_characterStats);
         projectile.velocity =  GetFacingDirection() * _projectileSpeed;
-        projectile.velocity.X += _kinematicOwner?.Velocity.X ?? 0.0f;
+
+        if (_inheritVelocity)
+        {
+            projectile.velocity.X += _kinematicOwner?.Velocity.X ?? 0.0f;
+        }
     }
 
     public void SetLookHorizontal(float x)

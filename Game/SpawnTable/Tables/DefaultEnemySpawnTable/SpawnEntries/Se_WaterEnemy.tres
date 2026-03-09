@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SpawnEntry" format=3 uid="uid://crtjwcti4phvi"]
+
+[ext_resource type="PackedScene" uid="uid://f3ftmbq455dv" path="res://Characters/Enemies/WaterEnemy.tscn" id="1_ol78u"]
+[ext_resource type="Script" uid="uid://cmhp0o8rvai1x" path="res://Game/SpawnTable/SpawnEntry.cs" id="2_outgl"]
+
+[resource]
+script = ExtResource("2_outgl")
+prefab = ExtResource("1_ol78u")
+spawnChance = 1.0
+metadata/_custom_type_script = "uid://cmhp0o8rvai1x"

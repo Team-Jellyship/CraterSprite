@@ -15,6 +15,11 @@
       "checkout": "6.x",
       "subfolder": "addons/imgui-godot"
     },
+    "resources_spreadsheet_view" : {
+      "url": "https://github.com/don-tnowe/godot-resources-as-sheets-plugin",
+      "checkout": "Godot-4",
+      "subfolder": "addons/resources_spreadsheet_view"
+    }
     // "GdUnit4": {
     //   "url": "https://github.com/godot-gdunit-labs/gdUnit4",
     //   "checkout": "v6.1.1",
