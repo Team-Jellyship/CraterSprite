@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SpawnEntry" format=3 uid="uid://bcbxjdsraojm3"]
+
+[ext_resource type="PackedScene" uid="uid://fjgqtatonlq6" path="res://Characters/Enemies/FireEnemy.tscn" id="1_sieks"]
+[ext_resource type="Script" uid="uid://cmhp0o8rvai1x" path="res://Game/SpawnTable/SpawnEntry.cs" id="2_tl682"]
+
+[resource]
+script = ExtResource("2_tl682")
+prefab = ExtResource("1_sieks")
+spawnChance = 1.0
+metadata/_custom_type_script = "uid://cmhp0o8rvai1x"

@@ -7,6 +7,7 @@ public partial class Projectile : Node2D
 {
     [Export] private bool _destroyOnContact = true;
     [Export] private float _lifetime = 1.0f;
+    [Export] private bool _collectGems = true;
     
     private EncodedObjectAsId _owner;
     public Vector2 velocity;
@@ -16,6 +17,7 @@ public partial class Projectile : Node2D
         var expirationTimer = new Timer();
         expirationTimer.Autostart = true;
         expirationTimer.OneShot = true;
+        expirationTimer.WaitTime = _lifetime;
         AddChild(expirationTimer);
         expirationTimer.Timeout += QueueFree;
 
@@ -57,7 +59,9 @@ public partial class Projectile : Node2D
     private void HitEnemy(IDamageListener character)
     {
         var obj = InstanceFromId(_owner.ObjectId);
-        character.TakeDamage(1.0f, (CharacterStats)obj);
+        // If this shouldn't collect gems, just don't give it the damage source
+        // and it won't receive the event for now
+        character.TakeDamage(1.0f, _collectGems ? (CharacterStats)obj : null);
 
         if (_destroyOnContact)
         {
