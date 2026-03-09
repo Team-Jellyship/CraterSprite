@@ -13,7 +13,6 @@ blend_point_1/node = SubResource("AnimationNodeAnimation_ujcrh")
 blend_point_1/pos = 1.0
 
 [resource]
-graph_offset = Vector2(-481, 19)
 nodes/walk_direction/node = SubResource("AnimationNodeBlendSpace1D_efgmg")
 nodes/walk_direction/position = Vector2(-140, 140)
 node_connections = [&"output", 0, &"walk_direction"]
