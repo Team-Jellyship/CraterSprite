@@ -10,4 +10,6 @@ public partial class GameModeSettings : Resource
     // Remove this later
     [Export] public PackedScene gem;
     [Export] public PackedScene defaultLevel;
+
+    [Export] public PackedScene characterSelectScreen;
 }

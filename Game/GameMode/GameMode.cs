@@ -21,6 +21,8 @@ public partial class GameMode : Node
 	public readonly CraterEvent<int, Node2D> onPlayerSpawned = new ();
 	public Node worldRoot { get; private set; }
 	
+	public Control menuRoot { get; private set; }
+	
 	// Serialized settings, because this is a singleton
 	public GameModeSettings settings { get; private set; }
 
@@ -39,6 +41,12 @@ public partial class GameMode : Node
 	private LoadingGameState loadingState { get; } = new()
 	{
 		stateName = "Loading"
+	};
+
+	private MenuState characterSelectState { get; } = new()
+	{
+		stateName = "Character Select",
+		transitionTime = 3.0f
 	};
 	private GameState warmupState { get; } = new()
 	{
@@ -75,6 +83,7 @@ public partial class GameMode : Node
 
 		var currentScene = GetTree().GetCurrentScene();
 		_sceneEntryPoint = currentScene.GetNode("%WorldRoot");
+		menuRoot = currentScene.GetNode<Control>("%MenuRoot");
 
 		if (_sceneEntryPoint == null)
 		{
@@ -83,13 +92,23 @@ public partial class GameMode : Node
 		}
 		
 		SetupTimer();
+		characterSelectState.menuScene = settings.characterSelectScreen;
+		
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(characterSelectState, GameModeCommand.Timeout), loadingState);
 		_transitions.Add(new Tuple<GameState, GameModeCommand>(loadingState, GameModeCommand.Loaded), versusGameState);
 		_transitions.Add(new Tuple<GameState, GameModeCommand>(versusGameState, GameModeCommand.Victory), victoryGameState);
 		_transitions.Add(new Tuple<GameState, GameModeCommand>(victoryGameState, GameModeCommand.Timeout), loadingState);
 		
-		
-		_currentGameState = loadingState;
+		_currentGameState = characterSelectState;
 		_currentGameState.EnterState(this);
+		if (_currentGameState.transitionTime <= 0.0f)
+		{
+			_transitionTimer.Stop();
+		}
+		else
+		{
+			_transitionTimer.Start(_currentGameState.transitionTime);
+		}
 	}
 
     /**
