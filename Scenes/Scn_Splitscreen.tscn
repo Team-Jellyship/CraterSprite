@@ -3,9 +3,8 @@
 [ext_resource type="Script" uid="uid://8srotn0dqetj" path="res://Scenes/scn_splitscreen.gd" id="1_4abrk"]
 [ext_resource type="Script" uid="uid://c2x7jpc3amnbq" path="res://Characters/Players/Scripts/PlayerCamera.cs" id="2_87bac"]
 [ext_resource type="PackedScene" uid="uid://gjs06khmi3td" path="res://UI/HUD/PlayerHud.tscn" id="3_4abrk"]
-[ext_resource type="PackedScene" uid="uid://d0jaad2ln7v51" path="res://Scenes/Scn_CraterBlocks.tscn" id="3_h0bj7"]
 [ext_resource type="Texture2D" uid="uid://cpmkupvah3gl6" path="res://Sprites/hud_bottom.png" id="4_8728c"]
-[ext_resource type="Texture2D" uid="uid://cjl507p7u2d7k" path="res://Sprites/hud_top.png" id="6_5acan"]
+[ext_resource type="Texture2D" uid="uid://br76bl5lfwm6" path="res://Sprites/hud_top.png" id="6_5acan"]
 
 [node name="ScnSplitscreen" type="Control" unique_id=398535084 node_paths=PackedStringArray("camera0", "camera1")]
 layout_mode = 3
@@ -51,8 +50,6 @@ script = ExtResource("2_87bac")
 [node name="WorldRoot" type="Node2D" parent="SplitscreenHBox/LeftScreen/LeftViewport" unique_id=1519984598]
 unique_name_in_owner = true
 
-[node name="ScnTestRoom" parent="SplitscreenHBox/LeftScreen/LeftViewport/WorldRoot" unique_id=2033458556 instance=ExtResource("3_h0bj7")]
-
 [node name="Divider" type="ColorRect" parent="SplitscreenHBox" unique_id=238917213]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
@@ -67,18 +64,84 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -104.0
-offset_top = 8.0
-offset_right = -36.0
-offset_bottom = 272.0
+offset_left = -58.0
+offset_top = 68.0
+offset_right = 74.0
+offset_bottom = 396.0
 grow_horizontal = 2
 
 [node name="Player1HUD" parent="SplitscreenHBox/Divider/HBoxContainer" unique_id=452054263 instance=ExtResource("3_4abrk")]
 layout_mode = 2
 
+[node name="Match3Display" parent="SplitscreenHBox/Divider/HBoxContainer/Player1HUD" index="0" unique_id=1242715241]
+custom_minimum_size = Vector2(50, 180)
+
+[node name="VBoxContainer" parent="SplitscreenHBox/Divider/HBoxContainer/Player1HUD/Match3Display" index="0" unique_id=1316356833]
+custom_minimum_size = Vector2(64, 0)
+offset_left = -1.0
+offset_top = -4.0
+offset_right = 63.0
+offset_bottom = 74.0
+theme_override_constants/separation = 12
+
+[node name="ColorRect" parent="SplitscreenHBox/Divider/HBoxContainer/Player1HUD/Match3Display/VBoxContainer" index="0" unique_id=1800992443]
+custom_minimum_size = Vector2(30, 18)
+
+[node name="ColorRect2" parent="SplitscreenHBox/Divider/HBoxContainer/Player1HUD/Match3Display/VBoxContainer" index="1" unique_id=221923131]
+custom_minimum_size = Vector2(30, 18)
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="ColorRect3" parent="SplitscreenHBox/Divider/HBoxContainer/Player1HUD/Match3Display/VBoxContainer" index="2" unique_id=1254151580]
+custom_minimum_size = Vector2(30, 18)
+size_flags_horizontal = 1
+size_flags_stretch_ratio = 0.0
+
+[node name="Supercharge" parent="SplitscreenHBox/Divider/HBoxContainer/Player1HUD" index="1" unique_id=1105424081]
+custom_minimum_size = Vector2(0, 165)
+
+[node name="ProgressBar" parent="SplitscreenHBox/Divider/HBoxContainer/Player1HUD/Supercharge" index="0" unique_id=644981813]
+offset_left = -2.0
+offset_right = -8.0
+
+[node name="ProgressBar" parent="SplitscreenHBox/Divider/HBoxContainer/Player1HUD/Health" parent_id_path=PackedInt32Array(452054263, 495745352) index="0" unique_id=88620746]
+offset_left = 2.0
+offset_right = -8.0
+
 [node name="Player2HUD" parent="SplitscreenHBox/Divider/HBoxContainer" unique_id=636055352 instance=ExtResource("3_4abrk")]
 layout_mode = 2
 _playerIndex = 1
+
+[node name="Match3Display" parent="SplitscreenHBox/Divider/HBoxContainer/Player2HUD" index="0" unique_id=1242715241]
+custom_minimum_size = Vector2(50, 180)
+
+[node name="VBoxContainer" parent="SplitscreenHBox/Divider/HBoxContainer/Player2HUD/Match3Display" index="0" unique_id=1316356833]
+custom_minimum_size = Vector2(64, 0)
+offset_left = -6.0
+offset_top = -4.0
+offset_right = 64.0
+offset_bottom = 74.0
+theme_override_constants/separation = 12
+
+[node name="ColorRect" parent="SplitscreenHBox/Divider/HBoxContainer/Player2HUD/Match3Display/VBoxContainer" index="0" unique_id=1800992443]
+custom_minimum_size = Vector2(30, 18)
+
+[node name="ColorRect2" parent="SplitscreenHBox/Divider/HBoxContainer/Player2HUD/Match3Display/VBoxContainer" index="1" unique_id=221923131]
+custom_minimum_size = Vector2(70.35, 18)
+size_flags_horizontal = 1
+
+[node name="Supercharge" parent="SplitscreenHBox/Divider/HBoxContainer/Player2HUD" index="1" unique_id=1105424081]
+custom_minimum_size = Vector2(0, 165)
+
+[node name="ProgressBar" parent="SplitscreenHBox/Divider/HBoxContainer/Player2HUD/Supercharge" index="0" unique_id=644981813]
+offset_left = 20.0
+offset_right = 14.0
+theme_override_colors/font_color = Color(0, 1, 0.6666667, 1)
+theme_override_colors/font_outline_color = Color(0, 1, 0.6666667, 1)
+
+[node name="ProgressBar" parent="SplitscreenHBox/Divider/HBoxContainer/Player2HUD/Health" parent_id_path=PackedInt32Array(636055352, 495745352) index="0" unique_id=88620746]
+offset_left = 21.0
+offset_right = 11.0
 
 [node name="HudTop" type="Sprite2D" parent="SplitscreenHBox/Divider" unique_id=851427595]
 position = Vector2(64, 324)
@@ -108,3 +171,8 @@ _playerIndex = 1
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[editable path="SplitscreenHBox/Divider/HBoxContainer/Player1HUD"]
+[editable path="SplitscreenHBox/Divider/HBoxContainer/Player1HUD/Match3Display"]
+[editable path="SplitscreenHBox/Divider/HBoxContainer/Player2HUD"]
+[editable path="SplitscreenHBox/Divider/HBoxContainer/Player2HUD/Match3Display"]
