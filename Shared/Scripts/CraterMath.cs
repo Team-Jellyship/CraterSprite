@@ -59,9 +59,42 @@ public abstract class CraterMath
         return items[GD.RandRange(0, items.Count - 1)];
     }
 
+    /**
+     * <summary>Helper function to get a direction vector from an angle</summary>
+     * <param name="angle">Angle in degrees</param>
+     */
     public static Vector2 VectorFromAngle(float angle)
     {
         var rads = Mathf.DegToRad(angle);
         return new Vector2(Mathf.Cos(rads), -Mathf.Sin(rads));
+    }
+
+    public static Vector2 RandomDirection(float negativeBounds = -MathF.PI, float positiveBounds = MathF.PI)
+    {
+        var angle = (float)GD.RandRange(negativeBounds, positiveBounds);
+        return new Vector2(MathF.Cos(angle), MathF.Sin(angle));
+    }
+
+    public static Vector2 ClampVectorLength(Vector2 vector, float length)
+    {
+        var vectorLengthSquared = vector.LengthSquared();
+        if (vectorLengthSquared > length * length)
+        {
+            return vector * (length / MathF.Sqrt(vectorLengthSquared));
+        }
+        return vector;
+    }
+
+    public static Vector2 ScaleVectorLength(Vector2 vector, float delta)
+    {
+        var length = vector.Length();
+        var normal = vector / length;
+
+        if (-delta > length)
+        {
+            return Vector2.Zero;
+        }
+
+        return normal * (length + delta);
     }
 }

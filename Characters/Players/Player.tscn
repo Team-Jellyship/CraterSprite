@@ -1,18 +1,21 @@
 [gd_scene format=3 uid="uid://cuq4hb7diqckf"]
 
 [ext_resource type="Script" uid="uid://bsfdycg3wydrv" path="res://Characters/Scripts/KinematicCharacter.cs" id="1_v58vf"]
-[ext_resource type="Texture2D" uid="uid://b6ltmkwpn20aw" path="res://Characters/Players/Sprites/Sp_DogBoy_Walking.png" id="2_1fpnh"]
 [ext_resource type="Script" uid="uid://r6asvyfexakk" path="res://Characters/Scripts/ProjectileLauncher.cs" id="2_dhh5l"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://btf2rg88m5jdc" path="res://Characters/Players/Animations/ABT_Player.tres" id="2_v58vf"]
-[ext_resource type="PackedScene" uid="uid://kgj0kkgcwle3" path="res://Props/Projectiles/Projectile.tscn" id="3_570sx"]
+[ext_resource type="PackedScene" uid="uid://kgj0kkgcwle3" path="res://Props/Projectiles/P_Projectile.tscn" id="3_570sx"]
 [ext_resource type="Script" uid="uid://bcijaprypmkpb" path="res://Characters/Players/Scripts/PlayerController.cs" id="4_1fpnh"]
 [ext_resource type="Script" uid="uid://b2v40725rdn8b" path="res://Characters/Scripts/ToggleableHitbox.cs" id="4_ht06l"]
 [ext_resource type="Script" uid="uid://c74blvexl5qt5" path="res://Characters/Scripts/CharacterAnimationTree.cs" id="5_7kb7x"]
+[ext_resource type="PackedScene" uid="uid://duiw5cd28iech" path="res://Props/Specials/P_SpecialTest.tscn" id="9_2x3uh"]
 [ext_resource type="Script" uid="uid://u3cmil3kdff0" path="res://Characters/Players/Scripts/PlayerState.cs" id="9_570sx"]
 [ext_resource type="Script" uid="uid://c6kd0fuula6g3" path="res://Characters/Players/Scripts/PlayerCameraAttachmentPoint.cs" id="10_vv1l6"]
 [ext_resource type="Script" uid="uid://5yfgyni1c342" path="res://Shared/Scripts/DamageZone2D.cs" id="11_7id01"]
 [ext_resource type="Script" uid="uid://b36fhs0k2brbr" path="res://Game/Match3/Match3Spawner.cs" id="12_tkb72"]
+[ext_resource type="Resource" uid="uid://crq8ungls07wu" path="res://Game/SpawnTable/Tables/DefaultEnemySpawnTable/St_DefaultEnemy.tres" id="13_mcxtw"]
 [ext_resource type="PackedScene" uid="uid://bos83ttcvikwk" path="res://Characters/Players/Match3SpawnerRegion.tscn" id="13_tkb72"]
+[ext_resource type="Resource" uid="uid://cx2r71cixu2uo" path="res://Game/SpawnTable/Tables/PickupSpawnTable/St_Pickups.tres" id="14_7s676"]
+[ext_resource type="SpriteFrames" uid="uid://c4uv1iqnbgnr2" path="res://Characters/Players/Animations/SF_TestPlayer.tres" id="15_7s676"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1fpnh"]
 size = Vector2(14, 20)
@@ -22,72 +25,57 @@ size = Vector2(14, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ybv78"]
 size = Vector2(20, 11)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7s676"]
+size = Vector2(16, 16)
+
 [sub_resource type="Animation" id="Animation_7kb7x"]
-length = 0.001
+length = 0.125
+step = 0.125
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("AnimatedSprite2D:flip_h")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [false]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:flip_h")
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [1]
 }
 
 [sub_resource type="Animation" id="Animation_ht06l"]
 resource_name = "walkLeft"
-length = 0.25
 loop_mode = 1
 step = 0.125
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.125),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1]
-}
-
-[sub_resource type="Animation" id="Animation_ybv78"]
-resource_name = "walkRight"
-length = 0.25
-loop_mode = 1
-step = 0.125
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.125),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0, 1]
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:flip_h")
+tracks/1/path = NodePath("AnimatedSprite2D:flip_h")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -95,6 +83,35 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_ybv78"]
+resource_name = "walkRight"
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dhh5l"]
@@ -110,41 +127,39 @@ size = Vector2(192, 20)
 [node name="Player" type="CharacterBody2D" unique_id=2076774000]
 z_index = 1
 collision_layer = 4
-collision_mask = 3
 input_pickable = true
 script = ExtResource("1_v58vf")
-_acceleration = 500.0
-_maxSpeed = 100.0
+_acceleration = 1000.0
+_maxSpeed = 125.0
 _crouchedMaxSpeed = 50.0
-_friction = 500.0
+_friction = 800.0
 _maxAirSpeedHorizontal = 150.0
+_airControlFactor = 2.0
+_gravity = 5.0
+_jumpStrength = 325.0
 _jumpTime = 0.1
-_wallFriction = 300.0
-_wallJumpStrength = 150.0
-_wallJumpAngle = 55.0
+_wallFriction = 1200.0
+_wallJumpStrength = 600.0
+_wallJumpAngle = 35.0
+
+[node name="Controller" type="Node" parent="." unique_id=505377627 node_paths=PackedStringArray("_character", "_playerState", "_gun")]
+script = ExtResource("4_1fpnh")
+_character = NodePath("..")
+_playerState = NodePath("../PlayerStats")
+_gun = NodePath("../Gun")
 
 [node name="Gun" type="Node2D" parent="." unique_id=590104627 node_paths=PackedStringArray("_kinematicOwner")]
 position = Vector2(0, -16)
 script = ExtResource("2_dhh5l")
 _projectile = ExtResource("3_570sx")
-_projectileSpeed = 100.0
+_projectileSpeed = 200.0
 _kinematicOwner = NodePath("..")
 _offset = 16.0
 facingDirection = Vector2(2, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2117321767]
-position = Vector2(0, -32)
-texture = ExtResource("2_1fpnh")
-hframes = 6
-
 [node name="KinematicBox" type="CollisionShape2D" parent="." unique_id=1005347515]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_1fpnh")
-
-[node name="Controller" type="Node" parent="." unique_id=505377627 node_paths=PackedStringArray("_character", "_gun")]
-script = ExtResource("4_1fpnh")
-_character = NodePath("..")
-_gun = NodePath("../Gun")
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=60656270 node_paths=PackedStringArray("_onHitbox", "_offHitbox")]
 collision_layer = 16
@@ -164,20 +179,34 @@ shape = SubResource("RectangleShape2D_ybv78")
 disabled = true
 debug_color = Color(0, 0.64773154, 0.21145341, 0.41960785)
 
+[node name="PickupRegion" type="Area2D" parent="." unique_id=280701384]
+position = Vector2(0, -8)
+collision_layer = 32
+collision_mask = 32
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRegion" unique_id=365786605]
+shape = SubResource("RectangleShape2D_7s676")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1065891037]
 libraries/ = SubResource("AnimationLibrary_dhh5l")
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=39323085]
 tree_root = ExtResource("2_v58vf")
 anim_player = NodePath("../AnimationPlayer")
-parameters/walk_direction/blend_position = 0.0
+parameters/state_machine/walking/walk_direction/blend_position = 1.0
+parameters/state_machine/walking/walk_speed/scale = 1.0
 script = ExtResource("5_7kb7x")
 
-[node name="PlayerStats" type="Node" parent="." unique_id=410689954]
+[node name="PlayerStats" type="Node" parent="." unique_id=410689954 node_paths=PackedStringArray("match3Spawner")]
 script = ExtResource("9_570sx")
 _maxSupercharge = 100.0
+match3Spawner = NodePath("../CameraAttach/Spawner")
+_specialScene = ExtResource("9_2x3uh")
+_specialCost = 10
 _showingStats = true
 characterTeam = 1
+_defaultHealth = 5.0
 _invulnerabilityTime = 2.0
 
 [node name="CameraAttach" type="RemoteTransform2D" parent="." unique_id=1538334504]
@@ -185,40 +214,48 @@ script = ExtResource("10_vv1l6")
 
 [node name="CameraKillZone" type="Area2D" parent="CameraAttach" unique_id=716764710]
 collision_layer = 8
-collision_mask = 16
+collision_mask = 32
 script = ExtResource("11_7id01")
 _filter = 3
 _damage = 99.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraAttach/CameraKillZone" unique_id=1671477932]
-position = Vector2(0, 96)
+position = Vector2(0, 162)
 shape = SubResource("RectangleShape2D_ebcvw")
 debug_color = Color(0.9470236, 3.5616756e-06, 0.5873681, 0.41960785)
 
 [node name="Spawner" type="Node2D" parent="CameraAttach" unique_id=1995583679]
-position = Vector2(0, -96)
+position = Vector2(0, -112)
 script = ExtResource("12_tkb72")
+_enemySpawnTable = ExtResource("13_mcxtw")
+_maxEnemyCount = 2
+_otherSpawnTable = ExtResource("14_7s676")
 
 [node name="Region0" parent="CameraAttach/Spawner" unique_id=474231788 instance=ExtResource("13_tkb72")]
-position = Vector2(-96, 0)
+position = Vector2(-80, 0)
 
 [node name="Region1" parent="CameraAttach/Spawner" unique_id=507030908 instance=ExtResource("13_tkb72")]
-position = Vector2(-64, 0)
+position = Vector2(-48, 0)
 
 [node name="Region2" parent="CameraAttach/Spawner" unique_id=1718867035 instance=ExtResource("13_tkb72")]
-position = Vector2(-32, 0)
+position = Vector2(-16, 0)
 
 [node name="Region3" parent="CameraAttach/Spawner" unique_id=1987165230 instance=ExtResource("13_tkb72")]
+position = Vector2(16, 0)
 
 [node name="Region4" parent="CameraAttach/Spawner" unique_id=770040365 instance=ExtResource("13_tkb72")]
-position = Vector2(32, 0)
+position = Vector2(48, 0)
 
 [node name="Region5" parent="CameraAttach/Spawner" unique_id=1169281093 instance=ExtResource("13_tkb72")]
-position = Vector2(64, 0)
+position = Vector2(80, 0)
 
-[node name="Region6" parent="CameraAttach/Spawner" unique_id=1484543971 instance=ExtResource("13_tkb72")]
-position = Vector2(96, 0)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1309789832]
+sprite_frames = ExtResource("15_7s676")
+animation = &"walk"
+frame = 1
+offset = Vector2(0, -32)
 
+[connection signal="MoveDirectionChanged" from="." to="AnimationTree" method="SetWalkDirection"]
 [connection signal="MoveSpeedChanged" from="." to="AnimationTree" method="SetWalkSpeed"]
 [connection signal="OnClicked" from="." to="PlayerStats" method="ToggleShowStats"]
 [connection signal="OnCrouched" from="." to="Hurtbox" method="SetOff"]
