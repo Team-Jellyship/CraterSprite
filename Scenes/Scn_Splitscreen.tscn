@@ -35,12 +35,11 @@ stretch = true
 [node name="LeftViewport" type="SubViewport" parent="SplitscreenHBox/LeftScreen" unique_id=1183002234]
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(512, 648)
+size = Vector2i(256, 360)
 render_target_update_mode = 4
 
 [node name="LeftPlayerCamera" type="Camera2D" parent="SplitscreenHBox/LeftScreen/LeftViewport" unique_id=716403420]
 offset = Vector2(0, -8)
-zoom = Vector2(2, 2)
 limit_enabled = false
 position_smoothing_enabled = true
 script = ExtResource("2_87bac")
@@ -79,12 +78,11 @@ stretch = true
 [node name="RightViewport" type="SubViewport" parent="SplitscreenHBox/RightScreen" unique_id=504124211]
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(512, 648)
+size = Vector2i(256, 360)
 render_target_update_mode = 4
 
 [node name="RightPlayerCamera" type="Camera2D" parent="SplitscreenHBox/RightScreen/RightViewport" unique_id=2029577569]
 offset = Vector2(0, -8)
-zoom = Vector2(2, 2)
 limit_enabled = false
 position_smoothing_enabled = true
 script = ExtResource("2_87bac")
