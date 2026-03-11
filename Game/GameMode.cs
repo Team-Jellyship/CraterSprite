@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CraterSprite.Effects;
 using CraterSprite.Match3;
 using Godot;
@@ -19,8 +20,11 @@ public partial class GameMode : Node
 
     private readonly List<SpawnLocation> _locations = [];
     public readonly List<Node2D> players = [];
+    private readonly List<PlayerState> _playerStates = [];
     
     public Node worldRoot { get; private set; }
+
+    public CraterEvent<int, Node2D> onPlayerSpawned = new ();
     
     // Serialized settings, because this is a singleton
     private GameModeSettings _settings;
@@ -59,6 +63,22 @@ public partial class GameMode : Node
         _locations.Insert((int)location.defaultIndex, location);
     }
 
+    public PlayerState GetPlayerState(int playerIndex)
+    {
+        if (playerIndex >= 0 && playerIndex < _playerStates.Count)
+        {
+            return _playerStates[playerIndex];
+        }
+        
+        GD.PrintErr("[GameMode] Attempted to access a player state from an out of bounds index.");
+        return null;
+    }
+
+    public void NotifyGemDestroyed(int destroyerPlayerIndex, Vector2 offset)
+    {
+        _playerStates[GetRivalIndex(destroyerPlayerIndex)].match3Spawner.QueueRelativeSpawn(_settings.gem, offset);
+    }
+
     private void SpawnPlayers()
     {
         var remainingSpawnLocations = new List<SpawnLocation>(_locations);
@@ -69,11 +89,53 @@ public partial class GameMode : Node
             var spawnLocation = remainingSpawnLocations[chosenSpawnIndex];
             var playerInstance = _settings.player.Instantiate<Node2D>();
             playerInstance.SetGlobalPosition(spawnLocation.GlobalPosition);
+            playerInstance.Name = $"Player{i}";
             spawnLocation.Owner.AddChild(playerInstance);
             remainingSpawnLocations.RemoveAt(chosenSpawnIndex);
             
             players.Add(playerInstance);
             CraterFunctions.GetNodeByClass<PlayerController>(playerInstance)?.BindInput(i);
+
+            onPlayerSpawned.Invoke(i, playerInstance);
+
+            var playerState = CraterFunctions.GetNodeByClass<PlayerState>(playerInstance);
+            if (playerState == null)
+            {
+                continue;
+            }
+            
+            _playerStates.Add(playerState);
+            var i1 = i;
+            playerState.container.onSpawnSingleRequested.AddListener(orb => SpawnEnemyFromSingleType(i1, orb));
+            playerState.container.onSpawnRequested.AddListener(orbs => SpawnEnemyFromMatch3(i1, orbs));
+            playerState.index = i;
         }
+    }
+
+    private void SpawnEnemyFromMatch3(int ownerIndex, List<MatchType> orbElements)
+    {
+        var spawner = _playerStates[GetRivalIndex(ownerIndex)].match3Spawner;
+        // spawner.QueueSpawn();
+    }
+
+    private void SpawnEnemyFromSingleType(int ownerIndex, MatchType orbType)
+    {
+        var enemyInstance = recipes.GetEnemyFromOrbType(orbType);
+        if (enemyInstance == null)
+        {
+            return;
+        }
+        
+        _playerStates[GetRivalIndex(ownerIndex)].match3Spawner.QueueSpawn(enemyInstance);
+    }
+
+    private static int GetRivalIndex(int playerIndex)
+    {
+        return playerIndex switch
+        {
+            0 => 1,
+            1 => 0,
+            _ => throw new NotImplementedException()
+        };
     }
 }

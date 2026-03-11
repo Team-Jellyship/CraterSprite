@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using CraterSprite;
+using CraterSprite.Shared.Scripts;
 
 public partial class Projectile : Node2D
 {
@@ -40,22 +41,23 @@ public partial class Projectile : Node2D
 
     private void Overlap(Area2D area)
     {
-        var hitObjectCharacterStats = CraterFunctions.GetNodeByClassFromRoot<CharacterStats>(area);
+        var hitObjectCharacterStats = CraterFunctions.GetNodeByClassFromParent<IDamageListener>(area);
         if (hitObjectCharacterStats == null)
         {
             return;
         }
         
-        if (hitObjectCharacterStats.GetInstanceId() == _owner.ObjectId)
+        if (hitObjectCharacterStats is Node node && node.GetInstanceId() == _owner.ObjectId)
         {
             return;
         }
         HitEnemy(hitObjectCharacterStats);
     }
 
-    private void HitEnemy(CharacterStats character)
+    private void HitEnemy(IDamageListener character)
     {
-        character.TakeDamage(1.0f);
+        var obj = InstanceFromId(_owner.ObjectId);
+        character.TakeDamage(1.0f, (CharacterStats)obj);
 
         if (_destroyOnContact)
         {

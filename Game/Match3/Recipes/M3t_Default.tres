@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://cq5y6qgvw6i4j" path="res://Game/Match3/Match3RecipeTable.cs" id="1_7au66"]
 [ext_resource type="Script" uid="uid://cgtmaxm7qx01f" path="res://Game/Match3/Match3Recipe.cs" id="1_24f5s"]
 [ext_resource type="PackedScene" uid="uid://bc63xk2i2ivxt" path="res://Characters/Enemies/TestEnemy.tscn" id="1_rsm47"]
+[ext_resource type="PackedScene" uid="uid://fjgqtatonlq6" path="res://Characters/Enemies/FireEnemy.tscn" id="2_l7flh"]
+[ext_resource type="PackedScene" uid="uid://f3ftmbq455dv" path="res://Characters/Enemies/WaterEnemy.tscn" id="3_xpkvb"]
 
 [sub_resource type="Resource" id="Resource_rsm47"]
 script = ExtResource("1_24f5s")
@@ -14,12 +16,17 @@ metadata/_custom_type_script = "uid://cgtmaxm7qx01f"
 
 [sub_resource type="Resource" id="Resource_24f5s"]
 script = ExtResource("1_24f5s")
-type1 = 1
-type2 = 1
+type1 = 2
+type2 = 2
 type3 = 2
 metadata/_custom_type_script = "uid://cgtmaxm7qx01f"
 
 [resource]
 script = ExtResource("1_7au66")
 recipes = Array[Object]([SubResource("Resource_rsm47"), SubResource("Resource_24f5s")])
+_fireEnemy = ExtResource("2_l7flh")
+_waterEnemy = ExtResource("3_xpkvb")
+_windEnemy = ExtResource("1_rsm47")
+_lightEnemy = ExtResource("1_rsm47")
+_darkEnemy = ExtResource("1_rsm47")
 metadata/_custom_type_script = "uid://cq5y6qgvw6i4j"

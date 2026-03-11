@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://8srotn0dqetj" path="res://Scenes/scn_splitscreen.gd" id="1_4abrk"]
 [ext_resource type="PackedScene" uid="uid://c1emph2w8faox" path="res://Scenes/Scn_TestRoom.tscn" id="1_d6ufi"]
 [ext_resource type="Script" uid="uid://c2x7jpc3amnbq" path="res://Characters/Players/Scripts/PlayerCamera.cs" id="2_87bac"]
+[ext_resource type="PackedScene" uid="uid://lcgmn2yj2pjg" path="res://UI/HUD/Match3Display.tscn" id="4_h0bj7"]
+[ext_resource type="Script" uid="uid://bk4tndcndnjv7" path="res://UI/HUD/Scripts/ScoreDisplay.cs" id="5_4qdo0"]
 
 [node name="ScnSplitscreen" type="Control" unique_id=398535084 node_paths=PackedStringArray("camera0", "camera1")]
 layout_mode = 3
@@ -40,7 +42,7 @@ render_target_update_mode = 4
 
 [node name="LeftPlayerCamera" type="Camera2D" parent="HBoxContainer/LeftScreen/LeftViewport" unique_id=716403420]
 offset = Vector2(0, -8)
-zoom = Vector2(4, 4)
+zoom = Vector2(2, 2)
 limit_enabled = false
 position_smoothing_enabled = true
 script = ExtResource("2_87bac")
@@ -52,6 +54,64 @@ position = Vector2(2, -5)
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 color = Color(0, 0, 0, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ColorRect" unique_id=539872155]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -34.0
+offset_right = 34.0
+offset_bottom = 128.0
+grow_horizontal = 2
+
+[node name="Player1HUD" type="VBoxContainer" parent="HBoxContainer/ColorRect/HBoxContainer" unique_id=1805563286]
+layout_mode = 2
+
+[node name="Match3Display" parent="HBoxContainer/ColorRect/HBoxContainer/Player1HUD" unique_id=1242715241 instance=ExtResource("4_h0bj7")]
+layout_mode = 2
+
+[node name="ScoreBar" type="Control" parent="HBoxContainer/ColorRect/HBoxContainer/Player1HUD" unique_id=2077870397 node_paths=PackedStringArray("_progressBar")]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+script = ExtResource("5_4qdo0")
+_progressBar = NodePath("ProgressBar")
+
+[node name="ProgressBar" type="ProgressBar" parent="HBoxContainer/ColorRect/HBoxContainer/Player1HUD/ScoreBar" unique_id=575544907]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 35.0
+fill_mode = 3
+show_percentage = false
+
+[node name="Player2Display" type="VBoxContainer" parent="HBoxContainer/ColorRect/HBoxContainer" unique_id=1776550017]
+layout_mode = 2
+
+[node name="Match3Display2" parent="HBoxContainer/ColorRect/HBoxContainer/Player2Display" unique_id=573105654 instance=ExtResource("4_h0bj7")]
+layout_mode = 2
+_playerIndex = 1
+
+[node name="ScoreBar" type="Control" parent="HBoxContainer/ColorRect/HBoxContainer/Player2Display" unique_id=125076228 node_paths=PackedStringArray("_progressBar")]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+script = ExtResource("5_4qdo0")
+_progressBar = NodePath("ProgressBar")
+_playerIndex = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="HBoxContainer/ColorRect/HBoxContainer/Player2Display/ScoreBar" unique_id=1799233910]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 35.0
+fill_mode = 3
+show_percentage = false
 
 [node name="RightScreen" type="SubViewportContainer" parent="HBoxContainer" unique_id=616400454]
 texture_filter = 1
@@ -67,7 +127,7 @@ render_target_update_mode = 4
 
 [node name="RightPlayerCamera" type="Camera2D" parent="HBoxContainer/RightScreen/RightViewport" unique_id=2029577569]
 offset = Vector2(0, -8)
-zoom = Vector2(4, 4)
+zoom = Vector2(2, 2)
 limit_enabled = false
 position_smoothing_enabled = true
 script = ExtResource("2_87bac")

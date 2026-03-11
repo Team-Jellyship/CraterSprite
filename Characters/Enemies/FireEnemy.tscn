@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://fjgqtatonlq6"]
+
+[ext_resource type="Texture2D" uid="uid://c765qygv0kp8i" path="res://icon.svg" id="1_4n4gg"]
+[ext_resource type="Script" uid="uid://bsfdycg3wydrv" path="res://Characters/Scripts/KinematicCharacter.cs" id="1_7yner"]
+[ext_resource type="Shader" uid="uid://cg3uln3xwrvyj" path="res://Shared/Shaders/Sh_SpriteColor.gdshader" id="1_30rjw"]
+[ext_resource type="Script" uid="uid://cyhvlrad5psho" path="res://Characters/Scripts/CharacterStats.cs" id="2_30rjw"]
+[ext_resource type="Script" uid="uid://5yfgyni1c342" path="res://Shared/Scripts/DamageZone2D.cs" id="3_7yner"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7yner"]
+shader = ExtResource("1_30rjw")
+shader_parameter/color = Vector4(1, 0, 0, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8nvh5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dq4fg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7yner"]
+size = Vector2(20, 10)
+
+[node name="FireEnemy" type="CharacterBody2D" unique_id=203046980]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_7yner")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=370477374]
+material = SubResource("ShaderMaterial_7yner")
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_4n4gg")
+
+[node name="Stats" type="Node" parent="." unique_id=802010356]
+script = ExtResource("2_30rjw")
+matchType = 1
+_defaultHealth = 3.0
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1727647131]
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=118484821]
+shape = SubResource("CircleShape2D_8nvh5")
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=829474099]
+collision_layer = 8
+collision_mask = 16
+script = ExtResource("3_7yner")
+_filter = 3
+_damage = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=35476914]
+shape = SubResource("RectangleShape2D_dq4fg")
+debug_color = Color(0.9733754, 0, 0.4378033, 0.41960785)
+
+[node name="PhysicsCollider" type="CollisionShape2D" parent="." unique_id=630353109]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_7yner")

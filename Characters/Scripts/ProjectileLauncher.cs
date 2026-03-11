@@ -10,16 +10,13 @@ public partial class ProjectileLauncher : Node2D
 	[Export] private KinematicCharacter _kinematicOwner;
 	[Export(PropertyHint.None, "suffix:px")] private float _offset = 0.0f;
 
-	[Export]
-	public Vector2 facingDirection
-	{
-		set
-		{
-			_facingDirection = value.Normalized();
-		}
-		get => _facingDirection;
-	}
-	private Vector2 _facingDirection;
+    [Export]
+    public Vector2 facingDirection
+    {
+        set => _facingDirection = value.Normalized();
+        get => _facingDirection;
+    }
+    private Vector2 _facingDirection;
 
 	public bool aimingUp = false;
 	

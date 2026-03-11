@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 using Godot;
+using Vector2 = Godot.Vector2;
 
 namespace CraterSprite;
 public abstract class CraterMath
@@ -56,5 +57,11 @@ public abstract class CraterMath
     public static T ChooseRandom<T>(List<T> items)
     {
         return items[GD.RandRange(0, items.Count - 1)];
+    }
+
+    public static Vector2 VectorFromAngle(float angle)
+    {
+        var rads = Mathf.DegToRad(angle);
+        return new Vector2(Mathf.Cos(rads), -Mathf.Sin(rads));
     }
 }

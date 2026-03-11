@@ -1,34 +1,39 @@
-using Godot;
-using System;
 using CraterSprite.Effects;
+using CraterSprite.Match3;
+using CraterSprite.Shared.Scripts;
+using CraterSprite.Teams;
+using Godot;
 using ImGuiNET;
 
 namespace CraterSprite;
 
-public enum Team
-{
-    Left,
-    Right,
-    Enemy,
-    Unaffiliated
-}
-
-
 /**
  * Class for holding relevant character stats information
  */
-public partial class CharacterStats : Node
+public partial class CharacterStats : Node, IDamageListener
 {
-    private readonly StatusEffectContainer _effects = new();
 
-    [Export] private bool _showingStats = false;
-    
     [Signal] public delegate void OnDeathEventHandler();
+    [Signal] public delegate void OnTakeDamageEventHandler(float damage);
+    [Signal] public delegate void OnStunnedEventHandler();
+    [Signal] public delegate void OnStunEndEventHandler();
 
+    [Export] private bool _showingStats;
+    [Export] public Team characterTeam { private set; get; }
+    [Export] public MatchType matchType { private set; get; }
+    [Export] private float _defaultHealth = 15;
+    [Export] private float _invulnerabilityTime = 0.0f;
+    
+    
+    private readonly StatusEffectContainer _effects = new();
+    
     public override void _Ready()
     {
-        _effects.SetBaseValue(GameMode.instance.statusEffects.health, 15);
-        _effects.SetBaseValue(GameMode.instance.statusEffects.maxHealth, 15);
+        _effects.SetBaseValue(GameMode.instance.statusEffects.health, _defaultHealth);
+        _effects.SetBaseValue(GameMode.instance.statusEffects.maxHealth, _defaultHealth);
+        
+        _effects.RegisterEffectAppliedCallback(GameMode.instance.statusEffects.invulnerability, EmitSignalOnStunned, this);
+        _effects.RegisterEffectRemovedCallback(GameMode.instance.statusEffects.invulnerability, EmitSignalOnStunEnd, this);
     }
 
     public override void _Process(double delta)
@@ -46,19 +51,46 @@ public partial class CharacterStats : Node
         _showingStats = !_showingStats;
     }
 
-    public void TakeDamage(float damageAmount)
+    /**
+     * <summary>
+     *     Take damage. Automatically emits events associated with the health effect,
+     *     and triggers the OnDeath signal if the damage causes this character to die
+     * </summary>
+     */
+    public void TakeDamage(float damageAmount, CharacterStats source)
     {
-        var healthEffect = GameMode.instance.statusEffects.health;
-        if (_effects.AddBaseValue(healthEffect, -damageAmount) <= 0.0f)
+        if (_effects.HasEffect(GameMode.instance.statusEffects.invulnerability))
         {
-            EmitSignalOnDeath();
-            Owner?.QueueFree();
+            GD.Print($"[CharacterStats] '{Owner.Name}' took damage, but was invulnerable so damage was discarded.");
+            return;
         }
+        
+        GD.Print($"[CharacterStats] '{Owner.Name}' took '{damageAmount}' damage.");
+        EmitSignalOnTakeDamage(damageAmount);
+        var healthEffect = GameMode.instance.statusEffects.health;
+        if (!(_effects.AddBaseValue(healthEffect, -damageAmount) <= 0.0f))
+        {
+            if (_invulnerabilityTime > 0.0f)
+            {
+                _effects.ApplyStatusEffectInstance(new StatusEffectInstance(GameMode.instance.statusEffects.invulnerability, this, _invulnerabilityTime));
+            }
+            return;
+        }
+
+        GD.Print($"Character '{Owner.Name}' died.");
+
+        source?.KilledEnemy(this);
+        Owner?.QueueFree();
+        EmitSignalOnDeath();
+    }
+
+    public virtual void KilledEnemy(CharacterStats enemy)
+    {
     }
 
     private void DrawImGui()
     {
-        if (ImGui.Begin($"{GetName()} Status###HealthComponent{GetName()}"))
+        if (ImGui.Begin($"{Owner.GetName()} Status###HealthComponent{Owner.GetName()}"))
         {
             ImGui.Text($"Health: {_effects.GetValue(GameMode.instance.statusEffects.health)} / {_effects.GetValue(GameMode.instance.statusEffects.maxHealth)}");
             foreach (var item in _effects)
@@ -84,7 +116,7 @@ public partial class CharacterStats : Node
 
                 foreach (var instance in item.Value)
                 {
-                    var content = $"Source:";
+                    var content = "Source:";
                     if (instance.duration != 0.0f)
                     {
                         content += $"\tTime: {instance.currentTime}/{instance.duration}s";
