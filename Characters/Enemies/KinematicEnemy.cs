@@ -72,7 +72,7 @@ namespace CraterSprite
 			}
 			
 			
-			GD.Print(currentVelocity.X);
+			// GD.Print(currentVelocity.X);
 			
 			//Sets our temporary Variable into active in the game
 			SetVelocity(currentVelocity);
