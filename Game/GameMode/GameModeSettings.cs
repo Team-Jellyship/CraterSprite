@@ -12,4 +12,6 @@ public partial class GameModeSettings : Resource
     [Export] public PackedScene defaultLevel;
 
     [Export] public PackedScene characterSelectScreen;
+    [Export] public PackedScene victoryScreen;
+    [Export] public PackedScene lossScreen;
 }

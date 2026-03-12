@@ -14,8 +14,8 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_4abrk")
-camera0 = NodePath("SplitscreenHBox/LeftScreen/LeftViewport/LeftPlayerCamera")
-camera1 = NodePath("SplitscreenHBox/RightScreen/RightViewport/RightPlayerCamera")
+camera0 = NodePath("SplitscreenHBox/Viewport0/Viewport/LeftPlayerCamera")
+camera1 = NodePath("SplitscreenHBox/Viewport1/Viewport/RightPlayerCamera")
 
 [node name="SplitscreenHBox" type="HBoxContainer" parent="." unique_id=1139025370]
 layout_mode = 1
@@ -26,25 +26,26 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="LeftScreen" type="SubViewportContainer" parent="SplitscreenHBox" unique_id=1710712568]
+[node name="Viewport0" type="SubViewportContainer" parent="SplitscreenHBox" unique_id=1710712568]
+unique_name_in_owner = true
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 stretch = true
 
-[node name="LeftViewport" type="SubViewport" parent="SplitscreenHBox/LeftScreen" unique_id=1183002234]
+[node name="Viewport" type="SubViewport" parent="SplitscreenHBox/Viewport0" unique_id=1183002234]
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 size = Vector2i(256, 360)
 render_target_update_mode = 4
 
-[node name="LeftPlayerCamera" type="Camera2D" parent="SplitscreenHBox/LeftScreen/LeftViewport" unique_id=716403420]
+[node name="LeftPlayerCamera" type="Camera2D" parent="SplitscreenHBox/Viewport0/Viewport" unique_id=716403420]
 offset = Vector2(0, -8)
 limit_enabled = false
 position_smoothing_enabled = true
 script = ExtResource("2_87bac")
 
-[node name="WorldRoot" type="Node2D" parent="SplitscreenHBox/LeftScreen/LeftViewport" unique_id=1519984598]
+[node name="WorldRoot" type="Node2D" parent="SplitscreenHBox/Viewport0/Viewport" unique_id=1519984598]
 unique_name_in_owner = true
 
 [node name="Divider" type="ColorRect" parent="SplitscreenHBox" unique_id=238917213]
@@ -69,19 +70,20 @@ layout_mode = 2
 layout_mode = 2
 _playerIndex = 1
 
-[node name="RightScreen" type="SubViewportContainer" parent="SplitscreenHBox" unique_id=616400454]
+[node name="Viewport1" type="SubViewportContainer" parent="SplitscreenHBox" unique_id=616400454]
+unique_name_in_owner = true
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 stretch = true
 
-[node name="RightViewport" type="SubViewport" parent="SplitscreenHBox/RightScreen" unique_id=504124211]
+[node name="Viewport" type="SubViewport" parent="SplitscreenHBox/Viewport1" unique_id=504124211]
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 size = Vector2i(256, 360)
 render_target_update_mode = 4
 
-[node name="RightPlayerCamera" type="Camera2D" parent="SplitscreenHBox/RightScreen/RightViewport" unique_id=2029577569]
+[node name="RightPlayerCamera" type="Camera2D" parent="SplitscreenHBox/Viewport1/Viewport" unique_id=2029577569]
 offset = Vector2(0, -8)
 limit_enabled = false
 position_smoothing_enabled = true
