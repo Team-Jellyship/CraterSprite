@@ -78,7 +78,7 @@ public partial class GameMode : Node
 		ImGuiGodot.ImGuiGD.ToolInit();
 		
 		statusEffects = ResourceLoader.Load<StatusEffectList>("res://Game/Effects/SL_Effects.tres");
-		recipes = ResourceLoader.Load<Match3RecipeTable>("res://Game/Match3/Recipes/M3t_Default.tres");
+		recipes = ResourceLoader.Load<Match3RecipeTable>("res://Game/Match3/M3t_RecipeTable.tres");
 		settings = ResourceLoader.Load<GameModeSettings>("res://Game/DefaultSettings.tres");
 
 		var currentScene = GetTree().GetCurrentScene();

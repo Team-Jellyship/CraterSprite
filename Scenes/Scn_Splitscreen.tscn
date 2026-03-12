@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://8srotn0dqetj" path="res://Scenes/scn_splitscreen.gd" id="1_4abrk"]
 [ext_resource type="Script" uid="uid://c2x7jpc3amnbq" path="res://Characters/Players/Scripts/PlayerCamera.cs" id="2_87bac"]
-[ext_resource type="PackedScene" uid="uid://gjs06khmi3td" path="res://UI/HUD/PlayerHud.tscn" id="3_4abrk"]
+[ext_resource type="PackedScene" uid="uid://gjs06khmi3td" path="res://UI/HUD/UI_PlayerHud.tscn" id="3_4abrk"]
 
 [node name="ScnSplitscreen" type="Control" unique_id=398535084 node_paths=PackedStringArray("camera0", "camera1")]
 layout_mode = 3
