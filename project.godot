@@ -34,6 +34,12 @@ InputManager="*uid://cqro5ppmwmevj"
 GameMode="*uid://ds6jeg40nytga"
 ImGuiRoot="*uid://dugmpnsxaagba"
 
+[display]
+
+window/size/viewport_width=640
+window/size/viewport_height=360
+window/stretch/mode="canvas_items"
+
 [dotnet]
 
 project/assembly_name="CraterSprite"
@@ -118,3 +124,4 @@ limits/debugger/max_chars_per_second=100000
 
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
+2d/snap/snap_2d_transforms_to_pixel=true

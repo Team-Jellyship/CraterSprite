@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="SpawnEntry" format=3 uid="uid://8gct3wyvopqm"]
-
-[ext_resource type="PackedScene" uid="uid://qfse5rogaf12" path="res://Characters/Enemies/WindEnemy.tscn" id="1_8mfvy"]
-[ext_resource type="Script" uid="uid://cmhp0o8rvai1x" path="res://Game/SpawnTable/SpawnEntry.cs" id="2_by8st"]
-
-[resource]
-script = ExtResource("2_by8st")
-prefab = ExtResource("1_8mfvy")
-metadata/_custom_type_script = "uid://cmhp0o8rvai1x"

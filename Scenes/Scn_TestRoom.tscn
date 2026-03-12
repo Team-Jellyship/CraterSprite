@@ -2,11 +2,10 @@
 
 [ext_resource type="Shader" uid="uid://csdxvr6rx5rjk" path="res://Shared/Shaders/Sh_WorldSpaceTexture.gdshader" id="2_5w25o"]
 [ext_resource type="Texture2D" uid="uid://bdqbta7j8iypg" path="res://Shared/Sprites/check16.png" id="2_l2rra"]
-[ext_resource type="PackedScene" uid="uid://bc63xk2i2ivxt" path="res://Characters/Enemies/TestEnemy.tscn" id="4_5ui78"]
+[ext_resource type="PackedScene" uid="uid://bc63xk2i2ivxt" path="res://Characters/Enemies/Char_TestEnemy.tscn" id="4_5ui78"]
 [ext_resource type="Texture2D" uid="uid://c2g84k6v3iajs" path="res://Shared/Sprites/wallTex.png" id="4_fcfrf"]
-[ext_resource type="PackedScene" uid="uid://fjgqtatonlq6" path="res://Characters/Enemies/FireEnemy.tscn" id="5_20dgb"]
+[ext_resource type="PackedScene" uid="uid://fjgqtatonlq6" path="res://Characters/Enemies/Char_WalkingEnemy.tscn" id="5_20dgb"]
 [ext_resource type="Script" uid="uid://dbsjfkw53mpjv" path="res://Game/SpawnLocation.cs" id="5_fcfrf"]
-[ext_resource type="PackedScene" uid="uid://f3ftmbq455dv" path="res://Characters/Enemies/WaterEnemy.tscn" id="6_2yfc4"]
 [ext_resource type="Script" uid="uid://chcnkhnc35ofv" path="res://Props/Scripts/VictoryRegion.cs" id="8_opeqa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l2rra"]
@@ -104,14 +103,11 @@ position = Vector2(664, -912)
 [node name="FireEnemy2" parent="TileMap" unique_id=926336945 instance=ExtResource("5_20dgb")]
 position = Vector2(752, -368)
 
-[node name="WaterEnemy" parent="TileMap" unique_id=452193388 instance=ExtResource("6_2yfc4")]
-position = Vector2(624, -208)
-
-[node name="WaterEnemy2" parent="TileMap" unique_id=1306600231 instance=ExtResource("6_2yfc4")]
-position = Vector2(792, -37)
-
 [node name="FireEnemy3" parent="TileMap" unique_id=632978020 instance=ExtResource("5_20dgb")]
-position = Vector2(720, 80)
+position = Vector2(656, 176)
+
+[node name="FireEnemy9" parent="TileMap" unique_id=295122709 instance=ExtResource("5_20dgb")]
+position = Vector2(656, 176)
 
 [node name="FireEnemy4" parent="TileMap" unique_id=1597739076 instance=ExtResource("5_20dgb")]
 position = Vector2(312, -424)
@@ -122,23 +118,11 @@ position = Vector2(280, -656)
 [node name="FireEnemy6" parent="TileMap" unique_id=155484174 instance=ExtResource("5_20dgb")]
 position = Vector2(376, -784)
 
-[node name="WaterEnemy3" parent="TileMap" unique_id=1049381411 instance=ExtResource("6_2yfc4")]
-position = Vector2(304, -1136)
-
 [node name="FireEnemy7" parent="TileMap" unique_id=1610894086 instance=ExtResource("5_20dgb")]
 position = Vector2(352, -1712)
 
 [node name="FireEnemy8" parent="TileMap" unique_id=339554368 instance=ExtResource("5_20dgb")]
 position = Vector2(712, -1712)
-
-[node name="WaterEnemy4" parent="TileMap" unique_id=586431872 instance=ExtResource("6_2yfc4")]
-position = Vector2(792, -37)
-
-[node name="WaterEnemy5" parent="TileMap" unique_id=1186938207 instance=ExtResource("6_2yfc4")]
-position = Vector2(664, 80)
-
-[node name="WaterEnemy6" parent="TileMap" unique_id=2045083923 instance=ExtResource("6_2yfc4")]
-position = Vector2(784, 176)
 
 [node name="Area2D" type="Area2D" parent="." unique_id=664018790]
 position = Vector2(512, 0)

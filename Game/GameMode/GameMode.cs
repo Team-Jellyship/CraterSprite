@@ -58,7 +58,7 @@ public partial class GameMode : Node
 		stateName = "Versus",
 		canSetWinner = true
 	};
-	private GameState victoryGameState { get; } = new()
+	private RoundOverState roundOverState { get; } = new()
 	{
 		stateName = "Victory",
 		transitionTime = 2.0f
@@ -78,7 +78,7 @@ public partial class GameMode : Node
 		ImGuiGodot.ImGuiGD.ToolInit();
 		
 		statusEffects = ResourceLoader.Load<StatusEffectList>("res://Game/Effects/SL_Effects.tres");
-		recipes = ResourceLoader.Load<Match3RecipeTable>("res://Game/Match3/Recipes/M3t_Default.tres");
+		recipes = ResourceLoader.Load<Match3RecipeTable>("res://Game/Match3/M3t_RecipeTable.tres");
 		settings = ResourceLoader.Load<GameModeSettings>("res://Game/DefaultSettings.tres");
 
 		var currentScene = GetTree().GetCurrentScene();
@@ -96,8 +96,8 @@ public partial class GameMode : Node
 		
 		_transitions.Add(new Tuple<GameState, GameModeCommand>(characterSelectState, GameModeCommand.Timeout), loadingState);
 		_transitions.Add(new Tuple<GameState, GameModeCommand>(loadingState, GameModeCommand.Loaded), versusGameState);
-		_transitions.Add(new Tuple<GameState, GameModeCommand>(versusGameState, GameModeCommand.Victory), victoryGameState);
-		_transitions.Add(new Tuple<GameState, GameModeCommand>(victoryGameState, GameModeCommand.Timeout), loadingState);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(versusGameState, GameModeCommand.Victory), roundOverState);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(roundOverState, GameModeCommand.Timeout), loadingState);
 		
 		_currentGameState = characterSelectState;
 		_currentGameState.EnterState(this);
@@ -108,6 +108,11 @@ public partial class GameMode : Node
 		else
 		{
 			_transitionTimer.Start(_currentGameState.transitionTime);
+		}
+
+		for (var i = 0; i < settings.playerCount; ++i)
+		{
+			playerData[i].playerViewport = currentScene.GetNode<SubViewportContainer>($"%Viewport{i}");
 		}
 	}
 
@@ -181,6 +186,11 @@ public partial class GameMode : Node
 
 		GD.Print($"[GameMode] Player {playerIndex} won!");
 		playerData[playerIndex].IncreaseScore();
+
+		for (var i = 0; i < playerData.Count; ++i)
+		{
+			playerData[i].lastRoundOutcome = i == playerIndex ? RoundOutcome.Win : RoundOutcome.Lose;
+		}
 		Command(GameModeCommand.Victory);
 	}
 
