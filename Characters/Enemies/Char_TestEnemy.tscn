@@ -15,7 +15,8 @@ size = Vector2(26, 26)
 
 [node name="TestEnemy" type="CharacterBody2D" unique_id=1975847372]
 script = ExtResource("1_hnwul")
-_maxSpeed = 50.0
+_acceleration = 500.0
+_maxSpeed = 75.0
 
 [node name="Gun" type="Node2D" parent="." unique_id=747628752 node_paths=PackedStringArray("_kinematicOwner")]
 script = ExtResource("2_ve3cf")

@@ -16,13 +16,14 @@ public partial class WalkingController : AiController
     [Export] private RayCast2D _groundCast;
 
     private float _facingDirection = 1.0f;
+    private bool _attackOnCooldown;
     private Timer _attackTimer;
     
     public override void _Ready()
     {
         // CreateTimer is a helper function to automatically... create a timer :)
         // It just saves on repeating code, so I used it here
-        _attackTimer = CraterFunctions.CreateTimer(this, "AttackTimer", _gun.FireProjectile);
+        _attackTimer = CraterFunctions.CreateTimer(this, "AttackTimer", () => _attackOnCooldown = false);
         
         // Register our flip function with the character's HitWall event, so it will automatically be run,
         // and we don't have to check each frame for it
@@ -35,6 +36,13 @@ public partial class WalkingController : AiController
 
     public override void _PhysicsProcess(double delta)
     {
+        if (_playerDetection.GetCollider() != null && !_attackOnCooldown)
+        {
+            _gun.FireProjectile();
+            _attackTimer.Start(_gunCooldownTime);
+            _attackOnCooldown = true;
+        }
+        
         // Because the wall hit logic is moved into an event instead, this method doesn't do anything when it's not on the floor
         // To avoid nesting the code (indents and adding blocks), I just used an early return statement.
         // If the character isn't on the floor, this exits early!
