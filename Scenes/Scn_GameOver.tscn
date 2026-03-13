@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://cgnvcxyrr6gpt"]
+
+[ext_resource type="Theme" uid="uid://cu53voa5sgi7g" path="res://UI/Themes/Tm_Menu.tres" id="1_8xnka"]
+[ext_resource type="Script" uid="uid://bab57b35nqp5u" path="res://UI/Menus/RematchMenu.cs" id="1_ir16e"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xx1rk"]
+font_size = 48
+font_color = Color(0, 0, 0, 1)
+
+[node name="ScnGameOver" type="Control" unique_id=1032031638 node_paths=PackedStringArray("_rematchButton")]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ir16e")
+_rematchButton = NodePath("VBoxContainer/RematchButton")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=267713195]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.47058824)
+
+[node name="WinnerText" type="Label" parent="." unique_id=1935074813]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -130.0
+offset_right = 130.0
+offset_bottom = 67.0
+grow_horizontal = 2
+text = "Player 1 Wins!"
+label_settings = SubResource("LabelSettings_xx1rk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1914676270]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -33.0
+offset_right = 48.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="RematchButton" type="Button" parent="VBoxContainer" unique_id=2094755012]
+layout_mode = 2
+focus_neighbor_top = NodePath(".")
+focus_neighbor_bottom = NodePath("../MainMenuButton")
+theme = ExtResource("1_8xnka")
+action_mode = 0
+text = "Rematch"
+
+[node name="MainMenuButton" type="Button" parent="VBoxContainer" unique_id=332382404]
+layout_mode = 2
+text = "Main Menu"

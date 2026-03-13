@@ -48,6 +48,11 @@ public partial class GameMode : Node
 		stateName = "Character Select",
 		transitionTime = 3.0f
 	};
+
+	private RematchMenuState rematchState { get; } = new()
+	{
+		stateName = "GameOver"
+	};
 	private GameState warmupState { get; } = new()
 	{
 		stateName = "Warmup",
@@ -65,7 +70,7 @@ public partial class GameMode : Node
 	};
 	
 	// Transition table
-	private readonly Dictionary<Tuple<GameState, GameModeCommand>, GameState> _transitions = new();
+	private readonly Dictionary<Tuple<GameState, GameModeCommand>, Func<GameState>> _transitions = new();
 
 
 	public override void _EnterTree()
@@ -93,11 +98,14 @@ public partial class GameMode : Node
 		
 		SetupTimer();
 		characterSelectState.menuScene = settings.characterSelectScreen;
+		rematchState.menuScene = settings.rematchScreen;
 		
-		_transitions.Add(new Tuple<GameState, GameModeCommand>(characterSelectState, GameModeCommand.Timeout), loadingState);
-		_transitions.Add(new Tuple<GameState, GameModeCommand>(loadingState, GameModeCommand.Loaded), versusGameState);
-		_transitions.Add(new Tuple<GameState, GameModeCommand>(versusGameState, GameModeCommand.Victory), roundOverState);
-		_transitions.Add(new Tuple<GameState, GameModeCommand>(roundOverState, GameModeCommand.Timeout), loadingState);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(characterSelectState, GameModeCommand.Timeout), () => loadingState);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(loadingState, GameModeCommand.Loaded), () => versusGameState);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(versusGameState, GameModeCommand.Victory), () => roundOverState);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(roundOverState, GameModeCommand.Timeout), () =>
+		{ return playerData.TrueForAll(data => data.playerScore < settings.roundsToWin) ? loadingState : rematchState; });
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(rematchState, GameModeCommand.Victory), () => loadingState);
 		
 		_currentGameState = characterSelectState;
 		_currentGameState.EnterState(this);
@@ -157,11 +165,12 @@ public partial class GameMode : Node
 
 	public void Command(GameModeCommand command)
 	{
-		if (!_transitions.TryGetValue(new Tuple<GameState, GameModeCommand>(_currentGameState, command), out var newState))
+		if (!_transitions.TryGetValue(new Tuple<GameState, GameModeCommand>(_currentGameState, command), out var newStateFunction))
 		{
 			return;
 		}
-		
+
+		var newState = newStateFunction.Invoke();
 		GD.Print($"[GameMode] Transitioning to new game state '{newState.stateName}'");
 		_currentGameState.ExitState();
 		_currentGameState = newState;
@@ -232,6 +241,7 @@ public partial class GameMode : Node
 		_transitionTimer.SetName("TransitionTimer");
 		_transitionTimer.OneShot = true;
 		_transitionTimer.Paused = false;
+		_transitionTimer.ProcessMode = ProcessModeEnum.Always;
 		_transitionTimer.Timeout += () => Command(GameModeCommand.Timeout);
 	}
 }

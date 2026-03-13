@@ -214,13 +214,13 @@ script = ExtResource("10_vv1l6")
 
 [node name="CameraKillZone" type="Area2D" parent="CameraAttach" unique_id=716764710]
 collision_layer = 8
-collision_mask = 32
+collision_mask = 48
 script = ExtResource("11_7id01")
-_filter = 3
+_filter = 7
 _damage = 99.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraAttach/CameraKillZone" unique_id=1671477932]
-position = Vector2(0, 162)
+position = Vector2(0, 192)
 shape = SubResource("RectangleShape2D_ebcvw")
 debug_color = Color(0.9470236, 3.5616756e-06, 0.5873681, 0.41960785)
 
@@ -228,7 +228,8 @@ debug_color = Color(0.9470236, 3.5616756e-06, 0.5873681, 0.41960785)
 position = Vector2(0, -112)
 script = ExtResource("12_tkb72")
 _enemySpawnTable = ExtResource("13_mcxtw")
-_maxEnemyCount = 2
+_enemySpawnTime = 5.0
+_maxEnemyCount = 10
 _otherSpawnTable = ExtResource("14_7s676")
 
 [node name="Region0" parent="CameraAttach/Spawner" unique_id=474231788 instance=ExtResource("13_tkb72")]

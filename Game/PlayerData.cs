@@ -40,4 +40,10 @@ public class PlayerData
     {
         onScoreChanged.Invoke(++playerScore);
     }
+
+    public void ResetScore()
+    {
+        playerScore = 0;
+        onScoreChanged.Invoke(0);
+    }
 }
