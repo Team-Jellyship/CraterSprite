@@ -23,9 +23,11 @@ namespace CraterSprite.Input
     
     public partial class InputManager : Node
     {
-        private const bool TreatControllerAsSecondDevice = true;
+        // private const bool TreatControllerAsSecondDevice = true;
         public static InputManager instance { get; private set; }
 
+        public InputSettings settings { get; private set; }
+        
         // Map our keys to action strings
         private readonly Dictionary<InputVariant, InputAction> _keyActionMap = new();
         public readonly List<InputAction> actions = [];
@@ -36,6 +38,9 @@ namespace CraterSprite.Input
         public override void _Ready()
         {
             instance = this;
+
+            settings = ResourceLoader.Load<InputSettings>("res://Game/Input/InputSettings.tres");
+            
             var actionCount = 0;
             // Steal godot's existing action editor, so I don't have to write one
             foreach (var action in InputMap.GetActions())
@@ -65,7 +70,7 @@ namespace CraterSprite.Input
             }
 
             var deviceId = @event.Device;
-            if (TreatControllerAsSecondDevice)
+            if (settings.treatGamepadAsSecondDevice)
             {
                 if (@event is InputEventJoypadButton or InputEventJoypadMotion)
                 {

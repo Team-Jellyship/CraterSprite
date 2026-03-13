@@ -18,7 +18,7 @@ public partial class VictoryRegion : Area2D
             return;
         }
 
-        var playerIndex = playerState.index;
+        var playerIndex = playerState.playerIndex;
         GameMode.instance.SetWinner(playerIndex);
     }
 }

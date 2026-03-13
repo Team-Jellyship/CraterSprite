@@ -21,6 +21,8 @@ public partial class GameMode : Node
 	public readonly CraterEvent<int, Node2D> onPlayerSpawned = new ();
 	public Node worldRoot { get; private set; }
 	
+	public Control menuRoot { get; private set; }
+	
 	// Serialized settings, because this is a singleton
 	public GameModeSettings settings { get; private set; }
 
@@ -40,6 +42,17 @@ public partial class GameMode : Node
 	{
 		stateName = "Loading"
 	};
+
+	private MenuState characterSelectState { get; } = new()
+	{
+		stateName = "Character Select",
+		transitionTime = 3.0f
+	};
+
+	private RematchMenuState rematchState { get; } = new()
+	{
+		stateName = "GameOver"
+	};
 	private GameState warmupState { get; } = new()
 	{
 		stateName = "Warmup",
@@ -50,14 +63,14 @@ public partial class GameMode : Node
 		stateName = "Versus",
 		canSetWinner = true
 	};
-	private GameState victoryGameState { get; } = new()
+	private RoundOverState roundOverState { get; } = new()
 	{
 		stateName = "Victory",
 		transitionTime = 2.0f
 	};
 	
 	// Transition table
-	private readonly Dictionary<Tuple<GameState, GameModeCommand>, GameState> _transitions = new();
+	private readonly Dictionary<Tuple<GameState, GameModeCommand>, Func<GameState>> _transitions = new();
 
 
 	public override void _EnterTree()
@@ -70,11 +83,12 @@ public partial class GameMode : Node
 		ImGuiGodot.ImGuiGD.ToolInit();
 		
 		statusEffects = ResourceLoader.Load<StatusEffectList>("res://Game/Effects/SL_Effects.tres");
-		recipes = ResourceLoader.Load<Match3RecipeTable>("res://Game/Match3/Recipes/M3t_Default.tres");
+		recipes = ResourceLoader.Load<Match3RecipeTable>("res://Game/Match3/M3t_RecipeTable.tres");
 		settings = ResourceLoader.Load<GameModeSettings>("res://Game/DefaultSettings.tres");
 
 		var currentScene = GetTree().GetCurrentScene();
 		_sceneEntryPoint = currentScene.GetNode("%WorldRoot");
+		menuRoot = currentScene.GetNode<Control>("%MenuRoot");
 
 		if (_sceneEntryPoint == null)
 		{
@@ -83,13 +97,31 @@ public partial class GameMode : Node
 		}
 		
 		SetupTimer();
-		_transitions.Add(new Tuple<GameState, GameModeCommand>(loadingState, GameModeCommand.Loaded), versusGameState);
-		_transitions.Add(new Tuple<GameState, GameModeCommand>(versusGameState, GameModeCommand.Victory), victoryGameState);
-		_transitions.Add(new Tuple<GameState, GameModeCommand>(victoryGameState, GameModeCommand.Timeout), loadingState);
+		characterSelectState.menuScene = settings.characterSelectScreen;
+		rematchState.menuScene = settings.rematchScreen;
 		
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(characterSelectState, GameModeCommand.Timeout), () => loadingState);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(loadingState, GameModeCommand.Loaded), () => versusGameState);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(versusGameState, GameModeCommand.Victory), () => roundOverState);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(roundOverState, GameModeCommand.Timeout), () =>
+		{ return playerData.TrueForAll(data => data.playerScore < settings.roundsToWin) ? loadingState : rematchState; });
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(rematchState, GameModeCommand.Victory), () => loadingState);
 		
-		_currentGameState = loadingState;
+		_currentGameState = characterSelectState;
 		_currentGameState.EnterState(this);
+		if (_currentGameState.transitionTime <= 0.0f)
+		{
+			_transitionTimer.Stop();
+		}
+		else
+		{
+			_transitionTimer.Start(_currentGameState.transitionTime);
+		}
+
+		for (var i = 0; i < settings.playerCount; ++i)
+		{
+			playerData[i].playerViewport = currentScene.GetNode<SubViewportContainer>($"%Viewport{i}");
+		}
 	}
 
     /**
@@ -133,11 +165,12 @@ public partial class GameMode : Node
 
 	public void Command(GameModeCommand command)
 	{
-		if (!_transitions.TryGetValue(new Tuple<GameState, GameModeCommand>(_currentGameState, command), out var newState))
+		if (!_transitions.TryGetValue(new Tuple<GameState, GameModeCommand>(_currentGameState, command), out var newStateFunction))
 		{
 			return;
 		}
-		
+
+		var newState = newStateFunction.Invoke();
 		GD.Print($"[GameMode] Transitioning to new game state '{newState.stateName}'");
 		_currentGameState.ExitState();
 		_currentGameState = newState;
@@ -162,6 +195,11 @@ public partial class GameMode : Node
 
 		GD.Print($"[GameMode] Player {playerIndex} won!");
 		playerData[playerIndex].IncreaseScore();
+
+		for (var i = 0; i < playerData.Count; ++i)
+		{
+			playerData[i].lastRoundOutcome = i == playerIndex ? RoundOutcome.Win : RoundOutcome.Lose;
+		}
 		Command(GameModeCommand.Victory);
 	}
 
@@ -203,6 +241,7 @@ public partial class GameMode : Node
 		_transitionTimer.SetName("TransitionTimer");
 		_transitionTimer.OneShot = true;
 		_transitionTimer.Paused = false;
+		_transitionTimer.ProcessMode = ProcessModeEnum.Always;
 		_transitionTimer.Timeout += () => Command(GameModeCommand.Timeout);
 	}
 }
