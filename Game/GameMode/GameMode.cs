@@ -82,9 +82,9 @@ public partial class GameMode : Node
 	{
 		ImGuiGodot.ImGuiGD.ToolInit();
 		
+		LoadSettings();
 		statusEffects = ResourceLoader.Load<StatusEffectList>("res://Game/Effects/SL_Effects.tres");
 		recipes = ResourceLoader.Load<Match3RecipeTable>("res://Game/Match3/M3t_RecipeTable.tres");
-		settings = ResourceLoader.Load<GameModeSettings>("res://Game/DefaultSettings.tres");
 
 		var currentScene = GetTree().GetCurrentScene();
 		_sceneEntryPoint = currentScene.GetNode("%WorldRoot");
@@ -95,8 +95,8 @@ public partial class GameMode : Node
 			GD.PrintErr("[GameMode] Could not find a valid world root node.");
 			return;
 		}
-		
-		SetupTimer();
+
+		_transitionTimer = CraterFunctions.CreateTimer(this, "TransitionTimer", () => Command(GameModeCommand.Timeout));
 		characterSelectState.menuScene = settings.characterSelectScreen;
 		rematchState.menuScene = settings.rematchScreen;
 		
@@ -235,13 +235,12 @@ public partial class GameMode : Node
 		_sceneEntryPoint.AddChild(worldRoot);
 	}
 
-	private void SetupTimer()
+	private void LoadSettings()
 	{
-		AddChild(_transitionTimer);
-		_transitionTimer.SetName("TransitionTimer");
-		_transitionTimer.OneShot = true;
-		_transitionTimer.Paused = false;
-		_transitionTimer.ProcessMode = ProcessModeEnum.Always;
-		_transitionTimer.Timeout += () => Command(GameModeCommand.Timeout);
+		settings = ResourceLoader.Load<GameModeSettings>("res://Game/DefaultSettings.tres");
+		for (var i = 0; i < playerData.Count && i < settings.playerDefaultSpriteFrames.Count; ++i)
+		{
+			playerData[i].playerSpriteFrames = settings.playerDefaultSpriteFrames[i];
+		}
 	}
 }

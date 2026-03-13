@@ -17,4 +17,7 @@ public partial class GameModeSettings : Resource
     [Export] public PackedScene victoryScreen;
     [Export] public PackedScene lossScreen;
     [Export] public PackedScene rematchScreen;
+
+    [ExportGroup("PlayerSprites")]
+    [Export] public Godot.Collections.Array<SpriteFrames> playerDefaultSpriteFrames = [];
 }
