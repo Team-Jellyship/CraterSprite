@@ -37,61 +37,102 @@ namespace CraterSprite
 		[Export(PropertyHint.None, "suffix:g")]
 		private float _gravity = 1.0f;
 		
-		private float _movingDirection = 1.0f;
+		private float _facingDirection = 1.0f;
 		
-		public float moveInput { get; private set; }
+		private RayCast2D rayCast;
+		private RayCast2D groundCast;
+		private Timer attackTimer;
+		private Timer waitTimer;
+		private ProjectileLauncher gun;
+		
+		public override void _Ready()
+		{
+			rayCast = GetNode<RayCast2D>("PlayerRay");
+			groundCast = GetNode<RayCast2D>("GroundRay");
+			attackTimer = GetNode<Timer>("AttackTimer");
+			waitTimer = GetNode<Timer>("WaitTimer");
+			gun = GetNode<ProjectileLauncher>("Gun");
+		}
+		
 		
 		public override void _PhysicsProcess(double delta)
 		{
-			//Variable used to store the Velocity
+			//gun.FireProjectile();
 			var currentVelocity = Velocity;
+			//Code that turns the enemy around
 			if(IsOnWall())
 			{
-				_movingDirection = -_movingDirection;
+				_facingDirection = -_facingDirection;
+				gun.SetLookHorizontal(_facingDirection);
+				if(_facingDirection < 0){
+					rayCast.SetTargetPosition(new Vector2(-50,0));
+					groundCast.SetTargetPosition(new Vector2(-20,20));
+				}
+				else{
+					rayCast.SetTargetPosition(new Vector2(50,0));
+					groundCast.SetTargetPosition(new Vector2(20,20));
+				}
+				
 			}
+			
+			//Determines if the entitiy is going to walk off an edge and turns them
+			Object groundDetect = groundCast.GetCollider();
+			if(IsOnFloor()){
+				if(groundDetect is Node groundFound){
+					//Fuck my brain is off right now I don't want to figure out the negative of this
+				}
+				else{
+					_facingDirection = -_facingDirection;
+					if(_facingDirection < 0){
+						rayCast.SetTargetPosition(new Vector2(-50,0));
+						groundCast.SetTargetPosition(new Vector2(-20,20));
+					}
+					else{
+						rayCast.SetTargetPosition(new Vector2(50,0));
+						groundCast.SetTargetPosition(new Vector2(20,20));
+					}
+				}
+			}
+			
 			//Applies gravity when enemy is not on ground
 			if(!IsOnFloor()){
 				currentVelocity.Y += GravityConstant * _gravity * (float)delta;
 			}
-			
-			currentVelocity.X += _movingDirection * _acceleration;
+			currentVelocity.X += _facingDirection * _acceleration;
 			//Sets a max Speed
 			if(Math.Abs(currentVelocity.X) > _maxSpeed){
-				currentVelocity.X = _maxSpeed * _movingDirection;
+				currentVelocity.X = _maxSpeed * _facingDirection;
 			}
-			
-			var rayCast = GetNode<RayCast2D>("PlayerRay");
-			
-			if(rayCast.IsColliding()){
-				//currentVelocity.X -= _movingDirection * _acceleration;
-				//if(Math.Abs(currentVelocity.X) < 0){
-				//	currentVelocity.X = 0.0f;
-				//}
-				currentVelocity.X = 0.0f;
-				
+
+			Object enemyInMySight = rayCast.GetCollider();
+			if(enemyInMySight is Node collidedNode){
+				if(string.Equals(collidedNode.GetParent().Name, "Player") || string.Equals(collidedNode.GetParent().Name, "@CharacterBody2D@5")){
+					if(attackTimer.GetTimeLeft() == 0.0 && waitTimer.GetTimeLeft() == 0.0){
+						attackTimer.Start();
+						waitTimer.Start();
+						currentVelocity.X = 0;
+						gun.FireProjectile();
+					}
+					else if (attackTimer.GetTimeLeft() != 0.0 && waitTimer.GetTimeLeft() != 0.0){
+						currentVelocity.X = 0;
+						GD.Print(attackTimer.GetTimeLeft().ToString("F2"));
+					}
+				}
 			}
-			
-			
-			// GD.Print(currentVelocity.X);
-			
+
 			//Sets our temporary Variable into active in the game
 			SetVelocity(currentVelocity);
-			
+			//Draws the Raycast Arrows
+			QueueRedraw();
 			//Physical Engine goes BRRRRR
 			MoveAndSlide();
-			
-			
-		}
-		
-		public void SetMoveInput(float input)
-		{
-			moveInput = Math.Clamp(input, -1.0f, 1.0f);
 		}
 		
 		
 		public override void _Draw()
 		{
-			DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, GetVelocity() * 0.25f, new Color(1.0f, 0.0f, 0.0f));
+			DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, GetNode<RayCast2D>("PlayerRay").GetTargetPosition(), new Color(1.0f, 0.0f, 0.0f));
+			DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, GetNode<RayCast2D>("GroundRay").GetTargetPosition(), new Color(1.0f, 0.0f, 1.0f));
 		}
 	}
 }
