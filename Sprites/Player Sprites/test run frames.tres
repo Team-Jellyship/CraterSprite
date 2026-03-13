@@ -1,0 +1,67 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://jtjtylja0jij"]
+
+[ext_resource type="Texture2D" uid="uid://cd6ff0v8udd2e" path="res://Sprites/Player Sprites/crator walk aim up test.png" id="1_jibj0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mwvv"]
+atlas = ExtResource("1_jibj0")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbe06"]
+atlas = ExtResource("1_jibj0")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_77gaw"]
+atlas = ExtResource("1_jibj0")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4uvrg"]
+atlas = ExtResource("1_jibj0")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ak4j1"]
+atlas = ExtResource("1_jibj0")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s7md8"]
+atlas = ExtResource("1_jibj0")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w414d"]
+atlas = ExtResource("1_jibj0")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85x1w"]
+atlas = ExtResource("1_jibj0")
+region = Rect2(448, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mwvv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gbe06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_77gaw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4uvrg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ak4j1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s7md8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w414d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85x1w")
+}],
+"loop": true,
+"name": &"walktest",
+"speed": 5.0
+}]
