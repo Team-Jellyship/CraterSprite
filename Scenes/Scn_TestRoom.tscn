@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c2g84k6v3iajs" path="res://Shared/Sprites/wallTex.png" id="4_fcfrf"]
 [ext_resource type="Script" uid="uid://dbsjfkw53mpjv" path="res://Game/SpawnLocation.cs" id="5_fcfrf"]
 [ext_resource type="PackedScene" uid="uid://cybtj76g4n71w" path="res://Characters/Enemies/Char_FireEnemy.tscn" id="6_20dgb"]
+[ext_resource type="PackedScene" uid="uid://bc63xk2i2ivxt" path="res://Characters/Enemies/Char_TestEnemy.tscn" id="7_2yfc4"]
 [ext_resource type="Script" uid="uid://chcnkhnc35ofv" path="res://Props/Scripts/VictoryRegion.cs" id="8_opeqa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l2rra"]
@@ -118,3 +119,6 @@ position = Vector2(752, -240)
 
 [node name="FireEnemy4" parent="." unique_id=1063731324 instance=ExtResource("6_20dgb")]
 position = Vector2(400, -240)
+
+[node name="TestEnemy" parent="." unique_id=1975847372 instance=ExtResource("7_2yfc4")]
+position = Vector2(288, 160)
