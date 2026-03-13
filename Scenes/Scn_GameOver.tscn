@@ -62,7 +62,6 @@ layout_mode = 2
 focus_neighbor_top = NodePath(".")
 focus_neighbor_bottom = NodePath("../MainMenuButton")
 theme = ExtResource("1_8xnka")
-action_mode = 0
 text = "Rematch"
 
 [node name="MainMenuButton" type="Button" parent="VBoxContainer" unique_id=332382404]

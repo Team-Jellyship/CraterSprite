@@ -10,12 +10,12 @@ public partial class RematchMenu : Control
     public override void _Ready()
     {
         _rematchButton.GrabFocus();
-        _rematchButton.ButtonDown += RematchPressed;
+        _rematchButton.Pressed += RematchPressed;
     }
 
     private void RematchPressed()
     {
-        _rematchButton.ButtonDown -= RematchPressed;
+        _rematchButton.Pressed -= RematchPressed;
         GameMode.instance.Command(GameModeCommand.Victory);
     }
 }
