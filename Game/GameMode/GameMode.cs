@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CraterSprite.Effects;
+using CraterSprite.Input;
 using CraterSprite.Match3;
 using Godot;
 
@@ -13,14 +14,9 @@ namespace CraterSprite.Game.GameMode;
 public partial class GameMode : Node
 {
 	public static GameMode instance { get; private set; }
-	
 	public StatusEffectList statusEffects { get; private set; }
-	
 	public Match3RecipeTable recipes { get; private set; }
-
-	public readonly CraterEvent<int, Node2D> onPlayerSpawned = new ();
 	public Node worldRoot { get; private set; }
-	
 	public Control menuRoot { get; private set; }
 	
 	// Serialized settings, because this is a singleton
@@ -28,8 +24,11 @@ public partial class GameMode : Node
 
 	public readonly List<PlayerData> playerData = [new(), new()];
 	public readonly List<SpawnLocation> spawnLocations = [];
-
 	public PackedScene nextLevel;
+	
+	public readonly CraterEvent<int, Node2D> onPlayerSpawned = new ();
+
+	public bool showingDebug { private set; get; }
 	
 	private Timer _transitionTimer = new();
 	private Node _sceneEntryPoint;
@@ -122,6 +121,13 @@ public partial class GameMode : Node
 		{
 			playerData[i].playerViewport = currentScene.GetNode<SubViewportContainer>($"%Viewport{i}");
 		}
+		
+		// Register our debug toggle input listener
+		InputManager.instance.RegisterCallback("game_debug_toggle", InputEventType.Pressed, _ =>
+		{ 
+			showingDebug = !showingDebug;
+			GD.Print($"[GameMode] set show game debug to {showingDebug}");
+		}, 0, this);
 	}
 
     /**

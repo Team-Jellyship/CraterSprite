@@ -1,4 +1,5 @@
 using System;
+using CraterSprite.Game.GameMode;
 using Godot;
 
 namespace CraterSprite;
@@ -36,6 +37,11 @@ public partial class ProjectileLauncher : Node2D
 
     public override void _Draw()
     {
+        if (!GameMode.instance.showingDebug)
+        {
+            return;
+        }
+        
         DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, _facingDirection * 25.0f, new Color(0.0f, 1.0f, 0.0f));
     }
 

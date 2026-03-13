@@ -233,6 +233,11 @@ public partial class KinematicCharacter : CharacterBody2D
 	
 	public override void _Draw()
 	{
+		if (!Game.GameMode.GameMode.instance.showingDebug)
+		{
+			return;
+		}
+		
 		DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, new Vector2(moveInput * 50.0f, 0.0f), new Color(0.2f, 0.25f, 1.0f));
 		DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, GetVelocity() * 0.25f, new Color(1.0f, 0.0f, 0.0f));
 	}
