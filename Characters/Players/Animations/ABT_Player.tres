@@ -32,7 +32,6 @@ states/walking/position = Vector2(415, 75)
 transitions = ["Start", "walking", SubResource("AnimationNodeStateMachineTransition_fkk7c")]
 
 [resource]
-graph_offset = Vector2(-476.63916, 123.50867)
 nodes/state_machine/node = SubResource("AnimationNodeStateMachine_060kb")
 nodes/state_machine/position = Vector2(-280, 140)
 node_connections = [&"output", 0, &"state_machine"]
