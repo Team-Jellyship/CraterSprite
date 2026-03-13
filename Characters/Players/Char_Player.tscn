@@ -137,10 +137,10 @@ _maxAirSpeedHorizontal = 150.0
 _airControlFactor = 2.0
 _gravity = 5.0
 _jumpStrength = 325.0
-_jumpTime = 0.1
+_jumpTime = 0.2
 _wallFriction = 1200.0
 _wallJumpStrength = 600.0
-_wallJumpAngle = 35.0
+_wallJumpAngle = 50.0
 
 [node name="Controller" type="Node" parent="." unique_id=505377627 node_paths=PackedStringArray("_character", "_playerState", "_gun")]
 script = ExtResource("4_1fpnh")

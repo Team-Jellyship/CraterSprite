@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CraterSprite.Game.GameMode;
 using Godot;
@@ -97,4 +98,22 @@ public static class CraterFunctions
         godotArray.AddRange(list);
         return godotArray;
     }
+
+    public static Timer CreateTimer(Node parent, string timerName, Action timerExpiredCallback)
+    {
+        var timer = new Timer();
+        parent.AddChild(timer);
+        timer.SetName(timerName);
+        timer.OneShot = true;
+        timer.Timeout += timerExpiredCallback;
+        return timer;
+    }
+
+    public static Timer CreateAndStartTimer(Node parent, string timerName, float time, Action timerExpiredCallback)
+    {
+        var timer = CreateTimer(parent, timerName, timerExpiredCallback);
+        timer.Start(time);
+        return timer;
+    }
+    
 }

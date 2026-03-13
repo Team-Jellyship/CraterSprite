@@ -52,7 +52,6 @@ public partial class KinematicEnemy : CharacterBody2D
         _rayCast = GetNode<RayCast2D>("PlayerRay");
         _groundCast = GetNode<RayCast2D>("GroundRay");
         _attackTimer = GetNode<Timer>("AttackTimer");
-        _waitTimer = GetNode<Timer>("WaitTimer");
         _gun = GetNode<ProjectileLauncher>("Gun");
     }
 
@@ -111,25 +110,7 @@ public partial class KinematicEnemy : CharacterBody2D
             currentVelocity.X = _maxSpeed * _facingDirection;
         }
 
-        var enemyInMySight = _rayCast.GetCollider();
-        if (enemyInMySight is Node collidedNode)
-        {
-            if (string.Equals(collidedNode.GetParent().Name, "Player") || string.Equals(collidedNode.GetParent().Name, "@CharacterBody2D@5"))
-            {
-                if (_attackTimer.GetTimeLeft() == 0.0 && _waitTimer.GetTimeLeft() == 0.0)
-                {
-                    _attackTimer.Start();
-                    _waitTimer.Start();
-                    currentVelocity.X = 0;
-                    _gun.FireProjectile();
-                }
-                else if (_attackTimer.GetTimeLeft() != 0.0 && _waitTimer.GetTimeLeft() != 0.0)
-                {
-                    currentVelocity.X = 0;
-                    GD.Print(_attackTimer.GetTimeLeft().ToString("F2"));
-                }
-            }
-        }
+
 
         //Sets our temporary Variable into active in the game
         SetVelocity(currentVelocity);

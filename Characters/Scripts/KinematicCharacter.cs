@@ -117,6 +117,7 @@ public partial class KinematicCharacter : CharacterBody2D
 	[Signal] public delegate void OnClickedEventHandler();
 
 	public CraterEvent onHitFloor = new();
+	public CraterEvent onHitWall = new();
 	
 	public float moveInput { get; private set; }
 
@@ -218,7 +219,7 @@ public partial class KinematicCharacter : CharacterBody2D
 			LeavePlatform();
 		}
 
-		if (IsOnWallOnly() && !onWallBeforeMove)
+		if (IsOnWall() && !onWallBeforeMove)
 		{
 			HitWall();
 		}
@@ -232,6 +233,7 @@ public partial class KinematicCharacter : CharacterBody2D
 	
 	public override void _Draw()
 	{
+		DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, new Vector2(moveInput * 50.0f, 0.0f), new Color(0.2f, 0.25f, 1.0f));
 		DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, GetVelocity() * 0.25f, new Color(1.0f, 0.0f, 0.0f));
 	}
 
@@ -368,7 +370,8 @@ public partial class KinematicCharacter : CharacterBody2D
 
 	private void HitWall()
 	{
-		if (_restoreJumpOnHitWall)
+		onHitWall.Invoke();
+		if (!IsOnFloor() && _restoreJumpOnHitWall)
 		{
 			_numJumpsRemaining = Math.Max(_numJumpsRemaining, 1);
 		}
