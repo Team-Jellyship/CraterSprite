@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://cpmkupvah3gl6" path="res://Sprites/hud_bottom.png" id="4_8728c"]
 [ext_resource type="Texture2D" uid="uid://br76bl5lfwm6" path="res://Sprites/hud_top.png" id="6_5acan"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4qdo0"]
+
 [node name="ScnSplitscreen" type="Control" unique_id=398535084 node_paths=PackedStringArray("camera0", "camera1")]
 layout_mode = 3
 anchors_preset = 15
@@ -104,10 +106,6 @@ custom_minimum_size = Vector2(0, 165)
 offset_left = -2.0
 offset_right = -8.0
 
-[node name="ProgressBar" parent="SplitscreenHBox/Divider/HBoxContainer/Player1HUD/Health" parent_id_path=PackedInt32Array(452054263, 495745352) index="0" unique_id=88620746]
-offset_left = 2.0
-offset_right = -8.0
-
 [node name="Player2HUD" parent="SplitscreenHBox/Divider/HBoxContainer" unique_id=636055352 instance=ExtResource("3_4abrk")]
 layout_mode = 2
 _playerIndex = 1
@@ -138,10 +136,7 @@ offset_left = 20.0
 offset_right = 14.0
 theme_override_colors/font_color = Color(0, 1, 0.6666667, 1)
 theme_override_colors/font_outline_color = Color(0, 1, 0.6666667, 1)
-
-[node name="ProgressBar" parent="SplitscreenHBox/Divider/HBoxContainer/Player2HUD/Health" parent_id_path=PackedInt32Array(636055352, 495745352) index="0" unique_id=88620746]
-offset_left = 21.0
-offset_right = 11.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_4qdo0")
 
 [node name="HudTop" type="Sprite2D" parent="SplitscreenHBox/Divider" unique_id=851427595]
 position = Vector2(64, 324)

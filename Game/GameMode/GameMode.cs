@@ -92,39 +92,39 @@ public partial class GameMode : Node
 		_currentGameState.EnterState(this);
 	}
 
-    /**
-     * <summary>Register a new potential spawn location for the players</summary>
-     */
-    public void AddSpawnLocation(SpawnLocation location)
-    {
-        spawnLocations.Insert((int)location.defaultIndex, location);
-    }
+	/**
+	 * <summary>Register a new potential spawn location for the players</summary>
+	 */
+	public void AddSpawnLocation(SpawnLocation location)
+	{
+		spawnLocations.Insert((int)location.defaultIndex, location);
+	}
 
-    /**
-     * <summary>Get the player state associated with a specific player index</summary>
-     * <returns>Player state, or null if there is no associated index</returns>
-     */
-    public PlayerState GetPlayerState(int playerIndex)
-    {
-	    return GetPlayerData(playerIndex)?.playerState;
-    }
+	/**
+	 * <summary>Get the player state associated with a specific player index</summary>
+	 * <returns>Player state, or null if there is no associated index</returns>
+	 */
+	public PlayerState GetPlayerState(int playerIndex)
+	{
+		return GetPlayerData(playerIndex)?.playerState;
+	}
 
-    public PlayerData GetPlayerData(int playerIndex)
-    {
-	    if (playerIndex >= 0 && playerIndex < playerData.Count)
-	    {
-		    return playerData[playerIndex];
-	    }
-	    
-	    GD.PrintErr("[GameMode] Attempted to access player data from an out of bounds index.");
-	    return null;
-    }
+	public PlayerData GetPlayerData(int playerIndex)
+	{
+		if (playerIndex >= 0 && playerIndex < playerData.Count)
+		{
+			return playerData[playerIndex];
+		}
+		
+		GD.PrintErr("[GameMode] Attempted to access player data from an out of bounds index.");
+		return null;
+	}
 
-    // Just a convenience method for players
-    public PlayerData GetRivalPlayerData(int selfPlayerIndex)
-    {
-	    return GetPlayerData(GetRivalIndex(selfPlayerIndex));
-    }
+	// Just a convenience method for players
+	public PlayerData GetRivalPlayerData(int selfPlayerIndex)
+	{
+		return GetPlayerData(GetRivalIndex(selfPlayerIndex));
+	}
 
 	public void NotifyGemDestroyed(int destroyerPlayerIndex, Vector2 offset)
 	{

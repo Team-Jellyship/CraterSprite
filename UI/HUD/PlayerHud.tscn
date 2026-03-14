@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://gjs06khmi3td"]
 
-[ext_resource type="Script" path="res://UI/HUD/Scripts/PlayerHudRoot.cs" id="1_rbypn"]
+[ext_resource type="Script" uid="uid://bmwemcdptew3g" path="res://UI/HUD/Scripts/PlayerHudRoot.cs" id="1_rbypn"]
 [ext_resource type="PackedScene" uid="uid://lcgmn2yj2pjg" path="res://UI/HUD/Match3Display.tscn" id="1_u4bt0"]
-[ext_resource type="Script" path="res://UI/HUD/Scripts/SuperDisplay.cs" id="2_rbypn"]
-[ext_resource type="Script" path="res://UI/HUD/Scripts/VictoryDisplay.cs" id="3_rohah"]
+[ext_resource type="Script" uid="uid://bk4tndcndnjv7" path="res://UI/HUD/Scripts/SuperDisplay.cs" id="2_rbypn"]
+[ext_resource type="Script" uid="uid://gjwu0xlak4ep" path="res://UI/HUD/Scripts/VictoryDisplay.cs" id="3_rohah"]
 
 [node name="Player1HUD" type="VBoxContainer" unique_id=452054263]
 script = ExtResource("1_rbypn")
