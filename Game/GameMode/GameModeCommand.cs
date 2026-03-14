@@ -2,7 +2,8 @@
 
 public enum GameModeCommand
 {
-    Victory,
     Timeout,
-    Loaded
+    Victory,
+    Loaded,
+    GameOver
 }

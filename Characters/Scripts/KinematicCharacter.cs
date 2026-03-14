@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 
 namespace CraterSprite;
 
@@ -104,6 +105,9 @@ public partial class KinematicCharacter : CharacterBody2D
 
 	[Export(PropertyHint.None, "suffix:px/s")]
 	private float _defaultKnockbackStrength = 200.0f;
+
+	[ExportGroup("Nodes")]
+	[Export] private Area2D _characterPenetrationArea;
 	
 	[Signal] public delegate void MoveDirectionChangedEventHandler(float moveDirection);
 	[Signal] public delegate void MoveSpeedChangedEventHandler(float moveSpeed);
@@ -113,6 +117,7 @@ public partial class KinematicCharacter : CharacterBody2D
 	[Signal] public delegate void OnClickedEventHandler();
 
 	public CraterEvent onHitFloor = new();
+	public CraterEvent onHitWall = new();
 	
 	public float moveInput { get; private set; }
 
@@ -196,13 +201,15 @@ public partial class KinematicCharacter : CharacterBody2D
 		{
 			currentVelocity = pendingImpulses;
 		}
-		
+
 		SetVelocity(currentVelocity);
 
 		var onFloorBeforeMove = IsOnFloor();
 		var onWallBeforeMove = IsOnWall();
 		
 		MoveAndSlide();
+		MoveAndCollide(GetCharacterPenetrationVelocity() * (float)delta);
+		
 		if (IsOnFloor() && !onFloorBeforeMove)
 		{
 			Land();
@@ -212,7 +219,7 @@ public partial class KinematicCharacter : CharacterBody2D
 			LeavePlatform();
 		}
 
-		if (IsOnWallOnly() && !onWallBeforeMove)
+		if (IsOnWall() && !onWallBeforeMove)
 		{
 			HitWall();
 		}
@@ -226,6 +233,12 @@ public partial class KinematicCharacter : CharacterBody2D
 	
 	public override void _Draw()
 	{
+		if (!Game.GameMode.GameMode.instance.showingDebug)
+		{
+			return;
+		}
+		
+		DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, new Vector2(moveInput * 50.0f, 0.0f), new Color(0.2f, 0.25f, 1.0f));
 		DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, GetVelocity() * 0.25f, new Color(1.0f, 0.0f, 0.0f));
 	}
 
@@ -362,7 +375,8 @@ public partial class KinematicCharacter : CharacterBody2D
 
 	private void HitWall()
 	{
-		if (_restoreJumpOnHitWall)
+		onHitWall.Invoke();
+		if (!IsOnFloor() && _restoreJumpOnHitWall)
 		{
 			_numJumpsRemaining = Math.Max(_numJumpsRemaining, 1);
 		}
@@ -418,5 +432,27 @@ public partial class KinematicCharacter : CharacterBody2D
 		var result = _pendingImpulses;
 		_pendingImpulses = Vector2.Zero;
 		return result;
+	}
+
+	private Vector2 GetCharacterPenetrationVelocity()
+	{
+		if (_characterPenetrationArea == null)
+		{
+			return Vector2.Zero;
+		}
+		return _characterPenetrationArea.GetOverlappingAreas().Aggregate(Vector2.Zero, (current, character) => 
+			current + GetIndividualCharacterPenetrationVelocity(character));
+	}
+
+	private Vector2 GetIndividualCharacterPenetrationVelocity(Area2D otherCharacter)
+	{
+		// only push horizontally
+		var delta = otherCharacter.GlobalPosition.X - GlobalPosition.X;
+		if (delta == 0.0f)
+		{
+			delta = GD.RandRange(0, 1) == 1 ? -1.0f : 1.0f;
+		}
+		var xVelocity = Mathf.Clamp(100.0f / -delta, -10.0f, 10.0f);
+		return new Vector2(xVelocity, 0.0f);
 	}
 }

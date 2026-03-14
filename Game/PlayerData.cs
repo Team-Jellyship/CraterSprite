@@ -2,15 +2,25 @@
 
 namespace CraterSprite.Game;
 
+public enum RoundOutcome
+{
+    Win,
+    Lose,
+    Draw
+}
+
 public class PlayerData
 {
     public uint playerScore { get; private set; }
     public PlayerState playerState { get; private set; }
     public Node2D player { get; private set; }
 
-    public readonly CraterEvent<uint> onScoreChanged = new();
-
+    public SubViewportContainer playerViewport;
     public PlayerCamera camera;
+    public RoundOutcome lastRoundOutcome = RoundOutcome.Win;
+    public SpriteFrames playerSpriteFrames;
+    
+    public readonly CraterEvent<uint> onScoreChanged = new();
 
     public void SetPlayer(Node2D playerNode, PlayerState state)
     {
@@ -26,5 +36,11 @@ public class PlayerData
     public void IncreaseScore()
     {
         onScoreChanged.Invoke(++playerScore);
+    }
+
+    public void ResetScore()
+    {
+        playerScore = 0;
+        onScoreChanged.Invoke(0);
     }
 }

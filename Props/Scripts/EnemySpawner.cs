@@ -6,7 +6,7 @@ public partial class EnemySpawner : Area2D
 {
     public Node2D SpawnEnemy(PackedScene packedScene)
     {
-        return CraterFunctions.CreateInstanceDeferred<Node2D>(this, packedScene, GlobalPosition);
+        return CraterFunctions.CreateInstanceDeferred<Node2D>(packedScene, GlobalPosition);
     }
 
     public bool CanSpawn()

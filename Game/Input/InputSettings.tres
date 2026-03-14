@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="InputSettings" format=3 uid="uid://re5v8m6xgkvk"]
+
+[ext_resource type="Script" uid="uid://c5gw1l2epkn53" path="res://Game/Input/Scripts/InputSettings.cs" id="1_4sbf6"]
+
+[resource]
+script = ExtResource("1_4sbf6")
+treatGamepadAsSecondDevice = false
+metadata/_custom_type_script = "uid://c5gw1l2epkn53"

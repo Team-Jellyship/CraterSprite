@@ -3,11 +3,11 @@
 [ext_resource type="Script" uid="uid://cjxelv1wmdsss" path="res://Props/Projectiles/Scripts/Projectile.cs" id="1_e5c1k"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_e5c1k"]
-radius = 64.0
-height = 128.0
+radius = 24.0
+height = 48.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h1k7s"]
-radius = 64.0
+radius = 24.0
 
 [node name="SpecialTest" type="Node2D" unique_id=1829869528]
 script = ExtResource("1_e5c1k")

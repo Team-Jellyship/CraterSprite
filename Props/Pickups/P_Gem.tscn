@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://o4xe28btcjdf"]
+
+[ext_resource type="Script" uid="uid://djhw83e3kvyov" path="res://Props/Pickups/Gem.cs" id="1_18bmh"]
+[ext_resource type="Texture2D" uid="uid://cjstqrrhx46ia" path="res://Sprites/gem.png" id="3_o606r"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_15qqv"]
+radius = 16.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eat03"]
+atlas = ExtResource("3_o606r")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_16qsd"]
+atlas = ExtResource("3_o606r")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ele4y"]
+atlas = ExtResource("3_o606r")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m22y1"]
+atlas = ExtResource("3_o606r")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vv7j6"]
+atlas = ExtResource("3_o606r")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swhs8"]
+atlas = ExtResource("3_o606r")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nwe1j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eat03")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_16qsd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ele4y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m22y1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vv7j6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swhs8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="Gem" type="Node2D" unique_id=2100040273]
+
+[node name="Gem Hitbox" type="Area2D" parent="." unique_id=1587296199]
+collision_layer = 18
+collision_mask = 24
+script = ExtResource("1_18bmh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gem Hitbox" unique_id=526088919]
+shape = SubResource("CircleShape2D_15qqv")
+debug_color = Color(0.77390766, 0.21254033, 0.9439154, 0.41960785)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Gem Hitbox" unique_id=314463215]
+sprite_frames = SubResource("SpriteFrames_nwe1j")
+autoplay = "default"
+frame_progress = 0.43547356

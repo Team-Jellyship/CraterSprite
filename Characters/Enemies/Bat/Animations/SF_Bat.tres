@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://kl1p1d6fwx8x"]
+
+[ext_resource type="Texture2D" uid="uid://dipfee8g0ul7g" path="res://Characters/Enemies/Bat/Sprites/Bat.png" id="1_4hm47"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rrn1n"]
+atlas = ExtResource("1_4hm47")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w88kr"]
+atlas = ExtResource("1_4hm47")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3nd3e"]
+atlas = ExtResource("1_4hm47")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adoei"]
+atlas = ExtResource("1_4hm47")
+region = Rect2(192, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rrn1n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w88kr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3nd3e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adoei")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]

@@ -2,11 +2,7 @@
 
 [ext_resource type="Script" uid="uid://8srotn0dqetj" path="res://Scenes/scn_splitscreen.gd" id="1_4abrk"]
 [ext_resource type="Script" uid="uid://c2x7jpc3amnbq" path="res://Characters/Players/Scripts/PlayerCamera.cs" id="2_87bac"]
-[ext_resource type="PackedScene" uid="uid://gjs06khmi3td" path="res://UI/HUD/PlayerHud.tscn" id="3_4abrk"]
-[ext_resource type="Texture2D" uid="uid://cpmkupvah3gl6" path="res://Sprites/hud_bottom.png" id="4_8728c"]
-[ext_resource type="Texture2D" uid="uid://br76bl5lfwm6" path="res://Sprites/hud_top.png" id="6_5acan"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4qdo0"]
+[ext_resource type="PackedScene" uid="uid://gjs06khmi3td" path="res://UI/HUD/UI_PlayerHud.tscn" id="3_4abrk"]
 
 [node name="ScnSplitscreen" type="Control" unique_id=398535084 node_paths=PackedStringArray("camera0", "camera1")]
 layout_mode = 3
@@ -18,8 +14,8 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_4abrk")
-camera0 = NodePath("SplitscreenHBox/LeftScreen/LeftViewport/LeftPlayerCamera")
-camera1 = NodePath("SplitscreenHBox/RightScreen/RightViewport/RightPlayerCamera")
+camera0 = NodePath("SplitscreenHBox/Viewport0/Viewport/LeftPlayerCamera")
+camera1 = NodePath("SplitscreenHBox/Viewport1/Viewport/RightPlayerCamera")
 
 [node name="SplitscreenHBox" type="HBoxContainer" parent="." unique_id=1139025370]
 layout_mode = 1
@@ -30,26 +26,26 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="LeftScreen" type="SubViewportContainer" parent="SplitscreenHBox" unique_id=1710712568]
+[node name="Viewport0" type="SubViewportContainer" parent="SplitscreenHBox" unique_id=1710712568]
+unique_name_in_owner = true
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 stretch = true
 
-[node name="LeftViewport" type="SubViewport" parent="SplitscreenHBox/LeftScreen" unique_id=1183002234]
+[node name="Viewport" type="SubViewport" parent="SplitscreenHBox/Viewport0" unique_id=1183002234]
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(512, 648)
+size = Vector2i(256, 360)
 render_target_update_mode = 4
 
-[node name="LeftPlayerCamera" type="Camera2D" parent="SplitscreenHBox/LeftScreen/LeftViewport" unique_id=716403420]
+[node name="LeftPlayerCamera" type="Camera2D" parent="SplitscreenHBox/Viewport0/Viewport" unique_id=716403420]
 offset = Vector2(0, -8)
-zoom = Vector2(2, 2)
 limit_enabled = false
 position_smoothing_enabled = true
 script = ExtResource("2_87bac")
 
-[node name="WorldRoot" type="Node2D" parent="SplitscreenHBox/LeftScreen/LeftViewport" unique_id=1519984598]
+[node name="WorldRoot" type="Node2D" parent="SplitscreenHBox/Viewport0/Viewport" unique_id=1519984598]
 unique_name_in_owner = true
 
 [node name="Divider" type="ColorRect" parent="SplitscreenHBox" unique_id=238917213]
@@ -57,117 +53,48 @@ custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 color = Color(0, 0, 0, 1)
 
-[node name="HudBottom" type="Sprite2D" parent="SplitscreenHBox/Divider" unique_id=1518513887]
-position = Vector2(64, 324)
-texture = ExtResource("4_8728c")
-
 [node name="HBoxContainer" type="HBoxContainer" parent="SplitscreenHBox/Divider" unique_id=539872155]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -58.0
-offset_top = 68.0
-offset_right = 74.0
-offset_bottom = 396.0
+offset_left = -34.0
+offset_right = 34.0
+offset_bottom = 128.0
 grow_horizontal = 2
 
 [node name="Player1HUD" parent="SplitscreenHBox/Divider/HBoxContainer" unique_id=452054263 instance=ExtResource("3_4abrk")]
 layout_mode = 2
 
-[node name="Match3Display" parent="SplitscreenHBox/Divider/HBoxContainer/Player1HUD" index="0" unique_id=1242715241]
-custom_minimum_size = Vector2(50, 180)
-
-[node name="VBoxContainer" parent="SplitscreenHBox/Divider/HBoxContainer/Player1HUD/Match3Display" index="0" unique_id=1316356833]
-custom_minimum_size = Vector2(64, 0)
-offset_left = -1.0
-offset_top = -4.0
-offset_right = 63.0
-offset_bottom = 74.0
-theme_override_constants/separation = 12
-
-[node name="ColorRect" parent="SplitscreenHBox/Divider/HBoxContainer/Player1HUD/Match3Display/VBoxContainer" index="0" unique_id=1800992443]
-custom_minimum_size = Vector2(30, 18)
-
-[node name="ColorRect2" parent="SplitscreenHBox/Divider/HBoxContainer/Player1HUD/Match3Display/VBoxContainer" index="1" unique_id=221923131]
-custom_minimum_size = Vector2(30, 18)
-size_flags_horizontal = 1
-size_flags_vertical = 1
-
-[node name="ColorRect3" parent="SplitscreenHBox/Divider/HBoxContainer/Player1HUD/Match3Display/VBoxContainer" index="2" unique_id=1254151580]
-custom_minimum_size = Vector2(30, 18)
-size_flags_horizontal = 1
-size_flags_stretch_ratio = 0.0
-
-[node name="Supercharge" parent="SplitscreenHBox/Divider/HBoxContainer/Player1HUD" index="1" unique_id=1105424081]
-custom_minimum_size = Vector2(0, 165)
-
-[node name="ProgressBar" parent="SplitscreenHBox/Divider/HBoxContainer/Player1HUD/Supercharge" index="0" unique_id=644981813]
-offset_left = -2.0
-offset_right = -8.0
-
 [node name="Player2HUD" parent="SplitscreenHBox/Divider/HBoxContainer" unique_id=636055352 instance=ExtResource("3_4abrk")]
 layout_mode = 2
 _playerIndex = 1
 
-[node name="Match3Display" parent="SplitscreenHBox/Divider/HBoxContainer/Player2HUD" index="0" unique_id=1242715241]
-custom_minimum_size = Vector2(50, 180)
-
-[node name="VBoxContainer" parent="SplitscreenHBox/Divider/HBoxContainer/Player2HUD/Match3Display" index="0" unique_id=1316356833]
-custom_minimum_size = Vector2(64, 0)
-offset_left = -6.0
-offset_top = -4.0
-offset_right = 64.0
-offset_bottom = 74.0
-theme_override_constants/separation = 12
-
-[node name="ColorRect" parent="SplitscreenHBox/Divider/HBoxContainer/Player2HUD/Match3Display/VBoxContainer" index="0" unique_id=1800992443]
-custom_minimum_size = Vector2(30, 18)
-
-[node name="ColorRect2" parent="SplitscreenHBox/Divider/HBoxContainer/Player2HUD/Match3Display/VBoxContainer" index="1" unique_id=221923131]
-custom_minimum_size = Vector2(70.35, 18)
-size_flags_horizontal = 1
-
-[node name="Supercharge" parent="SplitscreenHBox/Divider/HBoxContainer/Player2HUD" index="1" unique_id=1105424081]
-custom_minimum_size = Vector2(0, 165)
-
-[node name="ProgressBar" parent="SplitscreenHBox/Divider/HBoxContainer/Player2HUD/Supercharge" index="0" unique_id=644981813]
-offset_left = 20.0
-offset_right = 14.0
-theme_override_colors/font_color = Color(0, 1, 0.6666667, 1)
-theme_override_colors/font_outline_color = Color(0, 1, 0.6666667, 1)
-theme_override_styles/fill = SubResource("StyleBoxFlat_4qdo0")
-
-[node name="HudTop" type="Sprite2D" parent="SplitscreenHBox/Divider" unique_id=851427595]
-position = Vector2(64, 324)
-texture = ExtResource("6_5acan")
-
-[node name="RightScreen" type="SubViewportContainer" parent="SplitscreenHBox" unique_id=616400454]
+[node name="Viewport1" type="SubViewportContainer" parent="SplitscreenHBox" unique_id=616400454]
+unique_name_in_owner = true
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 stretch = true
 
-[node name="RightViewport" type="SubViewport" parent="SplitscreenHBox/RightScreen" unique_id=504124211]
+[node name="Viewport" type="SubViewport" parent="SplitscreenHBox/Viewport1" unique_id=504124211]
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(512, 648)
+size = Vector2i(256, 360)
 render_target_update_mode = 4
 
-[node name="RightPlayerCamera" type="Camera2D" parent="SplitscreenHBox/RightScreen/RightViewport" unique_id=2029577569]
+[node name="RightPlayerCamera" type="Camera2D" parent="SplitscreenHBox/Viewport1/Viewport" unique_id=2029577569]
 offset = Vector2(0, -8)
-zoom = Vector2(2, 2)
 limit_enabled = false
 position_smoothing_enabled = true
 script = ExtResource("2_87bac")
 _playerIndex = 1
 
-[node name="Overlay" type="Control" parent="." unique_id=939040090]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[editable path="SplitscreenHBox/Divider/HBoxContainer/Player1HUD"]
-[editable path="SplitscreenHBox/Divider/HBoxContainer/Player1HUD/Match3Display"]
-[editable path="SplitscreenHBox/Divider/HBoxContainer/Player2HUD"]
-[editable path="SplitscreenHBox/Divider/HBoxContainer/Player2HUD/Match3Display"]
+[node name="MenuRoot" type="Control" parent="." unique_id=591402947]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
