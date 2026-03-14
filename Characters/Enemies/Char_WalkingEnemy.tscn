@@ -55,10 +55,12 @@ shape = SubResource("RectangleShape2D_7yner")
 
 [node name="AIController" type="Node2D" parent="." unique_id=1312789790 node_paths=PackedStringArray("_gun", "_character", "_playerDetection", "_groundCast")]
 script = ExtResource("5_i4w1b")
+_gunTeamFilter = 3
 _gun = NodePath("../Gun")
 _character = NodePath("..")
 _playerDetection = NodePath("../PlayerRay")
 _groundCast = NodePath("../GroundRay")
+_floorEdgeResponse = 1
 
 [node name="Node2D" type="Node2D" parent="." unique_id=112846174]
 

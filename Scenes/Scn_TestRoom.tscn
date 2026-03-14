@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c2g84k6v3iajs" path="res://Shared/Sprites/wallTex.png" id="4_fcfrf"]
 [ext_resource type="Script" uid="uid://dbsjfkw53mpjv" path="res://Game/SpawnLocation.cs" id="5_fcfrf"]
 [ext_resource type="PackedScene" uid="uid://cybtj76g4n71w" path="res://Characters/Enemies/Char_FireEnemy.tscn" id="6_20dgb"]
+[ext_resource type="PackedScene" uid="uid://o4xe28btcjdf" path="res://Props/Pickups/P_Gem.tscn" id="7_2yfc4"]
 [ext_resource type="Script" uid="uid://chcnkhnc35ofv" path="res://Props/Scripts/VictoryRegion.cs" id="8_opeqa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l2rra"]
@@ -109,20 +110,18 @@ shape = SubResource("RectangleShape2D_2yfc4")
 
 [node name="FireEnemy" parent="." unique_id=203046980 instance=ExtResource("6_20dgb")]
 position = Vector2(400, 48)
-_acceleration = 50.0
-_maxSpeed = 5.0
 
 [node name="FireEnemy2" parent="." unique_id=918957552 instance=ExtResource("6_20dgb")]
 position = Vector2(752, 48)
-_acceleration = 50.0
-_maxSpeed = 5.0
 
 [node name="FireEnemy3" parent="." unique_id=69180279 instance=ExtResource("6_20dgb")]
 position = Vector2(752, -240)
-_acceleration = 50.0
-_maxSpeed = 5.0
 
 [node name="FireEnemy4" parent="." unique_id=1063731324 instance=ExtResource("6_20dgb")]
 position = Vector2(400, -240)
-_acceleration = 50.0
-_maxSpeed = 5.0
+
+[node name="Gem" parent="." unique_id=2100040273 instance=ExtResource("7_2yfc4")]
+position = Vector2(288, 160)
+
+[node name="Gem2" parent="." unique_id=301525220 instance=ExtResource("7_2yfc4")]
+position = Vector2(640, 160)

@@ -1,11 +1,21 @@
-﻿using Godot;
+﻿using System;
+using CraterSprite.Teams;
+using Godot;
 
 namespace CraterSprite.Characters.Enemies.AI.Scripts;
+
+public enum FloorEdgeResponse
+{
+    Flip,
+    Jump,
+    Ignore
+}
 
 public partial class WalkingController : AiController
 {
     [Export] private float _gunCooldownTime = 2.0f;
-    
+    [Export] private TeamFilter _gunTeamFilter;
+
     // Exporting Node types allows you to assign them in the editor, and avoids having to hardcode the paths,
     // in the event you want to change the node path or name, you won't need to modify the source code.
     // Nodes can still be null, and I've omitted null checking them because godot will catch this itself,
@@ -14,6 +24,8 @@ public partial class WalkingController : AiController
     [Export] private KinematicCharacter _character;
     [Export] private RayCast2D _playerDetection;
     [Export] private RayCast2D _groundCast;
+
+    [Export] private FloorEdgeResponse _floorEdgeResponse;
 
     private float _facingDirection = 1.0f;
     private bool _attackOnCooldown;
@@ -36,7 +48,7 @@ public partial class WalkingController : AiController
 
     public override void _PhysicsProcess(double delta)
     {
-        if (_playerDetection.GetCollider() != null && !_attackOnCooldown)
+        if (!_attackOnCooldown && ShouldShootTarget(_playerDetection.GetCollider()))
         {
             _gun.FireProjectile();
             _attackTimer.Start(_gunCooldownTime);
@@ -53,9 +65,27 @@ public partial class WalkingController : AiController
         
         // Determines if the entity is going to walk off an edge and turns them
         // Godot's raycast can return null when it doesn't hit anything, so it's faster than trying to cast
-        if (_groundCast.GetCollider() == null || _playerDetection.GetCollider() != null || _character.IsOnWall())
+        if (_playerDetection.GetCollider() != null || _character.IsOnWall())
         {
             Flip();
+        }
+        else if (_groundCast.GetCollider() == null)
+        {
+            switch (_floorEdgeResponse)
+            {
+                case FloorEdgeResponse.Flip:
+                    Flip();
+                    break;
+
+                case FloorEdgeResponse.Jump:
+                    _character.StartJumping();
+                    break;
+
+                default:
+                case FloorEdgeResponse.Ignore:
+                    break;
+            }
+
         }
     }
 
@@ -74,5 +104,16 @@ public partial class WalkingController : AiController
         // Feed the facing direction back into the kinematic character so it can start moving in the new direction
         // This is identical to how a player would move if they changed direction
         _character.SetMoveInput(_facingDirection);
+    }
+
+    private bool ShouldShootTarget(GodotObject godotObject)
+    {
+        if (godotObject == null)
+        {
+            return false;
+        }
+        
+        var characterStats = CraterFunctions.GetNodeByClassFromRoot<CharacterStats>(godotObject as Node);
+        return characterStats != null && TeamFunctions.TeamMatches(characterStats.characterTeam, _gunTeamFilter);
     }
 }
