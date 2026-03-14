@@ -52,7 +52,7 @@ public partial class ProjectileLauncher : Node2D
 
     public void FireProjectile()
     {
-        var projectile = CraterFunctions.CreateInstance<Projectile>(this, _projectile, GlobalPosition + GetFacingDirection() * _offset);
+        var projectile = CraterFunctions.CreateInstance<Projectile>(_projectile, GlobalPosition + GetFacingDirection() * _offset);
         if (projectile == null)
         {
             return;

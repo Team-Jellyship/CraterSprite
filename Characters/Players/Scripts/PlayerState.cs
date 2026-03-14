@@ -81,7 +81,7 @@ public partial class PlayerState : CharacterStats
 		for (var i = 0; i < _numMeteors; ++i)
 		{
 			var targetPosition = new Vector2(cameraRect.Position.X + cameraRect.Size.X * GD.Randf() * 0.75f, cameraRect.Position.Y - 128.0f * GD.Randf());
-			var meteor = CraterFunctions.CreateInstance<Projectile>(this, _specialScene, targetPosition);
+			var meteor = CraterFunctions.CreateInstance<Projectile>(_specialScene, targetPosition);
 			meteor.velocity = CraterMath.VectorFromAngle(-75.0f) * (32.0f + 100.0f * GD.Randf());
 			meteor.SetOwner(this);
 		}

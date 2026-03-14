@@ -64,11 +64,15 @@ public partial class WalkingController : AiController
         }
         
         // Determines if the entity is going to walk off an edge and turns them
-        // Godot's raycast can return null when it doesn't hit anything, so it's faster than trying to cast
+        // Godot's raycast can return null when it doesn't hit anything, so it's faster than trying to cast.
+        // Also, make sure to check again if the character is on the wall, because otherwise the player will
+        // be able to force the enemy into the wall, where it will no longer trigger the event from above.
         if (_playerDetection.GetCollider() != null || _character.IsOnWall())
         {
             Flip();
         }
+        // The priority of execution is to check if this controller can see a player, then check if it's still on the wall
+        // only then do we fall back to jumping etc.
         else if (_groundCast.GetCollider() == null)
         {
             switch (_floorEdgeResponse)
@@ -108,12 +112,19 @@ public partial class WalkingController : AiController
 
     private bool ShouldShootTarget(GodotObject godotObject)
     {
+        // Null check, and return nothing false because there's no way to execute the rest of the code
+        // if godotObject is null
         if (godotObject == null)
         {
             return false;
         }
         
+        // Try to find a CharacterStats object inside the object we hit earlier, by first casting it to a node type
         var characterStats = CraterFunctions.GetNodeByClassFromRoot<CharacterStats>(godotObject as Node);
+        
+        // Check that CharacterStats isn't null first, because it GetNodeByClassFromRoot can return a null value.
+        // Boolean AND/OR are executed in order, so the second condition will only be hit (preventing a null
+        // reference exception) if the first condition is TRUE/FALSE respectively
         return characterStats != null && TeamFunctions.TeamMatches(characterStats.characterTeam, _gunTeamFilter);
     }
 }
