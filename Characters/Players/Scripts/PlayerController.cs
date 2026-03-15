@@ -29,7 +29,7 @@ namespace CraterSprite
 			
 			InputManager.instance.RegisterCallback("special", InputEventType.Pressed, _ => _playerState.ExecuteSpecial(), deviceIndex, this);
 			
-			InputManager.instance.RegisterCallback("input_debug_toggle", InputEventType.Pressed, _ => InputManager.instance.ToggleDebug(), deviceIndex, this);
+			// InputManager.instance.RegisterCallback("input_debug_toggle", InputEventType.Pressed, _ => InputManager.instance.ToggleDebug(), deviceIndex, this);
 		}
 	}
 }

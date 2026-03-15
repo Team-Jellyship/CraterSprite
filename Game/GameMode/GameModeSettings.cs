@@ -17,6 +17,8 @@ public partial class GameModeSettings : Resource
     [Export] public PackedScene victoryScreen;
     [Export] public PackedScene lossScreen;
     [Export] public PackedScene rematchScreen;
+    // Add an entry for the start menu scene so it can be found later
+    [Export] public PackedScene startMenuScene;
 
     [ExportGroup("PlayerSprites")]
     [Export] public Godot.Collections.Array<SpriteFrames> playerDefaultSpriteFrames = [];

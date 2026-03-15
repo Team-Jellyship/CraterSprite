@@ -41,7 +41,6 @@ public partial class GameMode : Node
 	{
 		stateName = "Loading"
 	};
-
 	private MenuState characterSelectState { get; } = new()
 	{
 		stateName = "Character Select",
@@ -80,6 +79,7 @@ public partial class GameMode : Node
 	public override void _Ready()
 	{
 		ImGuiGodot.ImGuiGD.ToolInit();
+		SetProcessMode(ProcessModeEnum.Always);
 		
 		LoadSettings();
 		statusEffects = ResourceLoader.Load<StatusEffectList>("res://Game/Effects/SL_Effects.tres");
@@ -98,7 +98,17 @@ public partial class GameMode : Node
 		_transitionTimer = CraterFunctions.CreateTimer(this, "TransitionTimer", () => Command(GameModeCommand.Timeout));
 		characterSelectState.menuScene = settings.characterSelectScreen;
 		rematchState.menuScene = settings.rematchScreen;
+
+		// Create a new MenuState. MenuStates automatically display a scene over the full screen when the start, and remove it when they exit
+		var startMenuState = new MenuState
+		{
+			stateName = "Start Menu", // Give it a name for debug displays to show
+			menuScene = settings.startMenuScene // Set the scene for the menu, in this case it's defined in GameModeSettings
+		};
 		
+		// Add a new transition. The game will transition from the StartMenuState (argument 0), when it receives the command 'Victory' (argument 1)
+		// into state CharacterSelectState
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(startMenuState, GameModeCommand.Victory), () => characterSelectState);
 		_transitions.Add(new Tuple<GameState, GameModeCommand>(characterSelectState, GameModeCommand.Timeout), () => loadingState);
 		_transitions.Add(new Tuple<GameState, GameModeCommand>(loadingState, GameModeCommand.Loaded), () => versusGameState);
 		_transitions.Add(new Tuple<GameState, GameModeCommand>(versusGameState, GameModeCommand.Victory), () => roundOverState);
@@ -106,7 +116,12 @@ public partial class GameMode : Node
 		{ return playerData.TrueForAll(data => data.playerScore < settings.roundsToWin) ? loadingState : rematchState; });
 		_transitions.Add(new Tuple<GameState, GameModeCommand>(rematchState, GameModeCommand.Victory), () => loadingState);
 		
-		_currentGameState = loadingState;
+		
+		// Set the starting game state, before we load into it
+		// in this case, the first thing the player sees should be the start menu
+		_currentGameState = startMenuState;
+		
+		// Now enter it
 		_currentGameState.EnterState(this);
 		if (_currentGameState.transitionTime <= 0.0f)
 		{
@@ -117,6 +132,8 @@ public partial class GameMode : Node
 			_transitionTimer.Start(_currentGameState.transitionTime);
 		}
 
+		// Get information about which screens each player will have, and assign them to our player data classes
+		// for easy access later
 		for (var i = 0; i < settings.playerCount; ++i)
 		{
 			playerData[i].playerViewport = currentScene.GetNode<SubViewportContainer>($"%Viewport{i}");
