@@ -59,6 +59,9 @@ public partial class KinematicCharacter : CharacterBody2D
 	[Export(PropertyHint.None, "suffix:px/s")]
 	private float _jumpStrength = 100.0f;
 
+	[Export]
+	private float _jumpHeldGravityFactor = 0.5f;
+
 	// How many times the character can jump without landing
 	// Walking off of a platform will consume one jump
 	[Export] private uint _numJumps = 2;
@@ -174,14 +177,11 @@ public partial class KinematicCharacter : CharacterBody2D
 		{
 			currentVelocity.X += moveInput * GetAcceleration() * (float)delta;
 		}
-
-		if (_isJumping)
+		
+		if (!IsOnFloor() && !IsOnWall())
 		{
-			currentVelocity.Y = Math.Min(-_jumpStrength, currentVelocity.Y);
-		}
-		else if (!IsOnFloor() && !IsOnWall())
-		{
-			currentVelocity.Y += GravityConstant * _gravity * (float)delta;
+			var jumpFactor = _isJumping ? _jumpHeldGravityFactor : 1.0f;
+			currentVelocity.Y += GravityConstant * _gravity  * (float)delta * jumpFactor;
 		}
 		
 		var maxSpeed = GetMaxHorizontalSpeed();
@@ -388,6 +388,7 @@ public partial class KinematicCharacter : CharacterBody2D
 		
 		_isJumping = true;
 		_jumpTimer.Start(_jumpTime);
+		AddImpulse(new Vector2(0.0f, -_jumpStrength));
 		
 		--_numJumpsRemaining;
 	}
