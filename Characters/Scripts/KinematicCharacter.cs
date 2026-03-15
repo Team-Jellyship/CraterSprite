@@ -177,9 +177,9 @@ public partial class KinematicCharacter : CharacterBody2D
 
 		if (_isJumping)
 		{
-			currentVelocity.Y = Math.Min(-_jumpStrength, currentVelocity.Y);
+			currentVelocity.Y = Math.Min(-currentVelocity.Y-_jumpStrength * (float)delta, currentVelocity.Y);
 		}
-		else if (!IsOnFloor() && !IsOnWall())
+		if (!IsOnFloor() && !IsOnWall())
 		{
 			currentVelocity.Y += GravityConstant * _gravity * (float)delta;
 		}
