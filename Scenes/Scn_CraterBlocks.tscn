@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://d0jaad2ln7v51"]
+[gd_scene format=4 uid="uid://b1vpvvplw370d"]
 
 [ext_resource type="Script" uid="uid://chcnkhnc35ofv" path="res://Props/Scripts/VictoryRegion.cs" id="3_13tc4"]
 [ext_resource type="Script" uid="uid://dbsjfkw53mpjv" path="res://Game/SpawnLocation.cs" id="5_50dmq"]

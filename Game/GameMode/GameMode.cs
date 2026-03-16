@@ -99,7 +99,8 @@ public partial class GameMode : Node
 		characterSelectState.menuScene = settings.characterSelectScreen;
 		rematchState.menuScene = settings.rematchScreen;
 		
-		_transitions.Add(new Tuple<GameState, GameModeCommand>(characterSelectState, GameModeCommand.Timeout), () => loadingState);
+		//Transition Handling
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(characterSelectState, GameModeCommand.Victory), () => loadingState);
 		_transitions.Add(new Tuple<GameState, GameModeCommand>(loadingState, GameModeCommand.Loaded), () => versusGameState);
 		_transitions.Add(new Tuple<GameState, GameModeCommand>(versusGameState, GameModeCommand.Victory), () => roundOverState);
 		_transitions.Add(new Tuple<GameState, GameModeCommand>(roundOverState, GameModeCommand.Timeout), () =>
