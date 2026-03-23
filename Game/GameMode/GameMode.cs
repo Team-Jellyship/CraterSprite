@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CraterSprite.Effects;
+using CraterSprite.Input;
 using CraterSprite.Match3;
 using Godot;
 
@@ -13,14 +14,9 @@ namespace CraterSprite.Game.GameMode;
 public partial class GameMode : Node
 {
 	public static GameMode instance { get; private set; }
-	
 	public StatusEffectList statusEffects { get; private set; }
-	
 	public Match3RecipeTable recipes { get; private set; }
-
-	public readonly CraterEvent<int, Node2D> onPlayerSpawned = new ();
 	public Node worldRoot { get; private set; }
-	
 	public Control menuRoot { get; private set; }
 	
 	// Serialized settings, because this is a singleton
@@ -28,8 +24,11 @@ public partial class GameMode : Node
 
 	public readonly List<PlayerData> playerData = [new(), new()];
 	public readonly List<SpawnLocation> spawnLocations = [];
-
 	public PackedScene nextLevel;
+	
+	public readonly CraterEvent<int, Node2D> onPlayerSpawned = new ();
+
+	public bool showingDebug { private set; get; }
 	
 	private Timer _transitionTimer = new();
 	private Node _sceneEntryPoint;
@@ -42,11 +41,15 @@ public partial class GameMode : Node
 	{
 		stateName = "Loading"
 	};
-
 	private MenuState characterSelectState { get; } = new()
 	{
 		stateName = "Character Select",
 		transitionTime = 3.0f
+	};
+
+	private RematchMenuState rematchState { get; } = new()
+	{
+		stateName = "GameOver"
 	};
 	private GameState warmupState { get; } = new()
 	{
@@ -65,7 +68,7 @@ public partial class GameMode : Node
 	};
 	
 	// Transition table
-	private readonly Dictionary<Tuple<GameState, GameModeCommand>, GameState> _transitions = new();
+	private readonly Dictionary<Tuple<GameState, GameModeCommand>, Func<GameState>> _transitions = new();
 
 
 	public override void _EnterTree()
@@ -76,10 +79,11 @@ public partial class GameMode : Node
 	public override void _Ready()
 	{
 		ImGuiGodot.ImGuiGD.ToolInit();
+		SetProcessMode(ProcessModeEnum.Always);
 		
+		LoadSettings();
 		statusEffects = ResourceLoader.Load<StatusEffectList>("res://Game/Effects/SL_Effects.tres");
 		recipes = ResourceLoader.Load<Match3RecipeTable>("res://Game/Match3/M3t_RecipeTable.tres");
-		settings = ResourceLoader.Load<GameModeSettings>("res://Game/DefaultSettings.tres");
 
 		var currentScene = GetTree().GetCurrentScene();
 		_sceneEntryPoint = currentScene.GetNode("%WorldRoot");
@@ -90,16 +94,34 @@ public partial class GameMode : Node
 			GD.PrintErr("[GameMode] Could not find a valid world root node.");
 			return;
 		}
-		
-		SetupTimer();
+
+		_transitionTimer = CraterFunctions.CreateTimer(this, "TransitionTimer", () => Command(GameModeCommand.Timeout));
 		characterSelectState.menuScene = settings.characterSelectScreen;
+		rematchState.menuScene = settings.rematchScreen;
+
+		// Create a new MenuState. MenuStates automatically display a scene over the full screen when the start, and remove it when they exit
+		var startMenuState = new MenuState
+		{
+			stateName = "Start Menu", // Give it a name for debug displays to show
+			menuScene = settings.startMenuScene // Set the scene for the menu, in this case it's defined in GameModeSettings
+		};
 		
-		_transitions.Add(new Tuple<GameState, GameModeCommand>(characterSelectState, GameModeCommand.Timeout), loadingState);
-		_transitions.Add(new Tuple<GameState, GameModeCommand>(loadingState, GameModeCommand.Loaded), versusGameState);
-		_transitions.Add(new Tuple<GameState, GameModeCommand>(versusGameState, GameModeCommand.Victory), roundOverState);
-		_transitions.Add(new Tuple<GameState, GameModeCommand>(roundOverState, GameModeCommand.Timeout), loadingState);
+		// Add a new transition. The game will transition from the StartMenuState (argument 0), when it receives the command 'Victory' (argument 1)
+		// into state CharacterSelectState
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(startMenuState, GameModeCommand.Victory), () => characterSelectState);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(characterSelectState, GameModeCommand.Timeout), () => loadingState);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(loadingState, GameModeCommand.Loaded), () => versusGameState);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(versusGameState, GameModeCommand.Victory), () => roundOverState);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(roundOverState, GameModeCommand.Timeout), () =>
+		{ return playerData.TrueForAll(data => data.playerScore < settings.roundsToWin) ? loadingState : rematchState; });
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(rematchState, GameModeCommand.Victory), () => loadingState);
 		
-		_currentGameState = characterSelectState;
+		
+		// Set the starting game state, before we load into it
+		// in this case, the first thing the player sees should be the start menu
+		_currentGameState = startMenuState;
+		
+		// Now enter it
 		_currentGameState.EnterState(this);
 		if (_currentGameState.transitionTime <= 0.0f)
 		{
@@ -110,10 +132,19 @@ public partial class GameMode : Node
 			_transitionTimer.Start(_currentGameState.transitionTime);
 		}
 
+		// Get information about which screens each player will have, and assign them to our player data classes
+		// for easy access later
 		for (var i = 0; i < settings.playerCount; ++i)
 		{
 			playerData[i].playerViewport = currentScene.GetNode<SubViewportContainer>($"%Viewport{i}");
 		}
+		
+		// Register our debug toggle input listener
+		InputManager.instance.RegisterCallback("game_debug_toggle", InputEventType.Pressed, _ =>
+		{ 
+			showingDebug = !showingDebug;
+			GD.Print($"[GameMode] set show game debug to {showingDebug}");
+		}, 0, this);
 	}
 
     /**
@@ -157,11 +188,12 @@ public partial class GameMode : Node
 
 	public void Command(GameModeCommand command)
 	{
-		if (!_transitions.TryGetValue(new Tuple<GameState, GameModeCommand>(_currentGameState, command), out var newState))
+		if (!_transitions.TryGetValue(new Tuple<GameState, GameModeCommand>(_currentGameState, command), out var newStateFunction))
 		{
 			return;
 		}
-		
+
+		var newState = newStateFunction.Invoke();
 		GD.Print($"[GameMode] Transitioning to new game state '{newState.stateName}'");
 		_currentGameState.ExitState();
 		_currentGameState = newState;
@@ -226,12 +258,12 @@ public partial class GameMode : Node
 		_sceneEntryPoint.AddChild(worldRoot);
 	}
 
-	private void SetupTimer()
+	private void LoadSettings()
 	{
-		AddChild(_transitionTimer);
-		_transitionTimer.SetName("TransitionTimer");
-		_transitionTimer.OneShot = true;
-		_transitionTimer.Paused = false;
-		_transitionTimer.Timeout += () => Command(GameModeCommand.Timeout);
+		settings = ResourceLoader.Load<GameModeSettings>("res://Game/DefaultSettings.tres");
+		for (var i = 0; i < playerData.Count && i < settings.playerDefaultSpriteFrames.Count; ++i)
+		{
+			playerData[i].playerSpriteFrames = settings.playerDefaultSpriteFrames[i];
+		}
 	}
 }

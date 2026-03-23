@@ -102,6 +102,11 @@ public partial class CharacterStats : Node, IDamageListener
 
     private void DrawImGui()
     {
+        if (!GameMode.instance.showingDebug)
+        {
+            return;
+        }
+        
         if (ImGui.Begin($"{Owner.GetName()} Status###HealthComponent{Owner.GetName()}"))
         {
             ImGui.Text($"Health: {_effects.GetValue(GameMode.instance.statusEffects.health)} / {_effects.GetValue(GameMode.instance.statusEffects.maxHealth)}");

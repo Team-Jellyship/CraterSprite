@@ -4,6 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://c765qygv0kp8i" path="res://icon.svg" id="3_i4w1b"]
 [ext_resource type="Script" uid="uid://cyhvlrad5psho" path="res://Characters/Scripts/CharacterStats.cs" id="4_jr4rn"]
 [ext_resource type="Script" uid="uid://5yfgyni1c342" path="res://Shared/Scripts/DamageZone2D.cs" id="5_1nmws"]
+[ext_resource type="Script" uid="uid://c31eejkub08hq" path="res://Characters/Enemies/AI/WalkingController.cs" id="5_i4w1b"]
+[ext_resource type="Script" uid="uid://r6asvyfexakk" path="res://Characters/Scripts/ProjectileLauncher.cs" id="6_jr4rn"]
+[ext_resource type="PackedScene" uid="uid://kgj0kkgcwle3" path="res://Props/Projectiles/P_Projectile.tscn" id="7_1nmws"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8nvh5"]
 
@@ -15,6 +18,8 @@ size = Vector2(20, 10)
 [node name="WalkingEnemy" type="CharacterBody2D" unique_id=203046980 node_paths=PackedStringArray("_characterPenetrationArea")]
 collision_layer = 4
 script = ExtResource("1_fw1c5")
+_acceleration = 500.0
+_maxSpeed = 75.0
 _characterPenetrationArea = NodePath("Hurtbox")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=370477374]
@@ -47,3 +52,30 @@ debug_color = Color(0.9733754, 0, 0.4378033, 0.41960785)
 [node name="PhysicsCollider" type="CollisionShape2D" parent="." unique_id=630353109]
 position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_7yner")
+
+[node name="AIController" type="Node2D" parent="." unique_id=1312789790 node_paths=PackedStringArray("_gun", "_character", "_playerDetection", "_groundCast")]
+script = ExtResource("5_i4w1b")
+_gunTeamFilter = 3
+_gun = NodePath("../Gun")
+_character = NodePath("..")
+_playerDetection = NodePath("../PlayerRay")
+_groundCast = NodePath("../GroundRay")
+_floorEdgeResponse = 1
+
+[node name="Node2D" type="Node2D" parent="." unique_id=112846174]
+
+[node name="Gun" type="Node2D" parent="." unique_id=941353924 node_paths=PackedStringArray("_kinematicOwner")]
+script = ExtResource("6_jr4rn")
+_projectile = ExtResource("7_1nmws")
+_projectileSpeed = 100.0
+_kinematicOwner = NodePath("..")
+_offset = 16.0
+facingDirection = Vector2(2, 0)
+
+[node name="GroundRay" type="RayCast2D" parent="." unique_id=1912750747]
+target_position = Vector2(20, 20)
+
+[node name="PlayerRay" type="RayCast2D" parent="." unique_id=1442245475]
+target_position = Vector2(50, 0)
+collision_mask = 16
+collide_with_areas = true

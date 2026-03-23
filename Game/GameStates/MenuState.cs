@@ -10,13 +10,15 @@ public class MenuState : GameState
         
     public override void EnterState(GameMode mode)
     {
+        mode.GetTree().Paused = true;
         _menuInstance = menuScene.Instantiate<Control>();
         mode.menuRoot.AddChild(_menuInstance);
     }
 
     public override void ExitState()
     {
-        _menuInstance.Free();
+        _menuInstance.GetTree().Paused = false;
+        _menuInstance.QueueFree();
         _menuInstance = null;
     }
 }
