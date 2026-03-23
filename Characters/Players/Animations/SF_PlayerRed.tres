@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" format=3 uid="uid://c4uv1iqnbgnr2"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://dngxbr6dw7xke"]
 
 [ext_resource type="Texture2D" uid="uid://b56qesu0ojc66" path="res://Characters/Players/Sprites/p2 key poses.png" id="4_8cv2n"]
 [ext_resource type="Texture2D" uid="uid://5n2bo6d7vjvf" path="res://Characters/Players/Sprites/walk Player 2.png" id="5_vlfl0"]
