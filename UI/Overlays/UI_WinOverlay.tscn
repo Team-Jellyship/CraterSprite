@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dopicirf40cdr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_04uq8"]
+font_size = 64
+
+[node name="UiVictoryOverlay" type="Control" unique_id=485305052]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1137450483]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.2509804)
+
+[node name="Label" type="Label" parent="." unique_id=1318551288]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "WIN"
+label_settings = SubResource("LabelSettings_04uq8")
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,11 +1,12 @@
 using Godot;
 using System;
+using System.Linq;
 
 namespace CraterSprite;
 
 public partial class KinematicCharacter : CharacterBody2D
 {
-	private const float GravityConstant = 32.0f * 9.8f;
+	public const float GravityConstant = 32.0f * 9.8f;
 	private const float DefaultMaxFallSpeed = 1000.0f;
 	private const float NegativeKillY = 1000.0f;
 
@@ -104,7 +105,11 @@ public partial class KinematicCharacter : CharacterBody2D
 
 	[Export(PropertyHint.None, "suffix:px/s")]
 	private float _defaultKnockbackStrength = 200.0f;
+
+	[ExportGroup("Nodes")]
+	[Export] private Area2D _characterPenetrationArea;
 	
+	[Signal] public delegate void MoveDirectionChangedEventHandler(float moveDirection);
 	[Signal] public delegate void MoveSpeedChangedEventHandler(float moveSpeed);
 	[Signal] public delegate void OnCrouchedEventHandler();
 	[Signal] public delegate void OnUncrouchedEventHandler();
@@ -195,13 +200,15 @@ public partial class KinematicCharacter : CharacterBody2D
 		{
 			currentVelocity = pendingImpulses;
 		}
-		
+
 		SetVelocity(currentVelocity);
 
 		var onFloorBeforeMove = IsOnFloor();
 		var onWallBeforeMove = IsOnWall();
 		
 		MoveAndSlide();
+		MoveAndCollide(GetCharacterPenetrationVelocity() * (float)delta);
+		
 		if (IsOnFloor() && !onFloorBeforeMove)
 		{
 			Land();
@@ -240,6 +247,15 @@ public partial class KinematicCharacter : CharacterBody2D
 	 */
 	public void SetMoveInput(float input)
 	{
+		if (moveInput != 0.0f && input == 0.0f)
+		{
+			EmitSignalMoveSpeedChanged(0.0f);
+		}
+		else if (moveInput == 0.0f && input != 0.0f)
+		{
+			EmitSignalMoveSpeedChanged(1.0f);
+		}
+		
 		moveInput = Math.Clamp(input, -1.0f, 1.0f);
 
 		if (input == 0.0f)
@@ -247,7 +263,7 @@ public partial class KinematicCharacter : CharacterBody2D
 			return;
 		}
 		_direction = Mathf.Sign(moveInput);
-		EmitSignalMoveSpeedChanged(moveInput);
+		EmitSignalMoveDirectionChanged(moveInput);
 	}
 	
 	/**
@@ -408,5 +424,27 @@ public partial class KinematicCharacter : CharacterBody2D
 		var result = _pendingImpulses;
 		_pendingImpulses = Vector2.Zero;
 		return result;
+	}
+
+	private Vector2 GetCharacterPenetrationVelocity()
+	{
+		if (_characterPenetrationArea == null)
+		{
+			return Vector2.Zero;
+		}
+		return _characterPenetrationArea.GetOverlappingAreas().Aggregate(Vector2.Zero, (current, character) => 
+			current + GetIndividualCharacterPenetrationVelocity(character));
+	}
+
+	private Vector2 GetIndividualCharacterPenetrationVelocity(Area2D otherCharacter)
+	{
+		// only push horizontally
+		var delta = otherCharacter.GlobalPosition.X - GlobalPosition.X;
+		if (delta == 0.0f)
+		{
+			delta = GD.RandRange(0, 1) == 1 ? -1.0f : 1.0f;
+		}
+		var xVelocity = Mathf.Clamp(100.0f / -delta, -10.0f, 10.0f);
+		return new Vector2(xVelocity, 0.0f);
 	}
 }

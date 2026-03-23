@@ -1,4 +1,6 @@
+using System;
 using CraterSprite.Effects;
+using CraterSprite.Game.GameMode;
 using CraterSprite.Match3;
 using CraterSprite.Shared.Scripts;
 using CraterSprite.Teams;
@@ -27,7 +29,7 @@ public partial class CharacterStats : Node, IDamageListener
     
     private readonly StatusEffectContainer _effects = new();
     
-    public override void _Ready()
+    public override void _EnterTree()
     {
         _effects.SetBaseValue(GameMode.instance.statusEffects.health, _defaultHealth);
         _effects.SetBaseValue(GameMode.instance.statusEffects.maxHealth, _defaultHealth);
@@ -86,6 +88,16 @@ public partial class CharacterStats : Node, IDamageListener
 
     public virtual void KilledEnemy(CharacterStats enemy)
     {
+    }
+
+    public void RegisterEffectChangedDelegate(StatusEffect effect, Action<int, float> action, Node owner)
+    {
+        _effects.RegisterStatusEffectChangedEvent(effect, action, owner);
+    }
+
+    public float GetEffectValue(StatusEffect effect)
+    {
+        return _effects.GetValue(effect);
     }
 
     private void DrawImGui()

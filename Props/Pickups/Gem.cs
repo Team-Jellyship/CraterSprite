@@ -1,4 +1,5 @@
-﻿using CraterSprite.Shared.Scripts;
+﻿using CraterSprite.Game.GameMode;
+using CraterSprite.Shared.Scripts;
 using Godot;
 
 namespace CraterSprite.Props;
@@ -17,11 +18,11 @@ public partial class Gem : Area2D, IDamageListener
         if (source is PlayerState playerState)
         {
             var offset = GlobalPosition - playerState.match3Spawner.GlobalPosition;
-            GameMode.instance.NotifyGemDestroyed(playerState.index, offset);
-            GD.Print($"[Gem] Gem '{Name}' was destroyed by player {playerState.index} with relative position {offset}");
+            GameMode.instance.NotifyGemDestroyed(playerState.playerIndex, offset);
+            GD.Print($"[Gem] Gem '{Name}' was destroyed by player {playerState.playerIndex} with relative position {offset}");
         }
         
-        QueueFree();
+        Owner.QueueFree();
     }
 
     private void Overlap(Area2D area)
@@ -33,6 +34,6 @@ public partial class Gem : Area2D, IDamageListener
         }
         
         playerState.AddSuperCharge(_chargeAmount);
-        QueueFree();
+        Owner.QueueFree();
     }
 }

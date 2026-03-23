@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="Match3Recipe" format=3 uid="uid://dqpv7ddynrmda"]
+
+[ext_resource type="Script" uid="uid://cgtmaxm7qx01f" path="res://Game/Match3/Scripts/Match3Recipe.cs" id="1_2u1sk"]
+
+[resource]
+script = ExtResource("1_2u1sk")
+metadata/_custom_type_script = "uid://cgtmaxm7qx01f"

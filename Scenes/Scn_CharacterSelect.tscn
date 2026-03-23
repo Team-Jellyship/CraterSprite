@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://bxk04xlwe138j"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4wvrv"]
+font_size = 32
+font_color = Color(0.07, 0.07, 0.07, 1)
+
+[node name="ScnCharacterSelect" type="Control" unique_id=1187210357]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=478269176]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ColorRect" unique_id=1668312245]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -149.0
+offset_top = -45.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Loading..."
+label_settings = SubResource("LabelSettings_4wvrv")
+horizontal_alignment = 2
+vertical_alignment = 2

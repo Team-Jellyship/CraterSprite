@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CraterSprite.Game.GameMode;
 using Godot;
 
 namespace CraterSprite;
