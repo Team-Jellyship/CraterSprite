@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://ul4qeudj8sbq"]
 
 [ext_resource type="Script" uid="uid://dtpwycy3o0baf" path="res://Characters/Scripts/KinematicFlyer.cs" id="1_w3jey"]
-[ext_resource type="Texture2D" uid="uid://c765qygv0kp8i" path="res://icon.svg" id="2_06fqe"]
 [ext_resource type="Script" uid="uid://bhiokieshedwe" path="res://Characters/Enemies/AI/FlyingController.cs" id="2_g2wum"]
 [ext_resource type="Script" uid="uid://5yfgyni1c342" path="res://Shared/Scripts/DamageZone2D.cs" id="4_o184k"]
 [ext_resource type="Script" uid="uid://cyhvlrad5psho" path="res://Characters/Scripts/CharacterStats.cs" id="5_h8sk2"]
+[ext_resource type="SpriteFrames" uid="uid://kl1p1d6fwx8x" path="res://Characters/Enemies/Bat/Animations/SF_Bat.tres" id="5_um8ag"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_06fqe"]
 radius = 8.0
@@ -23,10 +23,6 @@ _acceleration = 200.0
 
 [node name="KinematicShape" type="CollisionShape2D" parent="." unique_id=328264790]
 shape = SubResource("CircleShape2D_06fqe")
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1453853052]
-scale = Vector2(0.15, 0.15)
-texture = ExtResource("2_06fqe")
 
 [node name="AIController" type="Node2D" parent="." unique_id=2064783572 node_paths=PackedStringArray("_character")]
 script = ExtResource("2_g2wum")
@@ -57,3 +53,8 @@ script = ExtResource("5_h8sk2")
 characterTeam = 3
 matchType = 3
 _defaultHealth = 2.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=811055459]
+sprite_frames = ExtResource("5_um8ag")
+autoplay = "default"
+frame_progress = 0.44504583

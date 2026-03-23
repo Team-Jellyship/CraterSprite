@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cv348pqc48tyb"]
+
+[ext_resource type="Script" uid="uid://qd7bxo0dkrs7" path="res://UI/Menus/StartMenu.cs" id="1_5mb8h"]
+
+[node name="ScnStartMenu" type="Control" unique_id=673704146]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5mb8h")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1476703013]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.41933742, 0.7481502, 0.9753484, 1)
+
+[node name="Label" type="Label" parent="." unique_id=1686109422]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Press 'Enter' to Start"
+horizontal_alignment = 1
+vertical_alignment = 1

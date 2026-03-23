@@ -1,17 +1,17 @@
-﻿using Godot;
+using Godot;
 
 namespace CraterSprite.UI.HUD.Scripts;
 
 public partial class SuperDisplay : AutobindUiElement
 {
-    [Export] private ProgressBar _progressBar;
+	[Export] private ProgressBar _progressBar;
 
-    protected override void Bind(PlayerState playerState)
-    {
-        playerState.onSuperchargeChanged.AddListener((charge, maxCharge) =>
-        {
-            _progressBar.Value = charge;
-            _progressBar.MaxValue = maxCharge;
-        });
-    }
+	protected override void Bind(PlayerState playerState)
+	{
+		playerState.onSuperchargeChanged.AddListener((charge, maxCharge) =>
+		{
+			_progressBar.Value = charge;
+			_progressBar.MaxValue = maxCharge;
+		});
+	}
 }

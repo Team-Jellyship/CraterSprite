@@ -110,7 +110,7 @@ public partial class Match3Spawner : Node2D
     {
         var newOffset = offset;
         newOffset.X *= -1.0f;
-        CraterFunctions.CreateInstanceDeferred<Node2D>(this, spawn, GlobalPosition + newOffset);
+        CraterFunctions.CreateInstanceDeferred<Node2D>(spawn, GlobalPosition + newOffset);
     }
 
     private EnemySpawner GetRandomAvailableSpawner()
