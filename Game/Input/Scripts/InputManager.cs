@@ -38,7 +38,7 @@ namespace CraterSprite.Input
         public override void _Ready()
         {
             instance = this;
-            SetProcessMode(ProcessModeEnum.Always);
+
             settings = ResourceLoader.Load<InputSettings>("res://Game/Input/InputSettings.tres");
             
             var actionCount = 0;
@@ -59,8 +59,6 @@ namespace CraterSprite.Input
             }
             
             GD.Print($"[Input Manager] Parsed {actions.Count} unique actions from {actionCount} in the action map.");
-            RegisterCallback("input_debug_toggle", InputEventType.Pressed, _ => ToggleDebug(), 0, this);
-
         }
 
         public override void _Input(InputEvent @event)
@@ -214,7 +212,6 @@ namespace CraterSprite.Input
 
         public void ToggleDebug()
         {
-            GD.Print("[InputManager} debug toggled");
             _showDebug = !_showDebug;
         }
 

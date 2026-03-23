@@ -23,8 +23,9 @@ size_flags_vertical = 3
 color = Color(0.90830255, 0.25420898, 0.40371034, 1)
 
 [node name="ColorRect2" type="ColorRect" parent="VBoxContainer" unique_id=221923131]
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 8
 size_flags_vertical = 3
 color = Color(0.19887447, 0.56199944, 0.8297888, 1)
 
