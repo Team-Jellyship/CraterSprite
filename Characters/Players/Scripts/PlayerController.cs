@@ -26,6 +26,8 @@ namespace CraterSprite
 			InputManager.instance.RegisterCallback("fire", InputEventType.Pressed, _ => _gun.FireProjectile(), deviceIndex, this);
 			InputManager.instance.RegisterCallback("aim_up", InputEventType.Pressed, _ => _gun.aimingUp = true, deviceIndex, this);
 			InputManager.instance.RegisterCallback("aim_up", InputEventType.Released, _ => _gun.aimingUp = false, deviceIndex, this);
+			InputManager.instance.RegisterCallback("aim_diagonal", InputEventType.Pressed, _ => _gun.aimingDiagonal = true, deviceIndex, this);
+			InputManager.instance.RegisterCallback("aim_diagonal", InputEventType.Released, _ => _gun.aimingDiagonal = false, deviceIndex, this);
 			
 			InputManager.instance.RegisterCallback("special", InputEventType.Pressed, _ => _playerState.ExecuteSpecial(), deviceIndex, this);
 			

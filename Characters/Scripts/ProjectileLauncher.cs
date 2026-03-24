@@ -3,6 +3,7 @@ using CraterSprite.Game.GameMode;
 using Godot;
 
 namespace CraterSprite;
+
 public partial class ProjectileLauncher : Node2D
 {
 	[Export] private PackedScene _projectile;
@@ -23,6 +24,7 @@ public partial class ProjectileLauncher : Node2D
 	private Vector2 _facingDirection;
 
 	public bool aimingUp = false;
+	public bool aimingDiagonal = false;
 	
 	private CharacterStats _characterStats;
 
@@ -79,6 +81,7 @@ public partial class ProjectileLauncher : Node2D
 
 	private Vector2 GetFacingDirection()
 	{
-		return aimingUp ? Vector2.Up : _facingDirection;
+		return aimingDiagonal ? new Vector2(0.8509f * MathF.Sign(_facingDirection.X), -0.8509f)
+			: aimingUp ? Vector2.Up : _facingDirection;
 	}
 }
