@@ -116,6 +116,7 @@ public partial class KinematicCharacter : CharacterBody2D
 	[Signal] public delegate void MoveSpeedChangedEventHandler(float moveSpeed);
 	[Signal] public delegate void OnCrouchedEventHandler();
 	[Signal] public delegate void OnUncrouchedEventHandler();
+	[Signal] public delegate void OnGroundedChangedEventHandler(bool grounded);
 
 	[Signal] public delegate void OnClickedEventHandler();
 
@@ -362,11 +363,13 @@ public partial class KinematicCharacter : CharacterBody2D
 	{
 		_numJumpsRemaining = _numJumps;
 		_coyoteTimer.Stop();
+		EmitSignalOnGroundedChanged(true);
 		onHitFloor.Invoke();
 	}
 
 	private void LeavePlatform()
 	{
+		EmitSignalOnGroundedChanged(false);
 		if (!_isJumping)
 		{
 			_coyoteTimer.Start(_coyoteTime);
