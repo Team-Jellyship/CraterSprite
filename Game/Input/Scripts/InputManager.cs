@@ -59,7 +59,7 @@ namespace CraterSprite.Input
             }
             
             GD.Print($"[Input Manager] Parsed {actions.Count} unique actions from {actionCount} in the action map.");
-            RegisterCallback("input_debug_toggle", InputEventType.Pressed, _ => ToggleDebug(), 0, this);
+            RegisterCallback("input_debug_toggle", InputEventType.Released, _ => ToggleDebug(), 0, this);
 
         }
 
@@ -214,7 +214,7 @@ namespace CraterSprite.Input
 
         public void ToggleDebug()
         {
-            GD.Print("[InputManager} debug toggled");
+            GD.Print("[InputManager] debug toggled");
             _showDebug = !_showDebug;
         }
 

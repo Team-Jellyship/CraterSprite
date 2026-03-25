@@ -30,8 +30,6 @@ namespace CraterSprite
 			InputManager.instance.RegisterCallback("aim_diagonal", InputEventType.Released, _ => _gun.SetAimDiagonal(false), deviceIndex, this);
 			
 			InputManager.instance.RegisterCallback("special", InputEventType.Pressed, _ => _playerState.ExecuteSpecial(), deviceIndex, this);
-			
-			InputManager.instance.RegisterCallback("input_debug_toggle", InputEventType.Pressed, _ => InputManager.instance.ToggleDebug(), deviceIndex, this);
 		}
 	}
 }

@@ -663,8 +663,8 @@ _projectile = ExtResource("3_570sx")
 _projectileSpeed = 200.0
 _kinematicOwner = NodePath("..")
 _offset = 12.0
-_offsetVerticalFacing = 4.0
-facingDirection = Vector2(1, 0)
+_offsetVerticalFacing = 8.0
+facingDirection = Vector2(-1, 0)
 
 [node name="KinematicBox" type="CollisionShape2D" parent="." unique_id=1005347515]
 position = Vector2(0, -10)
@@ -722,6 +722,7 @@ _invulnerabilityTime = 2.0
 
 [node name="CameraAttach" type="RemoteTransform2D" parent="." unique_id=1538334504]
 script = ExtResource("10_vv1l6")
+_verticalOffset = -16.0
 
 [node name="CameraKillZone" type="Area2D" parent="CameraAttach" unique_id=716764710]
 collision_layer = 8
