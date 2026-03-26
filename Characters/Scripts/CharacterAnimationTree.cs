@@ -12,7 +12,7 @@ public partial class CharacterAnimationTree : AnimationTree
 	private void SetWalkDirection(float direction)
 	{
 		_walkDirection = direction;
-		Set("parameters/state_machine/jumping/blend_position", direction);
+		Set("parameters/state_machine/jumping/blend_position", new Vector2(_walkDirection, _aimDirection));
 		Set("parameters/state_machine/walking/walkAimBlend/blend_position", new Vector2(_walkDirection, _aimDirection));
 		Set("parameters/state_machine/idle/blend_position", new Vector2(_walkDirection, _aimDirection));
 	}
@@ -26,6 +26,7 @@ public partial class CharacterAnimationTree : AnimationTree
 	private void SetAimDirection(AimDirection direction)
 	{
 		_aimDirection = GetAimDirectionAsFloat(direction);
+		Set("parameters/state_machine/jumping/blend_position", new Vector2(_walkDirection, _aimDirection));
 		Set("parameters/state_machine/walking/walkAimBlend/blend_position", new Vector2(_walkDirection, _aimDirection));
 		Set("parameters/state_machine/idle/blend_position", new Vector2(_walkDirection, _aimDirection));
 	}
