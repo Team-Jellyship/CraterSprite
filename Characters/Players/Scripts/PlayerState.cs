@@ -56,6 +56,7 @@ public partial class PlayerState : CharacterStats
 		if (source.canBeJumpedOn && Owner is KinematicCharacter { Velocity.Y: > 0.0f } ownerKinematicCharacter)
 		{
 			ownerKinematicCharacter.StartJumping();
+			source.TakeDamage(3.0f, this);
 			return;
 		}
 		
