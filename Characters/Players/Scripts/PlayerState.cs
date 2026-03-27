@@ -53,9 +53,9 @@ public partial class PlayerState : CharacterStats
 
 	public override void TakeDamage(float damageAmount, CharacterStats source)
 	{
-		if (source.canBeJumpedOn && Owner is KinematicCharacter { Velocity.Y: > 0.0f } ownerKinematicCharacter)
+		if (source is { canBeJumpedOn: true } && Owner is KinematicCharacter { Velocity.Y: > 0.0f } ownerKinematicCharacter)
 		{
-			ownerKinematicCharacter.StartJumping();
+			ownerKinematicCharacter.Hop();
 			source.TakeDamage(3.0f, this);
 			return;
 		}
