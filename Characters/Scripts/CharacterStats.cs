@@ -65,7 +65,7 @@ public partial class CharacterStats : Node, IDamageListener
 	{
 		if (_effects.HasEffect(GameMode.instance.statusEffects.invulnerability))
 		{
-			GD.Print($"[CharacterStats] '{Owner.Name}' took damage, but was invulnerable so damage was discarded.");
+			// GD.Print($"[CharacterStats] '{Owner.Name}' took damage, but was invulnerable so damage was discarded.");
 			return;
 		}
 		
