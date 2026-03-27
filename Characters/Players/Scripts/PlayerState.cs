@@ -51,6 +51,17 @@ public partial class PlayerState : CharacterStats
 		container.AddOrb(enemy.matchType);
 	}
 
+	public override void TakeDamage(float damageAmount, CharacterStats source)
+	{
+		if (source.canBeJumpedOn && Owner is KinematicCharacter { Velocity.Y: > 0.0f } ownerKinematicCharacter)
+		{
+			ownerKinematicCharacter.StartJumping();
+			return;
+		}
+		
+		base.TakeDamage(damageAmount, source);
+	}
+
 	public void SetPlayerIndex(int index)
 	{
 		playerIndex = index;

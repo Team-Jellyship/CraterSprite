@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dbsjfkw53mpjv" path="res://Game/SpawnLocation.cs" id="5_fcfrf"]
 [ext_resource type="PackedScene" uid="uid://cybtj76g4n71w" path="res://Characters/Enemies/Char_FireEnemy.tscn" id="6_20dgb"]
 [ext_resource type="PackedScene" uid="uid://o4xe28btcjdf" path="res://Props/Pickups/P_Gem.tscn" id="7_2yfc4"]
+[ext_resource type="PackedScene" uid="uid://bsqs3cujm4r8m" path="res://Characters/Enemies/Char_GoombaStompTestEnemy.tscn" id="8_jqstg"]
 [ext_resource type="Script" uid="uid://chcnkhnc35ofv" path="res://Props/Scripts/VictoryRegion.cs" id="8_opeqa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l2rra"]
@@ -125,3 +126,9 @@ position = Vector2(288, 160)
 
 [node name="Gem2" parent="." unique_id=301525220 instance=ExtResource("7_2yfc4")]
 position = Vector2(640, 160)
+
+[node name="GoombaStompTestEnemy" parent="." unique_id=786479495 instance=ExtResource("8_jqstg")]
+position = Vector2(320, 256)
+
+[node name="GoombaStompTestEnemy2" parent="." unique_id=87549990 instance=ExtResource("8_jqstg")]
+position = Vector2(672, 256)

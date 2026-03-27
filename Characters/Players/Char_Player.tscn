@@ -882,7 +882,7 @@ _specialCost = 75
 _showingStats = true
 characterTeam = 1
 _defaultHealth = 5.0
-_invulnerabilityTime = 2.0
+_invulnerabilityTime = 0.5
 
 [node name="CameraAttach" type="RemoteTransform2D" parent="." unique_id=1538334504]
 script = ExtResource("10_vv1l6")

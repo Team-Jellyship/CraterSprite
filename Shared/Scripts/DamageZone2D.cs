@@ -32,6 +32,6 @@ public partial class DamageZone2D : Area2D
             return;
         }
         
-        characterStats.TakeDamage(_damage, null);
+        characterStats.TakeDamage(_damage, _owner);
     }
 }

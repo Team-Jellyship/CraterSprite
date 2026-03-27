@@ -21,6 +21,8 @@ public partial class CharacterStats : Node, IDamageListener
 	[Signal] public delegate void OnStunEndEventHandler();
 
 	[Export] private bool _showingStats;
+
+	[Export] public bool canBeJumpedOn { private set; get; }
 	[Export] public Team characterTeam { private set; get; }
 	[Export] public MatchType matchType { private set; get; }
 	[Export] private float _defaultHealth = 15;
@@ -59,7 +61,7 @@ public partial class CharacterStats : Node, IDamageListener
 	 *     and triggers the OnDeath signal if the damage causes this character to die
 	 * </summary>
 	 */
-	public void TakeDamage(float damageAmount, CharacterStats source)
+	public virtual void TakeDamage(float damageAmount, CharacterStats source)
 	{
 		if (_effects.HasEffect(GameMode.instance.statusEffects.invulnerability))
 		{
