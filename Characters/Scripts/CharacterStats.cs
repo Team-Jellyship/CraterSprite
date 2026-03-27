@@ -80,8 +80,12 @@ public partial class CharacterStats : Node, IDamageListener
 			}
 			return;
 		}
+		Kill(source);
+	}
 
-		GD.Print($"Character '{Owner.Name}' died.");
+	public void Kill(CharacterStats source)
+	{
+		// GD.Print($"Character '{Owner.Name}' died.");
 
 		source?.KilledEnemy(this);
 		Owner?.QueueFree();

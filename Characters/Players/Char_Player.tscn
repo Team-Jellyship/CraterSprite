@@ -882,7 +882,7 @@ _specialCost = 75
 _showingStats = true
 characterTeam = 1
 _defaultHealth = 5.0
-_invulnerabilityTime = 0.5
+_invulnerabilityTime = 10.0
 
 [node name="CameraAttach" type="RemoteTransform2D" parent="." unique_id=1538334504]
 script = ExtResource("10_vv1l6")
@@ -892,7 +892,7 @@ collision_layer = 8
 collision_mask = 48
 script = ExtResource("11_7id01")
 _filter = 7
-_damage = 99.0
+_damage = -1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraAttach/CameraKillZone" unique_id=1671477932]
 position = Vector2(0, 192)
@@ -938,6 +938,5 @@ offset = Vector2(0, -32)
 [connection signal="OnGroundedChanged" from="." to="AnimationTree" method="SetGrounded"]
 [connection signal="OnUncrouched" from="." to="Hurtbox" method="SetOn"]
 [connection signal="OnAimDirectionChanged" from="Gun" to="AnimationTree" method="SetAimDirection"]
-[connection signal="OnStunEnd" from="PlayerStats" to="Hurtbox" method="Enable"]
-[connection signal="OnStunned" from="PlayerStats" to="Hurtbox" method="Disable"]
+[connection signal="OnStunEnd" from="PlayerStats" to="Hurtbox" method="Retrigger"]
 [connection signal="OnTakeDamage" from="PlayerStats" to="." method="ApplyKnockbackDefault"]

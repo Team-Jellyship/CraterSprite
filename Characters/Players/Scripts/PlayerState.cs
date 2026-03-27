@@ -15,6 +15,7 @@ public partial class PlayerState : CharacterStats
 	private float _supercharge;
 	
 	[Export] private float _maxSupercharge;
+	[Export] private float _stompDamage = 3.0f;
 	[Export] public Match3Spawner match3Spawner { private set; get; }
 	
 	// Special stuff. This should all be moved to another data class
@@ -56,7 +57,7 @@ public partial class PlayerState : CharacterStats
 		if (source is { canBeJumpedOn: true } && Owner is KinematicCharacter { Velocity.Y: > 0.0f } ownerKinematicCharacter)
 		{
 			ownerKinematicCharacter.Hop();
-			source.TakeDamage(3.0f, this);
+			source.TakeDamage(_stompDamage, this);
 			return;
 		}
 		
