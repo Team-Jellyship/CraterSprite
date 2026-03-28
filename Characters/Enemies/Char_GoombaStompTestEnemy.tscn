@@ -11,6 +11,7 @@ size = Vector2(20, 10)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s1cow"]
 
 [node name="GoombaStompTestEnemy" type="CharacterBody2D" unique_id=786479495]
+collision_layer = 4
 script = ExtResource("1_burtm")
 
 [node name="PhysicsCollider" type="CollisionShape2D" parent="." unique_id=1760764892]
@@ -25,6 +26,7 @@ texture = ExtResource("2_jt7ru")
 script = ExtResource("3_5xj14")
 canBeJumpedOn = true
 characterTeam = 3
+matchType = 1
 _defaultHealth = 3.0
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1297332669 node_paths=PackedStringArray("_owner")]

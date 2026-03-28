@@ -245,8 +245,7 @@ public partial class KinematicCharacter : CharacterBody2D
 		DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, new Vector2(moveInput * 50.0f, 0.0f), new Color(0.2f, 0.25f, 1.0f));
 		DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, GetVelocity() * 0.25f, new Color(1.0f, 0.0f, 0.0f));
 		DrawString(ThemeDB.FallbackFont, new Vector2(-16.0f, -32.0f), $"Jumping: {_isJumping}", HorizontalAlignment.Center, -1.0f, 8);
-		DrawString(ThemeDB.FallbackFont, new Vector2(-16.0f, -16.0f), $"Hopping: {_isHopping}", HorizontalAlignment.Center, -1.0f, 8);
-		DrawString(ThemeDB.FallbackFont, new Vector2(-16.0f, -48.0f), $"Jumps: {_numJumpsRemaining}", HorizontalAlignment.Center, -1.0f, 8);
+		DrawString(ThemeDB.FallbackFont, new Vector2(-16.0f, -16.0f), $"Jumps: {_numJumpsRemaining}", HorizontalAlignment.Center, -1.0f, 8);
 	}
 
 	/**

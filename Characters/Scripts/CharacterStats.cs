@@ -87,6 +87,7 @@ public partial class CharacterStats : Node, IDamageListener
 	{
 		// GD.Print($"Character '{Owner.Name}' died.");
 
+		_effects.SetBaseValue(GameMode.instance.statusEffects.health, 0.0f);
 		source?.KilledEnemy(this);
 		Owner?.QueueFree();
 		EmitSignalOnDeath();

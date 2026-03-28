@@ -44,6 +44,12 @@ public class Match3Container
             }
             orbs.RemoveRange(0, orbs.Count - 1);
         }
+
+        if (orbs.Count == 3)
+        {
+            onSpawnRequested.Invoke(orbs);
+            orbs.Clear();
+        }
         
         onOrbsChanged.Invoke(orbs);
     }
