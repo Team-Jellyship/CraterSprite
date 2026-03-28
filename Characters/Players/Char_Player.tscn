@@ -15,7 +15,7 @@
 [ext_resource type="Resource" uid="uid://crq8ungls07wu" path="res://Game/SpawnTable/Tables/DefaultEnemySpawnTable/St_DefaultEnemy.tres" id="13_mcxtw"]
 [ext_resource type="PackedScene" uid="uid://bos83ttcvikwk" path="res://Characters/Players/Match3SpawnerRegion.tscn" id="13_tkb72"]
 [ext_resource type="Resource" uid="uid://cx2r71cixu2uo" path="res://Game/SpawnTable/Tables/PickupSpawnTable/St_Pickups.tres" id="14_7s676"]
-[ext_resource type="SpriteFrames" uid="uid://c4uv1iqnbgnr2" path="res://Characters/Players/Animations/SF_TestPlayer.tres" id="15_7s676"]
+[ext_resource type="SpriteFrames" uid="uid://c4uv1iqnbgnr2" path="res://Characters/Players/Animations/SF_PlayerRed.tres" id="15_7s676"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1fpnh"]
 size = Vector2(14, 20)
@@ -134,13 +134,13 @@ _maxSpeed = 125.0
 _crouchedMaxSpeed = 50.0
 _friction = 800.0
 _maxAirSpeedHorizontal = 150.0
-_airControlFactor = 2.0
-_gravity = 5.0
-_jumpStrength = 325.0
-_jumpTime = 0.1
+_airControlFactor = 1.0
+_gravity = 3.2
+_jumpStrength = 265.0
 _wallFriction = 1200.0
-_wallJumpStrength = 600.0
-_wallJumpAngle = 35.0
+_wallJumpStrength = 425.0
+_wallJumpAngle = 45.0
+_restoreJumpOnHitWall = false
 
 [node name="Controller" type="Node" parent="." unique_id=505377627 node_paths=PackedStringArray("_character", "_playerState", "_gun")]
 script = ExtResource("4_1fpnh")
@@ -225,7 +225,7 @@ shape = SubResource("RectangleShape2D_ebcvw")
 debug_color = Color(0.9470236, 3.5616756e-06, 0.5873681, 0.41960785)
 
 [node name="Spawner" type="Node2D" parent="CameraAttach" unique_id=1995583679]
-position = Vector2(0, -112)
+position = Vector2(0, -144)
 script = ExtResource("12_tkb72")
 _enemySpawnTable = ExtResource("13_mcxtw")
 _enemySpawnTime = 5.0

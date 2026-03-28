@@ -16,14 +16,11 @@ public class PlayerData
     public Node2D player { get; private set; }
 
     public SubViewportContainer playerViewport;
-    
     public PlayerCamera camera;
-
     public RoundOutcome lastRoundOutcome = RoundOutcome.Win;
+    public SpriteFrames playerSpriteFrames;
     
     public readonly CraterEvent<uint> onScoreChanged = new();
-
-
 
     public void SetPlayer(Node2D playerNode, PlayerState state)
     {

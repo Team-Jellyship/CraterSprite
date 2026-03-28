@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bc63xk2i2ivxt" path="res://Characters/Enemies/Char_TestEnemy.tscn" id="1_yat5j"]
 [ext_resource type="PackedScene" uid="uid://cybtj76g4n71w" path="res://Characters/Enemies/Char_FireEnemy.tscn" id="2_sywf2"]
 [ext_resource type="PackedScene" uid="uid://3w7dcvisb2no" path="res://Characters/Enemies/Char_WaterEnemy.tscn" id="3_kq03y"]
-[ext_resource type="PackedScene" uid="uid://ul4qeudj8sbq" path="res://Characters/Enemies/Char_FlyingEnemyTest.tscn" id="4_sril6"]
+[ext_resource type="PackedScene" uid="uid://ul4qeudj8sbq" path="res://Characters/Enemies/Bat/Char_FlyingEnemyTest.tscn" id="4_sril6"]
 [ext_resource type="Script" uid="uid://cq5y6qgvw6i4j" path="res://Game/Match3/Scripts/Match3RecipeTable.cs" id="5_5pm0m"]
 
 [resource]

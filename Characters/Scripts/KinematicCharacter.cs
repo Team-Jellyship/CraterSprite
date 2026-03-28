@@ -59,6 +59,9 @@ public partial class KinematicCharacter : CharacterBody2D
 	[Export(PropertyHint.None, "suffix:px/s")]
 	private float _jumpStrength = 100.0f;
 
+	[Export]
+	private float _jumpHeldGravityFactor = 0.5f;
+
 	// How many times the character can jump without landing
 	// Walking off of a platform will consume one jump
 	[Export] private uint _numJumps = 2;
@@ -117,6 +120,7 @@ public partial class KinematicCharacter : CharacterBody2D
 	[Signal] public delegate void OnClickedEventHandler();
 
 	public CraterEvent onHitFloor = new();
+	public CraterEvent onHitWall = new();
 	
 	public float moveInput { get; private set; }
 
@@ -173,14 +177,11 @@ public partial class KinematicCharacter : CharacterBody2D
 		{
 			currentVelocity.X += moveInput * GetAcceleration() * (float)delta;
 		}
-
-		if (_isJumping)
+		
+		if (!IsOnFloor() && !IsOnWall())
 		{
-			currentVelocity.Y = Math.Min(-_jumpStrength, currentVelocity.Y);
-		}
-		else if (!IsOnFloor() && !IsOnWall())
-		{
-			currentVelocity.Y += GravityConstant * _gravity * (float)delta;
+			var jumpFactor = _isJumping ? _jumpHeldGravityFactor : 1.0f;
+			currentVelocity.Y += GravityConstant * _gravity  * (float)delta * jumpFactor;
 		}
 		
 		var maxSpeed = GetMaxHorizontalSpeed();
@@ -218,7 +219,7 @@ public partial class KinematicCharacter : CharacterBody2D
 			LeavePlatform();
 		}
 
-		if (IsOnWallOnly() && !onWallBeforeMove)
+		if (IsOnWall() && !onWallBeforeMove)
 		{
 			HitWall();
 		}
@@ -232,6 +233,12 @@ public partial class KinematicCharacter : CharacterBody2D
 	
 	public override void _Draw()
 	{
+		if (!Game.GameMode.GameMode.instance.showingDebug)
+		{
+			return;
+		}
+		
+		DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, new Vector2(moveInput * 50.0f, 0.0f), new Color(0.2f, 0.25f, 1.0f));
 		DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, GetVelocity() * 0.25f, new Color(1.0f, 0.0f, 0.0f));
 	}
 
@@ -368,7 +375,8 @@ public partial class KinematicCharacter : CharacterBody2D
 
 	private void HitWall()
 	{
-		if (_restoreJumpOnHitWall)
+		onHitWall.Invoke();
+		if (!IsOnFloor() && _restoreJumpOnHitWall)
 		{
 			_numJumpsRemaining = Math.Max(_numJumpsRemaining, 1);
 		}
@@ -380,6 +388,7 @@ public partial class KinematicCharacter : CharacterBody2D
 		
 		_isJumping = true;
 		_jumpTimer.Start(_jumpTime);
+		AddImpulse(new Vector2(0.0f, -_jumpStrength));
 		
 		--_numJumpsRemaining;
 	}

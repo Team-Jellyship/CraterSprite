@@ -34,6 +34,10 @@ public partial class FlyingController : AiController
 
     public override void _Draw()
     {
+        if (!GameMode.instance.showingDebug)
+        {
+            return;
+        }
         DrawCircle(GetTargetLocation() - GlobalPosition, 8.0f, new Color(0.0f, 1.0f, 0.0f, 0.25f));
     }
 

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="SpawnEntry" format=3 uid="uid://cmyu4srum60lh"]
 
-[ext_resource type="PackedScene" uid="uid://ul4qeudj8sbq" path="res://Characters/Enemies/Char_FlyingEnemyTest.tscn" id="1_f7ngm"]
+[ext_resource type="PackedScene" uid="uid://ul4qeudj8sbq" path="res://Characters/Enemies/Bat/Char_FlyingEnemyTest.tscn" id="1_f7ngm"]
 [ext_resource type="Script" uid="uid://cmhp0o8rvai1x" path="res://Game/SpawnTable/SpawnEntry.cs" id="2_ic5wf"]
 
 [resource]
