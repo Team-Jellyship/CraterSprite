@@ -33,6 +33,7 @@ config/icon="res://icon.svg"
 InputManager="*uid://cqro5ppmwmevj"
 GameMode="*uid://ds6jeg40nytga"
 ImGuiRoot="*uid://dugmpnsxaagba"
+SoundtrackPlayer="*uid://b4j215e3xo8l"
 
 [display]
 
