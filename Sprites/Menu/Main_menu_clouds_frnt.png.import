@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpmkupvah3gl6"
-path="res://.godot/imported/hud_bottom.png-e38ba04fb83e33dea75e856aa9a2cb92.ctex"
+uid="uid://cu7hwe131l2om"
+path="res://.godot/imported/Main_menu_clouds_frnt.png-af5f505460e8e79a26896d427fd9ffff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/hud_bottom.png"
-dest_files=["res://.godot/imported/hud_bottom.png-e38ba04fb83e33dea75e856aa9a2cb92.ctex"]
+source_file="res://Sprites/Menu/Main_menu_clouds_frnt.png"
+dest_files=["res://.godot/imported/Main_menu_clouds_frnt.png-af5f505460e8e79a26896d427fd9ffff.ctex"]
 
 [params]
 

@@ -107,7 +107,7 @@ public partial class GameMode : Node
 		{ return playerData.TrueForAll(data => data.playerScore < settings.roundsToWin) ? loadingState : rematchState; });
 		_transitions.Add(new Tuple<GameState, GameModeCommand>(rematchState, GameModeCommand.Victory), () => loadingState);
 		
-		_currentGameState = loadingState;
+		_currentGameState = characterSelectState;
 		_currentGameState.EnterState(this);
 		if (_currentGameState.transitionTime <= 0.0f)
 		{

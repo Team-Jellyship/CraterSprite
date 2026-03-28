@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://br76bl5lfwm6"
-path="res://.godot/imported/hud_top.png-73bc693d7a24d9f33fb50682f9e80edc.ctex"
+uid="uid://bjltkyfqgwl36"
+path="res://.godot/imported/Main_menu_clouds_bck.png-cefe43e0ec293dd637df32d276ccc4e6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/hud_top.png"
-dest_files=["res://.godot/imported/hud_top.png-73bc693d7a24d9f33fb50682f9e80edc.ctex"]
+source_file="res://Sprites/Menu/Main_menu_clouds_bck.png"
+dest_files=["res://.godot/imported/Main_menu_clouds_bck.png-cefe43e0ec293dd637df32d276ccc4e6.ctex"]
 
 [params]
 
