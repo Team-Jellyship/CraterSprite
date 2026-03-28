@@ -37,6 +37,6 @@ public partial class DamageZone2D : Area2D
             characterStats.Kill(_owner);
             return;
         }
-        characterStats.TakeDamage(_damage, _owner);
+        characterStats.TakeDamage(_damage, _owner, true);
     }
 }

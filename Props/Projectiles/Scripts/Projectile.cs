@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using CraterSprite;
 using CraterSprite.Shared.Scripts;
 
@@ -44,16 +43,17 @@ public partial class Projectile : Node2D
     private void Overlap(Area2D area)
     {
         var hitObjectCharacterStats = CraterFunctions.GetNodeByClassFromParent<IDamageListener>(area);
-        if (hitObjectCharacterStats == null)
+        switch (hitObjectCharacterStats)
         {
-            return;
+            case null:
+            case Node node when node.GetInstanceId() == _owner.ObjectId:
+                return;
+
+            default:
+                HitEnemy(hitObjectCharacterStats);
+                break;
         }
-        
-        if (hitObjectCharacterStats is Node node && node.GetInstanceId() == _owner.ObjectId)
-        {
-            return;
-        }
-        HitEnemy(hitObjectCharacterStats);
+
     }
 
     private void HitEnemy(IDamageListener character)
@@ -61,7 +61,7 @@ public partial class Projectile : Node2D
         var obj = InstanceFromId(_owner.ObjectId);
         // If this shouldn't collect gems, just don't give it the damage source
         // and it won't receive the event for now
-        character.TakeDamage(1.0f, _collectGems ? (CharacterStats)obj : null);
+        character.TakeDamage(1.0f, _collectGems ? (CharacterStats)obj : null, false);
 
         if (_destroyOnContact)
         {

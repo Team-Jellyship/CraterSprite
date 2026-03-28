@@ -61,7 +61,7 @@ public partial class CharacterStats : Node, IDamageListener
 	 *     and triggers the OnDeath signal if the damage causes this character to die
 	 * </summary>
 	 */
-	public virtual void TakeDamage(float damageAmount, CharacterStats source)
+	public virtual void TakeDamage(float damageAmount, CharacterStats source, bool canBeBlocked)
 	{
 		if (_effects.HasEffect(GameMode.instance.statusEffects.invulnerability))
 		{

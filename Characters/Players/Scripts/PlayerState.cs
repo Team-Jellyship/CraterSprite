@@ -52,16 +52,16 @@ public partial class PlayerState : CharacterStats
 		container.AddOrb(enemy.matchType);
 	}
 
-	public override void TakeDamage(float damageAmount, CharacterStats source)
+	public override void TakeDamage(float damageAmount, CharacterStats source, bool canBeBlocked)
 	{
-		if (source is { canBeJumpedOn: true } && Owner is KinematicCharacter { Velocity.Y: > 0.0f } ownerKinematicCharacter)
+		if (canBeBlocked && source is { canBeJumpedOn: true } && Owner is KinematicCharacter { Velocity.Y: > 0.0f } ownerKinematicCharacter)
 		{
 			ownerKinematicCharacter.Hop();
-			source.TakeDamage(_stompDamage, this);
+			source.TakeDamage(_stompDamage, this, false);
 			return;
 		}
 		
-		base.TakeDamage(damageAmount, source);
+		base.TakeDamage(damageAmount, source, canBeBlocked);
 	}
 
 	public void SetPlayerIndex(int index)
