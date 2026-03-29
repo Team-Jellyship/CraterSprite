@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bdqbta7j8iypg" path="res://Shared/Sprites/check16.png" id="2_l2rra"]
 [ext_resource type="Texture2D" uid="uid://c2g84k6v3iajs" path="res://Shared/Sprites/wallTex.png" id="4_fcfrf"]
 [ext_resource type="Script" uid="uid://dbsjfkw53mpjv" path="res://Game/SpawnLocation.cs" id="5_fcfrf"]
-[ext_resource type="PackedScene" uid="uid://cybtj76g4n71w" path="res://Characters/Enemies/Char_FireEnemy.tscn" id="6_20dgb"]
+[ext_resource type="PackedScene" uid="uid://cybtj76g4n71w" path="res://Characters/Enemies/Walker/Char_FireEnemy.tscn" id="6_20dgb"]
 [ext_resource type="PackedScene" uid="uid://o4xe28btcjdf" path="res://Props/Pickups/P_Gem.tscn" id="7_2yfc4"]
 [ext_resource type="PackedScene" uid="uid://bsqs3cujm4r8m" path="res://Characters/Enemies/Char_GoombaStompTestEnemy.tscn" id="8_jqstg"]
 [ext_resource type="Script" uid="uid://chcnkhnc35ofv" path="res://Props/Scripts/VictoryRegion.cs" id="8_opeqa"]

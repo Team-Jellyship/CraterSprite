@@ -16,6 +16,8 @@
 [ext_resource type="PackedScene" uid="uid://bos83ttcvikwk" path="res://Characters/Players/Match3SpawnerRegion.tscn" id="13_tkb72"]
 [ext_resource type="Resource" uid="uid://cx2r71cixu2uo" path="res://Game/SpawnTable/Tables/PickupSpawnTable/St_Pickups.tres" id="14_7s676"]
 [ext_resource type="SpriteFrames" uid="uid://c4uv1iqnbgnr2" path="res://Characters/Players/Animations/SF_PlayerRed.tres" id="15_7s676"]
+[ext_resource type="Script" uid="uid://dr3tjjo5qtenx" path="res://Props/Particles/SimpleParticleSpawner.cs" id="17_s0icw"]
+[ext_resource type="SpriteFrames" uid="uid://bc3gbw7ktkyif" path="res://Props/Particles/Animations/SF_PivotDust.tres" id="18_rqh2m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1fpnh"]
 size = Vector2(14, 20)
@@ -931,7 +933,13 @@ animation = &"sp_p1_keyposes"
 frame = 1
 offset = Vector2(0, -32)
 
+[node name="TurnaroundParticleSpawner" type="Node2D" parent="." unique_id=1372178291]
+script = ExtResource("17_s0icw")
+_particleSprite = ExtResource("18_rqh2m")
+_offset = Vector2(-16, -8)
+
 [connection signal="MoveDirectionChanged" from="." to="AnimationTree" method="SetWalkDirection"]
+[connection signal="MoveDirectionChanged" from="." to="TurnaroundParticleSpawner" method="DirectionChanged"]
 [connection signal="MoveSpeedChanged" from="." to="AnimationTree" method="SetWalkSpeed"]
 [connection signal="OnClicked" from="." to="PlayerStats" method="ToggleShowStats"]
 [connection signal="OnCrouched" from="." to="Hurtbox" method="SetOff"]

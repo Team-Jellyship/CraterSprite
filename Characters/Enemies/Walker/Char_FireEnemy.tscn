@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cybtj76g4n71w"]
 
-[ext_resource type="PackedScene" uid="uid://fjgqtatonlq6" path="res://Characters/Enemies/Char_WalkingEnemy.tscn" id="1_ncujn"]
+[ext_resource type="PackedScene" uid="uid://fjgqtatonlq6" path="res://Characters/Enemies/Walker/Char_WalkingEnemy.tscn" id="1_ncujn"]
 [ext_resource type="Shader" uid="uid://cg3uln3xwrvyj" path="res://Shared/Shaders/Sh_SpriteColor.gdshader" id="2_whvdj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wn7ye"]

@@ -1,0 +1,46 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://bc3gbw7ktkyif"]
+
+[ext_resource type="Texture2D" uid="uid://crwtxeoejjloq" path="res://Props/Particles/Sprites/PivotDust.png" id="1_rvolq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nja8v"]
+atlas = ExtResource("1_rvolq")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ecq1h"]
+atlas = ExtResource("1_rvolq")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b1tfe"]
+atlas = ExtResource("1_rvolq")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w2v3g"]
+atlas = ExtResource("1_rvolq")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hkib4"]
+atlas = ExtResource("1_rvolq")
+region = Rect2(64, 0, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nja8v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ecq1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b1tfe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w2v3g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hkib4")
+}],
+"loop": false,
+"name": &"default",
+"speed": 8.0
+}]

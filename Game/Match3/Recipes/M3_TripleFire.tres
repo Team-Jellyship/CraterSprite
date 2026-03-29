@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Match3Recipe" format=3 uid="uid://dqpv7ddynrmda"]
 
 [ext_resource type="Script" uid="uid://cgtmaxm7qx01f" path="res://Game/Match3/Scripts/Match3Recipe.cs" id="1_2u1sk"]
-[ext_resource type="PackedScene" uid="uid://b0ol4q8m6naqw" path="res://Characters/Enemies/Char_FireEnemyElite.tscn" id="1_kbxh8"]
+[ext_resource type="PackedScene" uid="uid://b0ol4q8m6naqw" path="res://Characters/Enemies/Walker/Char_FireEnemyElite.tscn" id="1_kbxh8"]
 
 [resource]
 script = ExtResource("1_2u1sk")
