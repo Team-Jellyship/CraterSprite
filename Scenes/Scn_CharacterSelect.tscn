@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://bxk04xlwe138j"]
 
+[ext_resource type="Script" uid="uid://wg11mbvkjhna" path="res://Scenes/MainMenu.cs" id="1_4bb6l"]
 [ext_resource type="Texture2D" uid="uid://bas5g5xlvdlnd" path="res://Sprites/Menu/menu_bg_space.png" id="1_afty0"]
 [ext_resource type="Texture2D" uid="uid://6h47os5joatg" path="res://Sprites/Menu/menu_logo.png" id="2_hresq"]
 [ext_resource type="Texture2D" uid="uid://crnhft50onqiu" path="res://Sprites/Menu/Main_menu_ship_blu.png" id="3_1ygr3"]
 [ext_resource type="Texture2D" uid="uid://cu7hwe131l2om" path="res://Sprites/Menu/Main_menu_clouds_frnt.png" id="4_5d00p"]
 [ext_resource type="Texture2D" uid="uid://dc4l6i6hn43fn" path="res://Sprites/Menu/Main_menu_ship_red.png" id="4_g8h14"]
 [ext_resource type="Texture2D" uid="uid://bjltkyfqgwl36" path="res://Sprites/Menu/Main_menu_clouds_bck.png" id="5_btwuc"]
+[ext_resource type="Script" uid="uid://dcmxb1ln3716k" path="res://Scenes/main_menu.gd" id="6_j7ku3"]
 [ext_resource type="Texture2D" uid="uid://dyt8q0n678w7k" path="res://Sprites/Menu/Main_menu_moon.png" id="7_btwuc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4wvrv"]
@@ -198,6 +200,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_4bb6l")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=478269176]
 layout_mode = 1
@@ -286,27 +289,60 @@ position = Vector2(320, 180)
 texture = ExtResource("4_5d00p")
 
 [node name="Text" type="Node" parent="." unique_id=17551156]
+script = ExtResource("6_j7ku3")
 
-[node name="Player1Start" type="RichTextLabel" parent="Text" unique_id=882205308]
+[node name="Button_Manager" type="Control" parent="Text" unique_id=1937746542]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="ButtonP1" type="Button" parent="Text/Button_Manager" unique_id=1868101506]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 2.8500001
+anchor_top = 7.4000006
+anchor_right = 6.2000003
+anchor_bottom = 8.200001
+offset_left = -1752.0001
+offset_top = -2392.0002
+offset_right = -3712.0002
+offset_bottom = -2616.0002
+
+[node name="Player1Start" type="RichTextLabel" parent="Text/Button_Manager/ButtonP1" unique_id=882205308]
 process_mode = 3
 z_index = 7
-offset_left = 104.0
-offset_top = 264.0
-offset_right = 256.0
-offset_bottom = 337.0
+layout_mode = 0
+offset_left = 16.0
+offset_top = -6.0
+offset_right = 168.0
+offset_bottom = 67.0
 bbcode_enabled = true
 text = "[outline_size=10] [center][wave][font=res://UI/Funhouse.ttf][color=ffff33] Player 1 Press Start"
 fit_content = true
 autowrap_mode = 2
 text_direction = 1
 
-[node name="Player2Start" type="RichTextLabel" parent="Text" unique_id=1704769096]
+[node name="ButtonP2" type="Button" parent="Text/Button_Manager" unique_id=1792034040]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 9.6
+anchor_top = 7.4000006
+anchor_right = 13.000001
+anchor_bottom = 8.200001
+offset_left = -5760.0
+offset_top = -2392.0002
+offset_right = -7752.001
+offset_bottom = -2624.0002
+
+[node name="Player2Start" type="RichTextLabel" parent="Text/Button_Manager/ButtonP2" unique_id=1704769096]
 process_mode = 3
 z_index = 7
-offset_left = 376.0
-offset_top = 264.0
-offset_right = 536.0
-offset_bottom = 337.0
+layout_mode = 0
+offset_left = 16.0
+offset_top = -8.0
+offset_right = 176.0
+offset_bottom = 65.0
 bbcode_enabled = true
 text = "[outline_size=10] [center][wave][font=res://UI/Funhouse.ttf][color=ffff33] Player 2 Press Start "
 fit_content = true
@@ -340,3 +376,5 @@ texture = ExtResource("7_btwuc")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" unique_id=1133957281]
 libraries/ = SubResource("AnimationLibrary_4bb6l")
 autoplay = &"moon_slide"
+
+[connection signal="pressed" from="Text/Button_Manager/ButtonP1" to="Text" method="_on_button_p_1_pressed"]

@@ -119,6 +119,9 @@ public partial class KinematicCharacter : CharacterBody2D
 
 	[Signal] public delegate void OnClickedEventHandler();
 
+	[Signal] public delegate void P1ReadyEventHandler();
+	[Signal] public delegate void P2ReadyEventHandler();
+
 	public CraterEvent onHitFloor = new();
 	public CraterEvent onHitWall = new();
 	
@@ -351,6 +354,22 @@ public partial class KinematicCharacter : CharacterBody2D
 	public void ApplyKnockbackDefault(float damage)
 	{
 		ApplyKnockback(_defaultKnockbackStrength);
+	}
+	
+	/**
+	* <summary>Allows Player 1 to ready up at the main menu by pressing start.</summary>
+	*/
+	public void StartP1()
+	{
+		EmitSignal(SignalName.P1Ready);
+	}
+	
+	/**
+	* <summary>Allows Player 2 to ready up at the main menu by pressing start.</summary>
+	*/
+	public void StartP2()
+	{
+		EmitSignal(SignalName.P2Ready);
 	}
 
 	/**
