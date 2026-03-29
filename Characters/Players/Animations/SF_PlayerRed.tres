@@ -1,6 +1,7 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://dngxbr6dw7xke"]
 
 [ext_resource type="Texture2D" uid="uid://b56qesu0ojc66" path="res://Characters/Players/Sprites/p2 key poses.png" id="4_8cv2n"]
+[ext_resource type="Texture2D" uid="uid://d4j7cmnutpim7" path="res://Characters/Players/Sprites/wallposes.png" id="4_o2a18"]
 [ext_resource type="Texture2D" uid="uid://5n2bo6d7vjvf" path="res://Characters/Players/Sprites/walk Player 2.png" id="5_vlfl0"]
 [ext_resource type="Texture2D" uid="uid://bcc78rhp0nyh4" path="res://Characters/Players/Sprites/walk Player 2 diag.png" id="6_qaor1"]
 [ext_resource type="Texture2D" uid="uid://cpotswwd43klb" path="res://Characters/Players/Sprites/walk Player 2 up.png" id="7_ejjle"]
@@ -104,6 +105,14 @@ region = Rect2(384, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_rfirl"]
 atlas = ExtResource("7_ejjle")
 region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_skmxd"]
+atlas = ExtResource("4_o2a18")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_obgyl"]
+atlas = ExtResource("4_o2a18")
+region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iyvo2"]
 atlas = ExtResource("5_vlfl0")
@@ -232,6 +241,22 @@ animations = [{
 }],
 "loop": true,
 "name": &"sp_p1_walkUp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_skmxd")
+}],
+"loop": true,
+"name": &"sp_p1_wallslide",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_obgyl")
+}],
+"loop": true,
+"name": &"sp_p1_wallslide_up",
 "speed": 5.0
 }, {
 "frames": [{
