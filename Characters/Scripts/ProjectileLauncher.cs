@@ -32,6 +32,7 @@ public partial class ProjectileLauncher : Node2D
 	private Vector2 _facingDirection;
 
 	[Signal] public delegate void OnAimDirectionChangedEventHandler(AimDirection aimDirection);
+	[Signal] public delegate void OnFiredEventHandler();
 		
 	public bool aimingUp = false;
 	public bool aimingDiagonal = false;
@@ -77,7 +78,8 @@ public partial class ProjectileLauncher : Node2D
 
 		projectile.SetOwner(_characterStats);
 		projectile.velocity =  GetFacingDirection() * _projectileSpeed;
-
+		EmitSignalOnFired();
+		
 		if (_inheritVelocity)
 		{
 			projectile.velocity.X += _kinematicOwner?.Velocity.X ?? 0.0f;

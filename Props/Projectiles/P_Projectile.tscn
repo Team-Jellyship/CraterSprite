@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://kgj0kkgcwle3"]
 
 [ext_resource type="Script" uid="uid://cjxelv1wmdsss" path="res://Props/Projectiles/Scripts/Projectile.cs" id="1_he73d"]
+[ext_resource type="Script" uid="uid://dr3tjjo5qtenx" path="res://Props/Particles/SimpleParticleSpawner.cs" id="2_p3rpe"]
+[ext_resource type="SpriteFrames" uid="uid://bc3gbw7ktkyif" path="res://Props/Particles/Animations/SF_PivotDust.tres" id="3_yjair"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_o6bxk"]
 radius = 0.05
@@ -22,3 +24,9 @@ collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1264524978]
 shape = SubResource("CircleShape2D_he73d")
+
+[node name="DestroyFx" type="Node2D" parent="." unique_id=972300109]
+script = ExtResource("2_p3rpe")
+_particleSprite = ExtResource("3_yjair")
+
+[connection signal="OnHit" from="." to="DestroyFx" method="Spawn"]

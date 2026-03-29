@@ -8,6 +8,8 @@ public partial class Projectile : Node2D
     [Export] private float _lifetime = 1.0f;
     [Export] private bool _collectGems = true;
     
+    [Signal] public delegate void OnHitEventHandler();
+
     private EncodedObjectAsId _owner;
     public Vector2 velocity;
 
@@ -18,7 +20,11 @@ public partial class Projectile : Node2D
         expirationTimer.OneShot = true;
         expirationTimer.WaitTime = _lifetime;
         AddChild(expirationTimer);
-        expirationTimer.Timeout += QueueFree;
+        expirationTimer.Timeout += () =>
+        {
+            EmitSignalOnHit();
+            QueueFree();
+        };
 
         var hitbox = CraterFunctions.GetNodeByClass<Area2D>(this);
         if (hitbox != null)
@@ -63,6 +69,8 @@ public partial class Projectile : Node2D
         // and it won't receive the event for now
         character.TakeDamage(1.0f, _collectGems ? (CharacterStats)obj : null, false);
 
+        EmitSignalOnHit();
+        
         if (_destroyOnContact)
         {
             QueueFree();

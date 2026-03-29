@@ -9,7 +9,7 @@ public partial class SimpleParticleSpawner : Node2D
     [Export] private Vector2 _offset;
     [Export] private bool _flipH;
     [Export] private bool _flipV;
-
+    [Export] private bool _startMirrored;
     private void Spawn()
     {
         var animatedSprite = new AnimatedSprite2D();
@@ -40,7 +40,6 @@ public partial class SimpleParticleSpawner : Node2D
 
     private void DirectionChanged(float direction)
     {
-        _flipH = direction < 0.0f;
-        Spawn();
+        _flipH = direction > 0.0f ^ _startMirrored;
     }
 }

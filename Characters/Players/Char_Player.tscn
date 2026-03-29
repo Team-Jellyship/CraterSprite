@@ -832,6 +832,13 @@ _offset = 12.0
 _offsetVerticalFacing = 8.0
 facingDirection = Vector2(-1, 0)
 
+[node name="TrailFx" type="Node2D" parent="Gun" unique_id=133643237]
+script = ExtResource("17_s0icw")
+_particleSprite = ExtResource("18_rqh2m")
+_offset = Vector2(-16, 0)
+
+[node name="GunSfx" type="AudioStreamPlayer2D" parent="Gun" unique_id=674183336]
+
 [node name="KinematicBox" type="CollisionShape2D" parent="." unique_id=1005347515]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_1fpnh")
@@ -933,18 +940,23 @@ animation = &"sp_p1_keyposes"
 frame = 1
 offset = Vector2(0, -32)
 
-[node name="TurnaroundParticleSpawner" type="Node2D" parent="." unique_id=1372178291]
+[node name="TurnaroundFx" type="Node2D" parent="." unique_id=1372178291]
 script = ExtResource("17_s0icw")
 _particleSprite = ExtResource("18_rqh2m")
 _offset = Vector2(-16, -8)
+_startMirrored = true
 
 [connection signal="MoveDirectionChanged" from="." to="AnimationTree" method="SetWalkDirection"]
-[connection signal="MoveDirectionChanged" from="." to="TurnaroundParticleSpawner" method="DirectionChanged"]
+[connection signal="MoveDirectionChanged" from="." to="TurnaroundFx" method="DirectionChanged"]
+[connection signal="MoveDirectionChanged" from="." to="Gun/TrailFx" method="DirectionChanged"]
+[connection signal="MoveDirectionChanged" from="." to="TurnaroundFx" method="Spawn" unbinds=1]
 [connection signal="MoveSpeedChanged" from="." to="AnimationTree" method="SetWalkSpeed"]
 [connection signal="OnClicked" from="." to="PlayerStats" method="ToggleShowStats"]
 [connection signal="OnCrouched" from="." to="Hurtbox" method="SetOff"]
 [connection signal="OnGroundedChanged" from="." to="AnimationTree" method="SetGrounded"]
 [connection signal="OnUncrouched" from="." to="Hurtbox" method="SetOn"]
 [connection signal="OnAimDirectionChanged" from="Gun" to="AnimationTree" method="SetAimDirection"]
+[connection signal="OnFired" from="Gun" to="Gun/TrailFx" method="Spawn"]
+[connection signal="OnFired" from="Gun" to="Gun/GunSfx" method="play" binds= [0.0]]
 [connection signal="OnStunEnd" from="PlayerStats" to="Hurtbox" method="Retrigger"]
 [connection signal="OnTakeDamage" from="PlayerStats" to="." method="ApplyKnockbackDefault"]
