@@ -19,9 +19,22 @@ public partial class RemoteSplitscreenTransform : Node2D
         get => _remotePath;
     }
     private Node2D _remotePath;
-    
-    public override void _PhysicsProcess(double delta)
+
+    public override void _EnterTree()
+    {
+        SetNotifyTransform(true);
+    }
+
+    private void UpdatePosition()
     {
         _remotePath?.SetGlobalPosition(CraterFunctions.GetPositionInViewport(this));
+    }
+
+    public override void _Notification(int what)
+    {
+        if (what == NotificationTransformChanged)
+        {
+            UpdatePosition();
+        }
     }
 }
