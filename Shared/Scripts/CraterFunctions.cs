@@ -155,18 +155,19 @@ public static class CraterFunctions
     
     public static Vector2 GetPositionInViewport(Node2D node)
     {
-        var camera = GetCurrentViewportFromGlobalPosition(node);
-        var cameraRect = camera.GetCameraBounds();
-        var viewportPosition = camera.GetParent().GetParent<Control>().Position;
-        GD.Print($"viewport position {viewportPosition}");
-        return cameraRect.Position + node.GlobalPosition - viewportPosition;
-    }
-    
-    public static PlayerCamera GetCurrentViewportFromGlobalPosition(Node2D node)
-    {
-        var viewportRect = node.GetViewportRect();
-        return node.GlobalPosition.X < viewportRect.Size.X / 2.0f ? 
+        var camera = node.GlobalPosition.X < node.GetViewportRect().Size.X / 2.0f ? 
             GameMode.instance.playerData[0].camera :
             GameMode.instance.playerData[1].camera;
+        var cameraRect = camera.GetCameraBounds();
+        var viewportPosition = camera.GetParent().GetParent<Control>().Position;
+        return cameraRect.Position + node.GlobalPosition - viewportPosition;
+    }
+
+    public static Vector2 GetGlobalOverlayPosition(Vector2 position, PlayerCamera camera)
+    {
+        // Position relative to camera
+        var relativeCameraPosition = position - camera.GetCameraBounds().Position;
+        var viewport = camera.GetParent().GetParent<Control>();
+        return viewport.Position + relativeCameraPosition;
     }
 }

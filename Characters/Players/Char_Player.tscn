@@ -4,9 +4,11 @@
 [ext_resource type="Script" uid="uid://r6asvyfexakk" path="res://Characters/Scripts/ProjectileLauncher.cs" id="2_dhh5l"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://btf2rg88m5jdc" path="res://Characters/Players/Animations/ABT_Player.tres" id="2_v58vf"]
 [ext_resource type="PackedScene" uid="uid://kgj0kkgcwle3" path="res://Props/Projectiles/P_Projectile.tscn" id="3_570sx"]
+[ext_resource type="Script" uid="uid://fow45tkrpoey" path="res://Characters/Scripts/SpecialProjectileLauncher.cs" id="3_dosqe"]
 [ext_resource type="Script" uid="uid://bcijaprypmkpb" path="res://Characters/Players/Scripts/PlayerController.cs" id="4_1fpnh"]
 [ext_resource type="Script" uid="uid://b2v40725rdn8b" path="res://Characters/Scripts/ToggleableHitbox.cs" id="4_ht06l"]
 [ext_resource type="Script" uid="uid://c74blvexl5qt5" path="res://Characters/Scripts/CharacterAnimationTree.cs" id="5_7kb7x"]
+[ext_resource type="PackedScene" uid="uid://mvrenn0b6mpk" path="res://Props/Projectiles/P_Rocket.tscn" id="5_rqh2m"]
 [ext_resource type="PackedScene" uid="uid://duiw5cd28iech" path="res://Props/Specials/P_SpecialTest.tscn" id="9_2x3uh"]
 [ext_resource type="Script" uid="uid://u3cmil3kdff0" path="res://Characters/Players/Scripts/PlayerState.cs" id="9_570sx"]
 [ext_resource type="Script" uid="uid://c6kd0fuula6g3" path="res://Characters/Players/Scripts/PlayerCameraAttachmentPoint.cs" id="10_vv1l6"]
@@ -15,7 +17,7 @@
 [ext_resource type="Resource" uid="uid://crq8ungls07wu" path="res://Game/SpawnTable/Tables/DefaultEnemySpawnTable/St_DefaultEnemy.tres" id="13_mcxtw"]
 [ext_resource type="PackedScene" uid="uid://bos83ttcvikwk" path="res://Characters/Players/Match3SpawnerRegion.tscn" id="13_tkb72"]
 [ext_resource type="Resource" uid="uid://cx2r71cixu2uo" path="res://Game/SpawnTable/Tables/PickupSpawnTable/St_Pickups.tres" id="14_7s676"]
-[ext_resource type="SpriteFrames" uid="uid://c4uv1iqnbgnr2" path="res://Characters/Players/Animations/SF_PlayerRed.tres" id="15_7s676"]
+[ext_resource type="SpriteFrames" uid="uid://dngxbr6dw7xke" path="res://Characters/Players/Animations/SF_PlayerRed.tres" id="15_7s676"]
 [ext_resource type="Script" uid="uid://dr3tjjo5qtenx" path="res://Props/Particles/SimpleParticleSpawner.cs" id="17_s0icw"]
 [ext_resource type="SpriteFrames" uid="uid://bc3gbw7ktkyif" path="res://Props/Particles/Animations/SF_PivotDust.tres" id="18_rqh2m"]
 
@@ -816,11 +818,21 @@ _wallFriction = 1200.0
 _wallJumpStrength = 600.0
 _wallJumpAngle = 50.0
 
-[node name="Controller" type="Node" parent="." unique_id=505377627 node_paths=PackedStringArray("_character", "_playerState", "_gun")]
+[node name="Controller" type="Node" parent="." unique_id=505377627 node_paths=PackedStringArray("_character", "_playerState", "_gun", "_rocketLauncher")]
 script = ExtResource("4_1fpnh")
 _character = NodePath("..")
 _playerState = NodePath("../PlayerStats")
 _gun = NodePath("../Gun")
+_rocketLauncher = NodePath("../Rocket")
+
+[node name="Rocket" type="Node2D" parent="." unique_id=1211035103 node_paths=PackedStringArray("_kinematicOwner")]
+position = Vector2(0, -8)
+script = ExtResource("3_dosqe")
+_projectile = ExtResource("3_570sx")
+_remoteProjectile = ExtResource("5_rqh2m")
+_projectileSpeed = 300.0
+_kinematicOwner = NodePath("..")
+facingDirection = Vector2(-1, 0)
 
 [node name="Gun" type="Node2D" parent="." unique_id=590104627 node_paths=PackedStringArray("_kinematicOwner")]
 position = Vector2(0, -8)
@@ -946,9 +958,9 @@ _particleSprite = ExtResource("18_rqh2m")
 _offset = Vector2(-16, -8)
 _startMirrored = true
 
+[connection signal="MoveDirectionChanged" from="." to="Gun/TrailFx" method="DirectionChanged"]
 [connection signal="MoveDirectionChanged" from="." to="AnimationTree" method="SetWalkDirection"]
 [connection signal="MoveDirectionChanged" from="." to="TurnaroundFx" method="DirectionChanged"]
-[connection signal="MoveDirectionChanged" from="." to="Gun/TrailFx" method="DirectionChanged"]
 [connection signal="MoveDirectionChanged" from="." to="TurnaroundFx" method="Spawn" unbinds=1]
 [connection signal="MoveSpeedChanged" from="." to="AnimationTree" method="SetWalkSpeed"]
 [connection signal="OnClicked" from="." to="PlayerStats" method="ToggleShowStats"]

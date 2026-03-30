@@ -90,6 +90,9 @@ position_smoothing_enabled = true
 script = ExtResource("2_87bac")
 _playerIndex = 1
 
+[node name="SharedRoot" type="Node2D" parent="." unique_id=578856345]
+unique_name_in_owner = true
+
 [node name="MenuRoot" type="Control" parent="." unique_id=591402947]
 unique_name_in_owner = true
 layout_mode = 1
