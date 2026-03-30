@@ -4,9 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://y5v8tto8fygj" path="res://Characters/Players/Sprites/TestSprites/EnemySprite.png" id="1_dq4fg"]
 [ext_resource type="Script" uid="uid://cyhvlrad5psho" path="res://Characters/Scripts/CharacterStats.cs" id="2_0y5hg"]
 [ext_resource type="Script" uid="uid://r6asvyfexakk" path="res://Characters/Scripts/ProjectileLauncher.cs" id="2_ve3cf"]
-[ext_resource type="PackedScene" uid="uid://kgj0kkgcwle3" path="res://Props/Projectiles/Projectile.tscn" id="3_uc7fb"]
+[ext_resource type="PackedScene" uid="uid://kgj0kkgcwle3" path="res://Props/Projectiles/P_Projectile.tscn" id="3_uc7fb"]
 [ext_resource type="Script" uid="uid://beyklarjb46ti" path="res://Characters/Enemies/Hurtbox.cs" id="4_8nvh5"]
-[ext_resource type="Script" uid="uid://wu7lthcoh3wr" path="res://Characters/Enemies/PlayerRay.cs" id="5_owphe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0y5hg"]
 size = Vector2(26, 26)
@@ -28,12 +27,9 @@ facingDirection = Vector2(2, 0)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_dq4fg")
 
-[node name="Hitbox" type="Area2D" parent="." unique_id=135219909 node_paths=PackedStringArray("_owner")]
+[node name="Hitbox" type="Area2D" parent="." unique_id=135219909]
 collision_layer = 8
 collision_mask = 16
-_filter = 3
-_damage = 1.0
-_owner = NodePath("../Stats")
 
 [node name="Stats" type="Node" parent="." unique_id=1725589565]
 script = ExtResource("2_0y5hg")
@@ -54,7 +50,6 @@ shape = SubResource("CircleShape2D_8nvh5")
 target_position = Vector2(50, 0)
 collision_mask = 16
 collide_with_areas = true
-script = ExtResource("5_owphe")
 
 [node name="GroundRay" type="RayCast2D" parent="." unique_id=2292803]
 target_position = Vector2(20, 20)

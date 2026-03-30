@@ -6,7 +6,7 @@ namespace CraterSprite;
 
 public partial class MenuControl : CharacterBody2D
 {
-	[ExportGroup("Nodes")]
+	// [ExportGroup("Nodes")]
 	[Signal] public delegate void UpEventHandler();
 	[Signal] public delegate void DownEventHandler();
 	

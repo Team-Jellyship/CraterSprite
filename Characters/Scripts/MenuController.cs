@@ -10,12 +10,7 @@ namespace CraterSprite
 		
 		public void BindInput(int deviceIndex)
 		{
-			InputManager.instance.RegisterCallback("walk", InputEventType.Changed, strength =>
-			{
-				_controller.SetMoveInput(strength);
-			}, deviceIndex, this);
-			
-			InputManager.instance.RegisterCallback("aim_up", InputEventType.Pressed, _ => _controller.up() = true, deviceIndex, this);
+			InputManager.instance.RegisterCallback("aim_up", InputEventType.Pressed, _ => _controller.up(), deviceIndex, this);
 			InputManager.instance.RegisterCallback("crouch", InputEventType.Pressed, _ => _controller.down(), deviceIndex,this);
 			
 			InputManager.instance.RegisterCallback("jump", InputEventType.Released, _ => _controller.select(), deviceIndex,this);
