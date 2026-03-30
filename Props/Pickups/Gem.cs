@@ -1,4 +1,4 @@
-﻿using CraterSprite.Game.GameMode;
+using CraterSprite.Game.GameMode;
 using CraterSprite.Shared.Scripts;
 using Godot;
 
