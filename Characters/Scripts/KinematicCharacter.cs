@@ -281,7 +281,7 @@ public partial class KinematicCharacter : CharacterBody2D
 		_direction = Mathf.Sign(moveInput);
 		EmitSignalMoveDirectionChanged(moveInput);
 	}
-	
+
 	/**
 	 * <summary>
 	 * Begin a jump. The jump will end automatically after jump time,
@@ -297,7 +297,13 @@ public partial class KinematicCharacter : CharacterBody2D
 		{
 			return;
 		}
-		
+
+		if (IsOnFloor() && _isCrouched)
+		{
+			Position += new Vector2(0.0f, 1.0f);
+			return;
+		}
+
 		if (IsOnWallOnly())
 		{
 			WallJump();
