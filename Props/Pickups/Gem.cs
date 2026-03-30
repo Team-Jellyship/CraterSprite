@@ -1,4 +1,4 @@
-﻿using CraterSprite.Game.GameMode;
+using CraterSprite.Game.GameMode;
 using CraterSprite.Shared.Scripts;
 using Godot;
 
@@ -13,7 +13,7 @@ public partial class Gem : Area2D, IDamageListener
         AreaEntered += Overlap;
     }
 
-    public void TakeDamage(float damageAmount, CharacterStats source)
+    public void TakeDamage(float damageAmount, CharacterStats source, bool canBeBlocked)
     {
         if (source is PlayerState playerState)
         {

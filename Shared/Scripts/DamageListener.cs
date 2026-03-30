@@ -2,5 +2,5 @@
 
 public interface IDamageListener
 {
-    public void TakeDamage(float damageAmount, CharacterStats source);
+    public void TakeDamage(float damageAmount, CharacterStats source, bool canBeBlocked);
 }

@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cybtj76g4n71w"]
+
+[ext_resource type="PackedScene" uid="uid://fjgqtatonlq6" path="res://Characters/Enemies/Walker/Char_WalkingEnemy.tscn" id="1_ncujn"]
+[ext_resource type="Shader" uid="uid://cg3uln3xwrvyj" path="res://Shared/Shaders/Sh_SpriteColor.gdshader" id="2_whvdj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wn7ye"]
+shader = ExtResource("2_whvdj")
+shader_parameter/color = Vector4(1, 0, 0, 1)
+
+[node name="FireEnemy" unique_id=203046980 instance=ExtResource("1_ncujn")]
+
+[node name="Sprite2D" parent="." index="0" unique_id=370477374]
+material = SubResource("ShaderMaterial_wn7ye")
+
+[node name="Stats" parent="." index="1" unique_id=802010356]
+characterTeam = 3
+matchType = 1

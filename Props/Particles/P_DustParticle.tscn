@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bheba0kscf0aj"]
+
+[ext_resource type="SpriteFrames" uid="uid://bc3gbw7ktkyif" path="res://Props/Particles/Animations/SF_PivotDust.tres" id="1_5ftb3"]
+
+[node name="DustParticle" type="AnimatedSprite2D" unique_id=203986282]
+sprite_frames = ExtResource("1_5ftb3")
+frame_progress = 0.9773324

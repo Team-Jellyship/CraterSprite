@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://bsqs3cujm4r8m"]
+
+[ext_resource type="Script" uid="uid://bsfdycg3wydrv" path="res://Characters/Scripts/KinematicCharacter.cs" id="1_burtm"]
+[ext_resource type="Texture2D" uid="uid://c765qygv0kp8i" path="res://icon.svg" id="2_jt7ru"]
+[ext_resource type="Script" uid="uid://cyhvlrad5psho" path="res://Characters/Scripts/CharacterStats.cs" id="3_5xj14"]
+[ext_resource type="Script" uid="uid://5yfgyni1c342" path="res://Shared/Scripts/DamageZone2D.cs" id="4_5xj14"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_00fb6"]
+size = Vector2(20, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s1cow"]
+
+[node name="GoombaStompTestEnemy" type="CharacterBody2D" unique_id=786479495]
+collision_layer = 4
+script = ExtResource("1_burtm")
+
+[node name="PhysicsCollider" type="CollisionShape2D" parent="." unique_id=1760764892]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_00fb6")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=989503687]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_jt7ru")
+
+[node name="Stats" type="Node" parent="." unique_id=227448695]
+script = ExtResource("3_5xj14")
+canBeJumpedOn = true
+characterTeam = 3
+matchType = 1
+_defaultHealth = 3.0
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1297332669 node_paths=PackedStringArray("_owner")]
+collision_layer = 8
+collision_mask = 16
+script = ExtResource("4_5xj14")
+_filter = 3
+_damage = 1.0
+_owner = NodePath("../Stats")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1152942242]
+shape = SubResource("RectangleShape2D_s1cow")
+debug_color = Color(0.9733754, 0, 0.4378033, 0.41960785)

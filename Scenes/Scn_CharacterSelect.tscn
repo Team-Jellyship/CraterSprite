@@ -1,8 +1,197 @@
 [gd_scene format=3 uid="uid://bxk04xlwe138j"]
 
+[ext_resource type="Script" uid="uid://wg11mbvkjhna" path="res://Scenes/MainMenu.cs" id="1_4bb6l"]
+[ext_resource type="Texture2D" uid="uid://bas5g5xlvdlnd" path="res://Sprites/Menu/menu_bg_space.png" id="1_afty0"]
+[ext_resource type="Texture2D" uid="uid://6h47os5joatg" path="res://Sprites/Menu/menu_logo.png" id="2_hresq"]
+[ext_resource type="Texture2D" uid="uid://crnhft50onqiu" path="res://Sprites/Menu/Main_menu_ship_blu.png" id="3_1ygr3"]
+[ext_resource type="Texture2D" uid="uid://cu7hwe131l2om" path="res://Sprites/Menu/Main_menu_clouds_frnt.png" id="4_5d00p"]
+[ext_resource type="Texture2D" uid="uid://dc4l6i6hn43fn" path="res://Sprites/Menu/Main_menu_ship_red.png" id="4_g8h14"]
+[ext_resource type="Texture2D" uid="uid://bjltkyfqgwl36" path="res://Sprites/Menu/Main_menu_clouds_bck.png" id="5_btwuc"]
+[ext_resource type="Script" uid="uid://dcmxb1ln3716k" path="res://Scenes/main_menu.gd" id="6_j7ku3"]
+[ext_resource type="Texture2D" uid="uid://dyt8q0n678w7k" path="res://Sprites/Menu/Main_menu_moon.png" id="7_btwuc"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_4wvrv"]
 font_size = 32
 font_color = Color(0.07, 0.07, 0.07, 1)
+
+[sub_resource type="Animation" id="Animation_rcnn5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_5d00p"]
+resource_name = "ships_loop"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5002632),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_btwuc"]
+_data = {
+&"RESET": SubResource("Animation_rcnn5"),
+&"ships_loop": SubResource("Animation_5d00p")
+}
+
+[sub_resource type="Animation" id="Animation_1ygr3"]
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.10269565, 0.20122796, 0.3039236, 0.4038437, 0.5037638),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [3, 4, 5, 0, 1, 2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(320, 168)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.008726646]
+}
+
+[sub_resource type="Animation" id="Animation_g8h14"]
+resource_name = "logo_loop"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(320, 168), Vector2(320, 168.215), Vector2(320, 166.453)]
+}
+
+[sub_resource type="Animation" id="Animation_4bb6l"]
+resource_name = "logo_slideIn"
+length = 36.533333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.8666668, 9.433333, 20.063894, 30.095842, 36.533333),
+"transitions": PackedFloat32Array(0.5, 2, -2, 1, -2, 2),
+"update": 0,
+"values": [Vector2(320, -83.5), Vector2(320, 150.405), Vector2(320, 146.155), Vector2(320, 150), Vector2(320, 142.785), Vector2(320, 150.405)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5.114326, 10.064732, 15.113489, 20.03111, 25.17822, 30.095842, 36.533333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.017453292, -0.017453292, 0.017453292, -0.012217305, 0.010471975, 0.008726646, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rcnn5"]
+_data = {
+&"RESET": SubResource("Animation_1ygr3"),
+&"logo_loop": SubResource("Animation_g8h14"),
+&"logo_slideIn": SubResource("Animation_4bb6l")
+}
+
+[sub_resource type="Animation" id="Animation_btwuc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(320, 304)]
+}
+
+[sub_resource type="Animation" id="Animation_j7ku3"]
+resource_name = "moon_slide"
+length = 60.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 60),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(320, 337.385), Vector2(320, 280)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4bb6l"]
+_data = {
+&"RESET": SubResource("Animation_btwuc"),
+&"moon_slide": SubResource("Animation_j7ku3")
+}
 
 [node name="ScnCharacterSelect" type="Control" unique_id=1187210357]
 layout_mode = 3
@@ -11,6 +200,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_4bb6l")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=478269176]
 layout_mode = 1
@@ -35,3 +225,156 @@ text = "Loading..."
 label_settings = SubResource("LabelSettings_4wvrv")
 horizontal_alignment = 2
 vertical_alignment = 2
+
+[node name="Background Space" type="Sprite2D" parent="." unique_id=1552777201]
+texture_filter = 1
+position = Vector2(320, 180)
+texture = ExtResource("1_afty0")
+
+[node name="Ships" type="Node" parent="." unique_id=566716296]
+
+[node name="Blu Ship" type="Sprite2D" parent="Ships" unique_id=1482909023]
+z_index = 2
+position = Vector2(64, 128)
+texture = ExtResource("3_1ygr3")
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Ships/Blu Ship" unique_id=17155793]
+process_mode = 3
+libraries/ = SubResource("AnimationLibrary_btwuc")
+autoplay = &"ships_loop"
+
+[node name="Red Ship" type="Sprite2D" parent="Ships" unique_id=1023833473]
+z_index = 2
+position = Vector2(568, 128)
+texture = ExtResource("4_g8h14")
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Ships/Red Ship" unique_id=1972225782]
+process_mode = 3
+libraries/ = SubResource("AnimationLibrary_btwuc")
+autoplay = &"ships_loop"
+
+[node name="Clouds" type="Node" parent="." unique_id=253444774]
+
+[node name="Parallax2D_Back" type="Parallax2D" parent="Clouds" unique_id=266188535]
+process_mode = 3
+z_index = -1
+texture_filter = 1
+scroll_scale = Vector2(0.2, 0.2)
+repeat_size = Vector2(0, 360)
+autoscroll = Vector2(0, -75)
+follow_viewport = false
+ignore_camera_scroll = true
+
+[node name="Cloud Sprite Back" type="Sprite2D" parent="Clouds/Parallax2D_Back" unique_id=1328844670]
+z_index = 1
+texture_filter = 1
+position = Vector2(320, 180)
+texture = ExtResource("5_btwuc")
+
+[node name="Parallax2D_Front" type="Parallax2D" parent="Clouds" unique_id=982824624]
+process_mode = 3
+z_index = 3
+texture_filter = 1
+repeat_size = Vector2(0, 360)
+autoscroll = Vector2(0, -400)
+follow_viewport = false
+ignore_camera_scroll = true
+
+[node name="Cloud Sprite Front" type="Sprite2D" parent="Clouds/Parallax2D_Front" unique_id=567335734]
+z_index = 3
+texture_filter = 1
+position = Vector2(320, 180)
+texture = ExtResource("4_5d00p")
+
+[node name="Text" type="Node" parent="." unique_id=17551156]
+script = ExtResource("6_j7ku3")
+
+[node name="Button_Manager" type="Control" parent="Text" unique_id=1937746542]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="ButtonP1" type="Button" parent="Text/Button_Manager" unique_id=1868101506]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 2.8500001
+anchor_top = 7.4000006
+anchor_right = 6.2000003
+anchor_bottom = 8.200001
+offset_left = -1752.0001
+offset_top = -2392.0002
+offset_right = -3712.0002
+offset_bottom = -2616.0002
+
+[node name="Player1Start" type="RichTextLabel" parent="Text/Button_Manager/ButtonP1" unique_id=882205308]
+process_mode = 3
+z_index = 7
+layout_mode = 0
+offset_left = 16.0
+offset_top = -6.0
+offset_right = 168.0
+offset_bottom = 67.0
+bbcode_enabled = true
+text = "[outline_size=10] [center][wave][font=res://UI/Funhouse.ttf][color=ffff33] Player 1 Press Start"
+fit_content = true
+autowrap_mode = 2
+text_direction = 1
+
+[node name="ButtonP2" type="Button" parent="Text/Button_Manager" unique_id=1792034040]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 9.6
+anchor_top = 7.4000006
+anchor_right = 13.000001
+anchor_bottom = 8.200001
+offset_left = -5760.0
+offset_top = -2392.0002
+offset_right = -7752.001
+offset_bottom = -2624.0002
+
+[node name="Player2Start" type="RichTextLabel" parent="Text/Button_Manager/ButtonP2" unique_id=1704769096]
+process_mode = 3
+z_index = 7
+layout_mode = 0
+offset_left = 16.0
+offset_top = -8.0
+offset_right = 176.0
+offset_bottom = 65.0
+bbcode_enabled = true
+text = "[outline_size=10] [center][wave][font=res://UI/Funhouse.ttf][color=ffff33] Player 2 Press Start "
+fit_content = true
+autowrap_mode = 2
+text_direction = 1
+
+[node name="Logo" type="Sprite2D" parent="." unique_id=75773860]
+process_mode = 3
+z_index = 7
+position = Vector2(320, 168)
+rotation = 0.008726646
+texture = ExtResource("2_hresq")
+hframes = 6
+frame = 3
+
+[node name="AnimationLogo_Loop" type="AnimationPlayer" parent="Logo" unique_id=1187296791]
+process_mode = 3
+libraries/ = SubResource("AnimationLibrary_rcnn5")
+autoplay = &"logo_loop"
+
+[node name="AnimationLogo_SlideIn" type="AnimationPlayer" parent="Logo" unique_id=2054509121]
+process_mode = 3
+libraries/ = SubResource("AnimationLibrary_rcnn5")
+autoplay = &"logo_slideIn"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1513551302]
+process_mode = 3
+position = Vector2(320, 304)
+texture = ExtResource("7_btwuc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" unique_id=1133957281]
+libraries/ = SubResource("AnimationLibrary_4bb6l")
+autoplay = &"moon_slide"
+
+[connection signal="pressed" from="Text/Button_Manager/ButtonP1" to="Text" method="_on_button_p_1_pressed"]

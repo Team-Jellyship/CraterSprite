@@ -36,6 +36,15 @@ public partial class ToggleableHitbox : Area2D
 		}).CallDeferred();
 	}
 
+	private void Retrigger()
+	{
+		Callable.From(() =>
+		{ _onHitbox.Disabled = true;
+		  _offHitbox.Disabled = false;
+		  Callable.From(Enable).CallDeferred(); 
+		}).CallDeferred();
+	}
+
 	private void SetOff()
 	{
 		_on = false;

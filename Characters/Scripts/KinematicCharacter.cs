@@ -116,8 +116,12 @@ public partial class KinematicCharacter : CharacterBody2D
 	[Signal] public delegate void MoveSpeedChangedEventHandler(float moveSpeed);
 	[Signal] public delegate void OnCrouchedEventHandler();
 	[Signal] public delegate void OnUncrouchedEventHandler();
+	[Signal] public delegate void OnGroundedChangedEventHandler(bool grounded);
 
 	[Signal] public delegate void OnClickedEventHandler();
+
+	[Signal] public delegate void P1ReadyEventHandler();
+	[Signal] public delegate void P2ReadyEventHandler();
 
 	public CraterEvent onHitFloor = new();
 	public CraterEvent onHitWall = new();
@@ -126,6 +130,8 @@ public partial class KinematicCharacter : CharacterBody2D
 
 	private int _direction;
 	private bool _isJumping;
+	private bool _isHopping;
+	private bool _jumpHeld;
 	private Timer _jumpTimer = new();
 	private Timer _coyoteTimer = new();
 	private Vector2 _pendingImpulses;
@@ -135,7 +141,7 @@ public partial class KinematicCharacter : CharacterBody2D
 		AddChild(_jumpTimer);
 		_jumpTimer.SetName("JumpTimer");
 		_jumpTimer.OneShot = true;
-		_jumpTimer.Timeout += StopJumping;
+		_jumpTimer.Timeout += () => { _isJumping = false; };
 		
 		AddChild(_coyoteTimer);
 		_coyoteTimer.SetName("CoyoteTimer");
@@ -153,6 +159,7 @@ public partial class KinematicCharacter : CharacterBody2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
+		_isHopping = false;
 		var currentVelocity = Velocity;
 		if (moveInput == 0.0f)
 		{
@@ -180,7 +187,7 @@ public partial class KinematicCharacter : CharacterBody2D
 		
 		if (!IsOnFloor() && !IsOnWall())
 		{
-			var jumpFactor = _isJumping ? _jumpHeldGravityFactor : 1.0f;
+			var jumpFactor = _isJumping && _jumpHeld ? _jumpHeldGravityFactor : 1.0f;
 			currentVelocity.Y += GravityConstant * _gravity  * (float)delta * jumpFactor;
 		}
 		
@@ -240,6 +247,8 @@ public partial class KinematicCharacter : CharacterBody2D
 		
 		DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, new Vector2(moveInput * 50.0f, 0.0f), new Color(0.2f, 0.25f, 1.0f));
 		DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, GetVelocity() * 0.25f, new Color(1.0f, 0.0f, 0.0f));
+		DrawString(ThemeDB.FallbackFont, new Vector2(-16.0f, -32.0f), $"Jumping: {_isJumping}", HorizontalAlignment.Center, -1.0f, 8);
+		DrawString(ThemeDB.FallbackFont, new Vector2(-16.0f, -16.0f), $"Jumps: {_numJumpsRemaining}", HorizontalAlignment.Center, -1.0f, 8);
 	}
 
 	/**
@@ -283,6 +292,12 @@ public partial class KinematicCharacter : CharacterBody2D
 	 */
 	public void StartJumping()
 	{
+		_jumpHeld = true;
+		if (_isHopping)
+		{
+			return;
+		}
+		
 		if (IsOnWallOnly())
 		{
 			WallJump();
@@ -300,7 +315,27 @@ public partial class KinematicCharacter : CharacterBody2D
 	 */
 	public void StopJumping()
 	{
-		_isJumping = false;
+		_jumpHeld = false;
+	}
+
+	/**
+	 * <summary>
+	 * Start a forced jump. Can only happen once per frame.
+	 * </summary>
+	 */
+	public void Hop()
+	{
+		if (_isHopping)
+		{
+			return;
+		}
+
+		_numJumpsRemaining = Math.Max(_numJumpsRemaining, 1);
+		_isJumping = true;
+		_isHopping = true;
+		_coyoteTimer.Stop();
+		_jumpTimer.Start(_jumpTime);
+		AddImpulse(new Vector2(0.0f, -_jumpStrength));
 	}
 	
 	/**
@@ -352,6 +387,22 @@ public partial class KinematicCharacter : CharacterBody2D
 	{
 		ApplyKnockback(_defaultKnockbackStrength);
 	}
+	
+	/**
+	* <summary>Allows Player 1 to ready up at the main menu by pressing start.</summary>
+	*/
+	public void StartP1()
+	{
+		EmitSignal(SignalName.P1Ready);
+	}
+	
+	/**
+	* <summary>Allows Player 2 to ready up at the main menu by pressing start.</summary>
+	*/
+	public void StartP2()
+	{
+		EmitSignal(SignalName.P2Ready);
+	}
 
 	/**
 	 * <summary>
@@ -362,11 +413,13 @@ public partial class KinematicCharacter : CharacterBody2D
 	{
 		_numJumpsRemaining = _numJumps;
 		_coyoteTimer.Stop();
+		EmitSignalOnGroundedChanged(true);
 		onHitFloor.Invoke();
 	}
 
 	private void LeavePlatform()
 	{
+		EmitSignalOnGroundedChanged(false);
 		if (!_isJumping)
 		{
 			_coyoteTimer.Start(_coyoteTime);

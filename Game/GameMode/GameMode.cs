@@ -27,7 +27,7 @@ public partial class GameMode : Node
 	public PackedScene nextLevel;
 	
 	public readonly CraterEvent<int, Node2D> onPlayerSpawned = new ();
-
+	
 	public bool showingDebug { private set; get; }
 	
 	private Timer _transitionTimer = new();
@@ -52,11 +52,6 @@ public partial class GameMode : Node
 	{
 		stateName = "GameOver"
 	};
-	private GameState warmupState { get; } = new()
-	{
-		stateName = "Warmup",
-		transitionTime = 2.0f
-	};
 	private VersusGameState versusGameState { get; } = new()
 	{
 		stateName = "Versus",
@@ -80,6 +75,7 @@ public partial class GameMode : Node
 	public override void _Ready()
 	{
 		ImGuiGodot.ImGuiGD.ToolInit();
+		ProcessMode = ProcessModeEnum.Always;
 		
 		LoadSettings();
 		statusEffects = ResourceLoader.Load<StatusEffectList>("res://Game/Effects/SL_Effects.tres");
@@ -98,16 +94,24 @@ public partial class GameMode : Node
 		_transitionTimer = CraterFunctions.CreateTimer(this, "TransitionTimer", () => Command(GameModeCommand.Timeout));
 		characterSelectState.menuScene = settings.characterSelectScreen;
 		rematchState.menuScene = settings.rematchScreen;
+
+		var roundStartState = new RoundStartState
+		{
+			stateName = "RoundStart",
+			menuScene = settings.roundIntroScreen,
+			transitionTime = 2.0f
+		};
 		
 		//Transition Handling
-		_transitions.Add(new Tuple<GameState, GameModeCommand>(characterSelectState, GameModeCommand.Victory), () => loadingState);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(characterSelectState, GameModeCommand.Victory), () => roundStartState);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(roundStartState, GameModeCommand.Timeout), () => loadingState);
 		_transitions.Add(new Tuple<GameState, GameModeCommand>(loadingState, GameModeCommand.Loaded), () => versusGameState);
 		_transitions.Add(new Tuple<GameState, GameModeCommand>(versusGameState, GameModeCommand.Victory), () => roundOverState);
 		_transitions.Add(new Tuple<GameState, GameModeCommand>(roundOverState, GameModeCommand.Timeout), () =>
 		{ return playerData.TrueForAll(data => data.playerScore < settings.roundsToWin) ? loadingState : rematchState; });
-		_transitions.Add(new Tuple<GameState, GameModeCommand>(rematchState, GameModeCommand.Victory), () => loadingState);
+		_transitions.Add(new Tuple<GameState, GameModeCommand>(rematchState, GameModeCommand.Victory), () => roundStartState);
 		
-		_currentGameState = loadingState;
+		_currentGameState = characterSelectState;
 		_currentGameState.EnterState(this);
 		if (_currentGameState.transitionTime <= 0.0f)
 		{
@@ -189,6 +193,7 @@ public partial class GameMode : Node
 		}
 		else
 		{
+			GD.Print($"[GameMode] Transition in {_currentGameState.transitionTime}");
 			_transitionTimer.Start(_currentGameState.transitionTime);
 		}
 	}

@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://b0ol4q8m6naqw"]
+
+[ext_resource type="Script" uid="uid://bsfdycg3wydrv" path="res://Characters/Scripts/KinematicCharacter.cs" id="1_510js"]
+[ext_resource type="Texture2D" uid="uid://c765qygv0kp8i" path="res://icon.svg" id="2_6iknl"]
+[ext_resource type="Shader" uid="uid://cg3uln3xwrvyj" path="res://Shared/Shaders/Sh_SpriteColor.gdshader" id="2_ym80k"]
+[ext_resource type="Script" uid="uid://cyhvlrad5psho" path="res://Characters/Scripts/CharacterStats.cs" id="3_ym80k"]
+[ext_resource type="Script" uid="uid://5yfgyni1c342" path="res://Shared/Scripts/DamageZone2D.cs" id="4_e4ix6"]
+[ext_resource type="Script" uid="uid://c31eejkub08hq" path="res://Characters/Enemies/AI/WalkingController.cs" id="5_qd1au"]
+[ext_resource type="Script" uid="uid://r6asvyfexakk" path="res://Characters/Scripts/ProjectileLauncher.cs" id="6_wh21p"]
+[ext_resource type="PackedScene" uid="uid://kgj0kkgcwle3" path="res://Props/Projectiles/P_Projectile.tscn" id="7_i8dnl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e4ix6"]
+shader = ExtResource("2_ym80k")
+shader_parameter/color = Vector4(1, 0, 0, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8nvh5"]
+radius = 24.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dq4fg"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7yner"]
+size = Vector2(32, 10)
+
+[node name="FireEnemyElite" type="CharacterBody2D" unique_id=203046980 node_paths=PackedStringArray("_characterPenetrationArea")]
+collision_layer = 4
+script = ExtResource("1_510js")
+_acceleration = 500.0
+_maxSpeed = 75.0
+_maxAirSpeedHorizontal = 75.0
+_airControlFactor = 2.0
+_jumpStrength = 50.0
+_jumpTime = 0.2
+_characterPenetrationArea = NodePath("Hurtbox")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=370477374]
+material = SubResource("ShaderMaterial_e4ix6")
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_6iknl")
+
+[node name="Stats" type="Node" parent="." unique_id=802010356]
+script = ExtResource("3_ym80k")
+characterTeam = 3
+matchType = 1
+_defaultHealth = 5.0
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1727647131]
+collision_layer = 16
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=118484821]
+shape = SubResource("CircleShape2D_8nvh5")
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=829474099 node_paths=PackedStringArray("_owner")]
+collision_layer = 8
+collision_mask = 16
+script = ExtResource("4_e4ix6")
+_filter = 3
+_damage = 2.0
+_owner = NodePath("../Stats")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=35476914]
+shape = SubResource("RectangleShape2D_dq4fg")
+debug_color = Color(0.9733754, 0, 0.4378033, 0.41960785)
+
+[node name="PhysicsCollider" type="CollisionShape2D" parent="." unique_id=630353109]
+position = Vector2(0, 20)
+shape = SubResource("RectangleShape2D_7yner")
+
+[node name="AIController" type="Node2D" parent="." unique_id=1312789790 node_paths=PackedStringArray("_gun", "_character", "_playerDetection", "_groundCast")]
+script = ExtResource("5_qd1au")
+_gunTeamFilter = 3
+_gun = NodePath("../Gun")
+_character = NodePath("..")
+_playerDetection = NodePath("../PlayerRay")
+_groundCast = NodePath("../GroundRay")
+_floorEdgeResponse = 2
+
+[node name="Node2D" type="Node2D" parent="." unique_id=112846174]
+
+[node name="Gun" type="Node2D" parent="." unique_id=941353924 node_paths=PackedStringArray("_kinematicOwner")]
+script = ExtResource("6_wh21p")
+_projectile = ExtResource("7_i8dnl")
+_projectileSpeed = 100.0
+_kinematicOwner = NodePath("..")
+_offset = 16.0
+facingDirection = Vector2(2, 0)
+
+[node name="GroundRay" type="RayCast2D" parent="." unique_id=1912750747]
+target_position = Vector2(32, 32)
+
+[node name="PlayerRay" type="RayCast2D" parent="." unique_id=1442245475]
+target_position = Vector2(50, 0)
+collision_mask = 16
+collide_with_areas = true

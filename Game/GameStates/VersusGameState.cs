@@ -70,7 +70,12 @@ public class VersusGameState : GameState
     private void SpawnEnemyFromMatch3(GameMode mode, int ownerIndex, List<MatchType> orbElements)
     {
         var spawner = mode.GetPlayerState(GameMode.GetRivalIndex(ownerIndex)).match3Spawner;
-        // spawner.QueueSpawn();
+        var eliteEnemy = mode.recipes.GetEnemy(orbElements);
+
+        if (eliteEnemy != null)
+        {
+            spawner.QueueSpawn(eliteEnemy);
+        }
     }
 
     private void SpawnEnemyFromSingleType(GameMode mode, int ownerIndex, MatchType orbType)

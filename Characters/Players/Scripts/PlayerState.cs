@@ -15,6 +15,7 @@ public partial class PlayerState : CharacterStats
 	private float _supercharge;
 	
 	[Export] private float _maxSupercharge;
+	[Export] private float _stompDamage = 3.0f;
 	[Export] public Match3Spawner match3Spawner { private set; get; }
 	
 	// Special stuff. This should all be moved to another data class
@@ -49,6 +50,18 @@ public partial class PlayerState : CharacterStats
 	public override void KilledEnemy(CharacterStats enemy)
 	{
 		container.AddOrb(enemy.matchType);
+	}
+
+	public override void TakeDamage(float damageAmount, CharacterStats source, bool canBeBlocked)
+	{
+		if (canBeBlocked && source is { canBeJumpedOn: true } && Owner is KinematicCharacter { Velocity.Y: > 0.0f } ownerKinematicCharacter)
+		{
+			ownerKinematicCharacter.Hop();
+			source.TakeDamage(_stompDamage, this, false);
+			return;
+		}
+		
+		base.TakeDamage(damageAmount, source, canBeBlocked);
 	}
 
 	public void SetPlayerIndex(int index)

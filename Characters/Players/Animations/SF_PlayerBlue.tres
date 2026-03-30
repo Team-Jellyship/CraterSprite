@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bcc78rhp0nyh4" path="res://Characters/Players/Sprites/walk Player 2 diag.png" id="6_lyyhw"]
 [ext_resource type="Texture2D" uid="uid://cpotswwd43klb" path="res://Characters/Players/Sprites/walk Player 2 up.png" id="7_v64dv"]
 [ext_resource type="Texture2D" uid="uid://b867snufdq5fu" path="res://Characters/Players/Sprites/walk Player 1.png" id="8_f73sb"]
+[ext_resource type="Texture2D" uid="uid://d4j7cmnutpim7" path="res://Characters/Players/Sprites/wallposes.png" id="9_hyh3t"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2uvpf"]
 atlas = ExtResource("1_h5v5b")
@@ -273,6 +274,14 @@ region = Rect2(384, 0, 64, 64)
 atlas = ExtResource("8_f73sb")
 region = Rect2(448, 0, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_yham5"]
+atlas = ExtResource("9_hyh3t")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idlf0"]
+atlas = ExtResource("9_hyh3t")
+region = Rect2(128, 0, 64, 64)
+
 [resource]
 animations = [{
 "frames": [],
@@ -517,4 +526,20 @@ animations = [{
 "loop": true,
 "name": &"walk",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yham5")
+}],
+"loop": true,
+"name": &"wallslide",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idlf0")
+}],
+"loop": true,
+"name": &"wallslide_up",
+"speed": 5.0
 }]

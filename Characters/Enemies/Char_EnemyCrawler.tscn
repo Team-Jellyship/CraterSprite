@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://d27qxu2gkyiqi"]
+
+[ext_resource type="Script" uid="uid://cxl88b17lj7v1" path="res://Characters/Enemies/CrawlerBody.cs" id="1_frgia"]
+[ext_resource type="Shader" uid="uid://cg3uln3xwrvyj" path="res://Shared/Shaders/Sh_SpriteColor.gdshader" id="2_kdgag"]
+[ext_resource type="Texture2D" uid="uid://c765qygv0kp8i" path="res://icon.svg" id="3_s3ib8"]
+[ext_resource type="Script" uid="uid://5yfgyni1c342" path="res://Shared/Scripts/DamageZone2D.cs" id="4_1a26h"]
+[ext_resource type="Script" uid="uid://ds7qqd2n3qh3x" path="res://Characters/Enemies/CrawlerController.cs" id="5_s3ib8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hkbjn"]
+shader = ExtResource("2_kdgag")
+shader_parameter/color = Vector4(1, 1, 0, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kdgag"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s3ib8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1a26h"]
+size = Vector2(20, 10)
+
+[node name="CharEnemyCrawler" type="CharacterBody2D" unique_id=946527503]
+script = ExtResource("1_frgia")
+_defaultKnockbackStrength = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1893942511]
+material = SubResource("ShaderMaterial_hkbjn")
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("3_s3ib8")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=652826595]
+collision_layer = 16
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1952653876]
+shape = SubResource("CircleShape2D_kdgag")
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=977162670]
+collision_layer = 8
+collision_mask = 16
+script = ExtResource("4_1a26h")
+_filter = 3
+_damage = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1438893119]
+shape = SubResource("RectangleShape2D_s3ib8")
+debug_color = Color(0.9733754, 0, 0.4378033, 0.41960785)
+
+[node name="PhysicsCollider" type="CollisionShape2D" parent="." unique_id=433242333]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_1a26h")
+
+[node name="Crawler AI" type="Node" parent="." unique_id=1722524811]
+script = ExtResource("5_s3ib8")
+
+[node name="DropChecker" type="RayCast2D" parent="." unique_id=2083648704]
+target_position = Vector2(-12, 12)
+
+[node name="LedgeChecker" type="RayCast2D" parent="." unique_id=56415450]
+target_position = Vector2(11, 11)

@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://c3xs886ctjt3v"]
+
+[ext_resource type="Texture2D" uid="uid://qxj6dkxggmaj" path="res://Characters/Players/Sprites/p1_blast.png" id="1_kcgfn"]
+[ext_resource type="Texture2D" uid="uid://cs6nxx4gobedd" path="res://Characters/Players/Sprites/p2_blast.png" id="2_b72cj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iqbw7"]
+atlas = ExtResource("1_kcgfn")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yrxjt"]
+atlas = ExtResource("1_kcgfn")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1a22s"]
+atlas = ExtResource("1_kcgfn")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bstau"]
+atlas = ExtResource("1_kcgfn")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uvdrr"]
+atlas = ExtResource("1_kcgfn")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s46wf"]
+atlas = ExtResource("2_b72cj")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dodmw"]
+atlas = ExtResource("2_b72cj")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apt33"]
+atlas = ExtResource("2_b72cj")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fnpxv"]
+atlas = ExtResource("2_b72cj")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntnli"]
+atlas = ExtResource("2_b72cj")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u872s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iqbw7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yrxjt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1a22s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bstau")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uvdrr")
+}],
+"loop": true,
+"name": &"P1_shot",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s46wf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dodmw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apt33")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fnpxv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntnli")
+}],
+"loop": true,
+"name": &"P2_shot",
+"speed": 5.0
+}]
+
+[node name="SfPlayerShot" type="AnimatedSprite2D" unique_id=873712340]
+sprite_frames = SubResource("SpriteFrames_u872s")
+animation = &"P1_shot"

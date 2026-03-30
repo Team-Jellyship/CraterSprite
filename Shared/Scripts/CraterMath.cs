@@ -56,7 +56,7 @@ public abstract class CraterMath
 
     public static T ChooseRandom<T>(List<T> items)
     {
-        return items[GD.RandRange(0, items.Count - 1)];
+        return items.Count == 0 ? default : items[GD.RandRange(0, items.Count - 1)];
     }
 
     /**
