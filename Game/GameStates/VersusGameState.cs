@@ -26,13 +26,12 @@ public class VersusGameState : GameState
         for (var i = 0; i < mode.settings.playerCount; ++i)
         {
             GD.Print($"[GameMode] Spawning player {i}...");
-            var chosenSpawnIndex = GD.RandRange(0, remainingSpawnLocations.Count - 1);
+            var chosenSpawnIndex = i;
             var spawnLocation = remainingSpawnLocations[chosenSpawnIndex];
             var playerInstance = mode.settings.player.Instantiate<Node2D>();
-            playerInstance.SetGlobalPosition(spawnLocation.GlobalPosition);
+            playerInstance.SetGlobalPosition(mode.spawnLocations[i].GlobalPosition);
             playerInstance.Name = $"Player{i}";
             spawnLocation.Owner.AddChild(playerInstance);
-            remainingSpawnLocations.RemoveAt(chosenSpawnIndex);
 			
             mode.onPlayerSpawned.Invoke(i, playerInstance);
             CraterFunctions.GetNodeByClass<PlayerController>(playerInstance)?.BindInput(i);

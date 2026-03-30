@@ -206,6 +206,7 @@ script = ExtResource("1_xply6")
 [node name="SpawnLocation2" type="Node2D" parent="." unique_id=1836631604]
 position = Vector2(704, 288)
 script = ExtResource("1_xply6")
+defaultIndex = 1
 
 [node name="Level" type="TileMapLayer" parent="." unique_id=1791783159]
 use_parent_material = true

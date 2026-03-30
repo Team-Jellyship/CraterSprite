@@ -153,4 +153,20 @@ public static class CraterFunctions
         return timer;
     }
     
+    public static Vector2 GetPositionInViewport(Node2D node)
+    {
+        var camera = GetCurrentViewportFromGlobalPosition(node);
+        var cameraRect = camera.GetCameraBounds();
+        var viewportPosition = camera.GetParent().GetParent<Control>().Position;
+        GD.Print($"viewport position {viewportPosition}");
+        return cameraRect.Position + node.GlobalPosition - viewportPosition;
+    }
+    
+    public static PlayerCamera GetCurrentViewportFromGlobalPosition(Node2D node)
+    {
+        var viewportRect = node.GetViewportRect();
+        return node.GlobalPosition.X < viewportRect.Size.X / 2.0f ? 
+            GameMode.instance.playerData[0].camera :
+            GameMode.instance.playerData[1].camera;
+    }
 }
