@@ -6,7 +6,6 @@ namespace CraterSprite;
 
 public partial class MenuControl : CharacterBody2D
 {
-	[ExportGroup("Nodes")]
 	[Signal] public delegate void UpEventHandler();
 	[Signal] public delegate void DownEventHandler();
 	
@@ -16,11 +15,6 @@ public partial class MenuControl : CharacterBody2D
 	
 	[Signal] public delegate void P1ReadyEventHandler();
 	[Signal] public delegate void P2ReadyEventHandler();
-	
-	public float moveInput { get; private set; }
-
-	private int _direction;
-	private Vector2 _pendingImpulses;
 	
 	/**
 	* <summary>Move the menu cursor up</summary>
