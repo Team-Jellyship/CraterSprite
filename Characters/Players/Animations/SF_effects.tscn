@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bqik2bp5oads5"]
 
 [ext_resource type="Texture2D" uid="uid://dcdmexl63jkjp" path="res://Characters/Players/Sprites/e_landdust.png" id="1_qifxr"]
+[ext_resource type="Texture2D" uid="uid://cfed0lqxrgony" path="res://Characters/Players/Sprites/player damage flash.png" id="2_fpdgr"]
 [ext_resource type="Texture2D" uid="uid://bjpfayoo3cy13" path="res://Characters/Players/Sprites/e_pivotdustt.png" id="2_n7bus"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fpdgr"]
@@ -63,6 +64,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"land dust",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_fpdgr")
+}],
+"loop": true,
+"name": &"player_damage_flash",
 "speed": 5.0
 }, {
 "frames": [{
@@ -83,9 +92,11 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk dust",
-"speed": 5.0
+"speed": 11.0
 }]
 
 [node name="Effects" type="AnimatedSprite2D" unique_id=1921377129]
 sprite_frames = SubResource("SpriteFrames_1eut1")
-animation = &"land dust"
+animation = &"walk dust"
+frame = 2
+frame_progress = 0.12737907
