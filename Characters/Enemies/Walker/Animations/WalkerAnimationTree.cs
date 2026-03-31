@@ -12,7 +12,6 @@ public partial class WalkerAnimationTree : AnimationTree
     {
         _walkDirection = direction;
         Set("parameters/StateMachine/Walk/blend_position", direction);
-        Set("parameters/StateMachine/Idle/blend_position", direction);
         Set("parameters/StateMachine/Shoot/blend_position", direction);
     }
 

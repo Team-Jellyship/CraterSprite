@@ -1,10 +1,10 @@
-[gd_resource type="AnimationNodeBlendTree" format=3 uid="uid://bxpl2ai2873da"]
+[gd_resource type="AnimationNodeBlendTree" format=3 uid="uid://dkaro1opncsih"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xdcic"]
-animation = &"ShootLeft"
+animation = &"EnemyGreen/ShootLeft"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_e4gjf"]
-animation = &"ShootRight"
+animation = &"EnemyGreen/ShootRight"
 
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_smhwb"]
 blend_point_0/node = SubResource("AnimationNodeAnimation_xdcic")
@@ -14,10 +14,10 @@ blend_point_1/pos = 1.0
 sync = true
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8lfqk"]
-animation = &"WalkLeft"
+animation = &"EnemyGreen/WalkLeft"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w71sw"]
-animation = &"WalkRight"
+animation = &"EnemyGreen/WalkRight"
 
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_xdcic"]
 blend_point_0/node = SubResource("AnimationNodeAnimation_8lfqk")
@@ -41,9 +41,10 @@ states/Start/position = Vector2(245, 100)
 states/Walk/node = SubResource("AnimationNodeBlendSpace1D_xdcic")
 states/Walk/position = Vector2(541, 100)
 transitions = ["Walk", "Shoot", SubResource("AnimationNodeStateMachineTransition_ytufn"), "Shoot", "Walk", SubResource("AnimationNodeStateMachineTransition_5u6nu"), "Start", "Walk", SubResource("AnimationNodeStateMachineTransition_yt1d7")]
+graph_offset = Vector2(41, 66)
 
 [resource]
-graph_offset = Vector2(-377.89185, 99.49295)
+graph_offset = Vector2(-392.89185, 145.49295)
 nodes/StateMachine/node = SubResource("AnimationNodeStateMachine_8lfqk")
 nodes/StateMachine/position = Vector2(-80, 140)
 node_connections = [&"output", 0, &"StateMachine"]

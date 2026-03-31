@@ -383,7 +383,6 @@ flip_h = true
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=103707440]
 tree_root = ExtResource("8_ityhb")
 anim_player = NodePath("../AnimationPlayer")
-parameters/StateMachine/Idle/blend_position = 0.0
 parameters/StateMachine/Shoot/blend_position = 0.0
 parameters/StateMachine/Walk/blend_position = 0.00694444444444444
 script = ExtResource("9_sa85k")
