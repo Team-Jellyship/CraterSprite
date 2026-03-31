@@ -27,6 +27,8 @@ public partial class WalkingController : AiController
 
     [Export] private FloorEdgeResponse _floorEdgeResponse;
 
+    [Signal] public delegate void OnAttackRequestedEventHandler();
+
     private float _facingDirection = 1.0f;
     private bool _attackOnCooldown;
     private Timer _attackTimer;
@@ -50,7 +52,8 @@ public partial class WalkingController : AiController
     {
         if (!_attackOnCooldown && ShouldShootTarget(_playerDetection.GetCollider()))
         {
-            _gun.FireProjectile();
+            // _gun.FireProjectile();
+            EmitSignalOnAttackRequested();
             _attackTimer.Start(_gunCooldownTime);
             _attackOnCooldown = true;
         }

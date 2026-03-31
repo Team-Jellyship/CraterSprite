@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://dwbx61wq2bxcw"]
+
+[ext_resource type="SpriteFrames" uid="uid://c4tw2hwcrrbqk" path="res://Characters/Enemies/Walker/Animations/SF_EnemyRed.tres" id="1_vjreh"]
+
+[node name="SfEnemyRed" type="AnimatedSprite2D" unique_id=1342094471]
+position = Vector2(-1, 17)
+sprite_frames = ExtResource("1_vjreh")
+animation = &"Shoot"

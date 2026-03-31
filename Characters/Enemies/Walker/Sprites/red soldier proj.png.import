@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmyicu3oewx7y"
-path="res://.godot/imported/red soldier walk.png-2747b84c9993dc2014b5d0b1870c2f97.ctex"
+uid="uid://dovvuowsc42i1"
+path="res://.godot/imported/red soldier proj.png-9b7bd179b1757a1e667d5c5fa5f67bc9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Characters/Enemies/Sprites/red soldier walk.png"
-dest_files=["res://.godot/imported/red soldier walk.png-2747b84c9993dc2014b5d0b1870c2f97.ctex"]
+source_file="res://Characters/Enemies/Walker/Sprites/red soldier proj.png"
+dest_files=["res://.godot/imported/red soldier proj.png-9b7bd179b1757a1e667d5c5fa5f67bc9.ctex"]
 
 [params]
 

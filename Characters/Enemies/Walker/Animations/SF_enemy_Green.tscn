@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cdkt43h43quwv"]
+
+[ext_resource type="SpriteFrames" uid="uid://ck62pdyw25ka5" path="res://Characters/Enemies/Walker/Animations/SF_EnemyGreen.tres" id="1_40gul"]
+
+[node name="SfEnemyGreen" type="AnimatedSprite2D" unique_id=1296242495]
+sprite_frames = ExtResource("1_40gul")
+animation = &"idle"
