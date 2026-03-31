@@ -1,33 +1,311 @@
 [gd_scene format=3 uid="uid://fjgqtatonlq6"]
 
 [ext_resource type="Script" uid="uid://bsfdycg3wydrv" path="res://Characters/Scripts/KinematicCharacter.cs" id="1_fw1c5"]
-[ext_resource type="Texture2D" uid="uid://c765qygv0kp8i" path="res://icon.svg" id="3_i4w1b"]
 [ext_resource type="Script" uid="uid://cyhvlrad5psho" path="res://Characters/Scripts/CharacterStats.cs" id="4_jr4rn"]
 [ext_resource type="Script" uid="uid://5yfgyni1c342" path="res://Shared/Scripts/DamageZone2D.cs" id="5_1nmws"]
 [ext_resource type="Script" uid="uid://c31eejkub08hq" path="res://Characters/Enemies/AI/WalkingController.cs" id="5_i4w1b"]
 [ext_resource type="Script" uid="uid://r6asvyfexakk" path="res://Characters/Scripts/ProjectileLauncher.cs" id="6_jr4rn"]
 [ext_resource type="PackedScene" uid="uid://kgj0kkgcwle3" path="res://Props/Projectiles/P_Projectile.tscn" id="7_1nmws"]
+[ext_resource type="SpriteFrames" uid="uid://c4tw2hwcrrbqk" path="res://Characters/Enemies/Walker/Animations/SF_EnemyRed.tres" id="7_lvtnf"]
+[ext_resource type="AnimationNodeBlendTree" uid="uid://bxpl2ai2873da" path="res://Characters/Enemies/Walker/Animations/ABT_EnemyRed.tres" id="8_ityhb"]
+[ext_resource type="Script" uid="uid://dqpr1vya5wb6p" path="res://Characters/Enemies/Walker/Animations/WalkerAnimationTree.cs" id="9_sa85k"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8nvh5"]
+radius = 12.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dq4fg"]
+size = Vector2(16, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7yner"]
-size = Vector2(20, 10)
+size = Vector2(16, 8)
+
+[sub_resource type="Animation" id="Animation_sa85k"]
+length = 0.001
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Walk"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemySprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EnemySprite:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:_maxSpeed")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [75.0]
+}
+
+[sub_resource type="Animation" id="Animation_ityhb"]
+resource_name = "ShootLeft"
+length = 0.875
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Shoot"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemySprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 3, 4, 5, 6, 7]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EnemySprite:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:_maxSpeed")
+tracks/3/interp = 0
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.875),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 75.0]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Gun")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.25),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"FireProjectile"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_rnsle"]
+resource_name = "ShootRight"
+length = 0.875
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Shoot"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemySprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 3, 4, 5, 6, 7]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EnemySprite:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:_maxSpeed")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.875),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0.0, 75.0]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Gun")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.25),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"FireProjectile"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_lpa3f"]
+resource_name = "WalkLeft"
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Walk"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemySprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EnemySprite:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_ox8gk"]
+resource_name = "WalkRight"
+loop_mode = 1
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Walk"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemySprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EnemySprite:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rnsle"]
+_data = {
+&"RESET": SubResource("Animation_sa85k"),
+&"ShootLeft": SubResource("Animation_ityhb"),
+&"ShootRight": SubResource("Animation_rnsle"),
+&"WalkLeft": SubResource("Animation_lpa3f"),
+&"WalkRight": SubResource("Animation_ox8gk")
+}
 
 [node name="WalkingEnemy" type="CharacterBody2D" unique_id=203046980 node_paths=PackedStringArray("_characterPenetrationArea")]
 collision_layer = 4
 script = ExtResource("1_fw1c5")
 _acceleration = 500.0
 _maxSpeed = 75.0
+_friction = 1500.0
 _maxAirSpeedHorizontal = 50.0
 _airControlFactor = 1.0
 _jumpTime = 0.2
 _characterPenetrationArea = NodePath("Hurtbox")
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=370477374]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("3_i4w1b")
 
 [node name="Stats" type="Node" parent="." unique_id=802010356]
 script = ExtResource("4_jr4rn")
@@ -40,7 +318,9 @@ collision_layer = 16
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=118484821]
+position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_8nvh5")
+debug_color = Color(0.29439315, 0.6198339, 0.32234174, 0.41960785)
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=829474099 node_paths=PackedStringArray("_owner")]
 collision_layer = 8
@@ -51,36 +331,64 @@ _damage = 1.0
 _owner = NodePath("../Stats")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=35476914]
+position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_dq4fg")
 debug_color = Color(0.9733754, 0, 0.4378033, 0.41960785)
 
 [node name="PhysicsCollider" type="CollisionShape2D" parent="." unique_id=630353109]
-position = Vector2(0, 5)
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_7yner")
 
-[node name="AIController" type="Node2D" parent="." unique_id=1312789790 node_paths=PackedStringArray("_gun", "_character", "_playerDetection", "_groundCast")]
+[node name="AIController" type="Node2D" parent="." unique_id=1312789790 node_paths=PackedStringArray("_gun", "_character", "_playerDetection", "_playerTurnDetection", "_groundCast")]
 script = ExtResource("5_i4w1b")
 _gunTeamFilter = 3
 _gun = NodePath("../Gun")
 _character = NodePath("..")
 _playerDetection = NodePath("../PlayerRay")
+_playerTurnDetection = NodePath("../PlayerTurnRay")
 _groundCast = NodePath("../GroundRay")
 _floorEdgeResponse = 1
 
 [node name="Node2D" type="Node2D" parent="." unique_id=112846174]
 
 [node name="Gun" type="Node2D" parent="." unique_id=941353924 node_paths=PackedStringArray("_kinematicOwner")]
+position = Vector2(0, -2)
 script = ExtResource("6_jr4rn")
 _projectile = ExtResource("7_1nmws")
 _projectileSpeed = 100.0
 _kinematicOwner = NodePath("..")
-_offset = 16.0
+_offset = 8.0
 facingDirection = Vector2(2, 0)
 
 [node name="GroundRay" type="RayCast2D" parent="." unique_id=1912750747]
 target_position = Vector2(20, 20)
 
 [node name="PlayerRay" type="RayCast2D" parent="." unique_id=1442245475]
-target_position = Vector2(50, 0)
+target_position = Vector2(75, 0)
 collision_mask = 16
 collide_with_areas = true
+
+[node name="PlayerTurnRay" type="RayCast2D" parent="." unique_id=1767600951]
+position = Vector2(0, 4)
+target_position = Vector2(25, 0)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="EnemySprite" type="AnimatedSprite2D" parent="." unique_id=1606058384]
+sprite_frames = ExtResource("7_lvtnf")
+animation = &"Walk"
+offset = Vector2(0, -24)
+flip_h = true
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=103707440]
+tree_root = ExtResource("8_ityhb")
+anim_player = NodePath("../AnimationPlayer")
+parameters/StateMachine/Shoot/blend_position = 0.0
+parameters/StateMachine/Walk/blend_position = 0.00694444444444444
+script = ExtResource("9_sa85k")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=82175347]
+libraries/ = SubResource("AnimationLibrary_rnsle")
+
+[connection signal="MoveDirectionChanged" from="." to="AnimationTree" method="SetWalkDirection"]
+[connection signal="OnAttackRequested" from="AIController" to="AnimationTree" method="Shoot"]

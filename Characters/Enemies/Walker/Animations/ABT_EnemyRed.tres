@@ -1,0 +1,49 @@
+[gd_resource type="AnimationNodeBlendTree" format=3 uid="uid://bxpl2ai2873da"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xdcic"]
+animation = &"ShootLeft"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_e4gjf"]
+animation = &"ShootRight"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_smhwb"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_xdcic")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_e4gjf")
+blend_point_1/pos = 1.0
+sync = true
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8lfqk"]
+animation = &"WalkLeft"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w71sw"]
+animation = &"WalkRight"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_xdcic"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_8lfqk")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_w71sw")
+blend_point_1/pos = 1.0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ytufn"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5u6nu"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yt1d7"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_8lfqk"]
+states/Shoot/node = SubResource("AnimationNodeBlendSpace1D_smhwb")
+states/Shoot/position = Vector2(541, 198)
+states/Start/position = Vector2(245, 100)
+states/Walk/node = SubResource("AnimationNodeBlendSpace1D_xdcic")
+states/Walk/position = Vector2(541, 100)
+transitions = ["Walk", "Shoot", SubResource("AnimationNodeStateMachineTransition_ytufn"), "Shoot", "Walk", SubResource("AnimationNodeStateMachineTransition_5u6nu"), "Start", "Walk", SubResource("AnimationNodeStateMachineTransition_yt1d7")]
+
+[resource]
+graph_offset = Vector2(-377.89185, 99.49295)
+nodes/StateMachine/node = SubResource("AnimationNodeStateMachine_8lfqk")
+nodes/StateMachine/position = Vector2(-80, 140)
+node_connections = [&"output", 0, &"StateMachine"]

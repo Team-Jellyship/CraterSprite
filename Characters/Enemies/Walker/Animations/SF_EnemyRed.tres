@@ -1,74 +1,79 @@
-[gd_scene format=3 uid="uid://dwbx61wq2bxcw"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://c4tw2hwcrrbqk"]
 
-[ext_resource type="Texture2D" uid="uid://1w2icyqt7bbw" path="res://Characters/Enemies/Sprites/red soldier shoot.png" id="1_e22bc"]
-[ext_resource type="Texture2D" uid="uid://dmyicu3oewx7y" path="res://Characters/Enemies/Sprites/red soldier walk.png" id="2_odcva"]
+[ext_resource type="Texture2D" uid="uid://1w2icyqt7bbw" path="res://Characters/Enemies/Walker/Sprites/red soldier shoot.png" id="1_a6lfk"]
+[ext_resource type="Texture2D" uid="uid://dmyicu3oewx7y" path="res://Characters/Enemies/Walker/Sprites/red soldier walk.png" id="2_eqak4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mmc3r"]
-atlas = ExtResource("1_e22bc")
+atlas = ExtResource("1_a6lfk")
 region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vtauo"]
-atlas = ExtResource("1_e22bc")
+atlas = ExtResource("1_a6lfk")
 region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kfn6w"]
-atlas = ExtResource("1_e22bc")
+atlas = ExtResource("1_a6lfk")
 region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_drjfe"]
-atlas = ExtResource("1_e22bc")
+atlas = ExtResource("1_a6lfk")
 region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bmmw7"]
-atlas = ExtResource("1_e22bc")
+atlas = ExtResource("1_a6lfk")
 region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g057e"]
-atlas = ExtResource("1_e22bc")
+atlas = ExtResource("1_a6lfk")
 region = Rect2(320, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6lxyc"]
-atlas = ExtResource("1_e22bc")
+atlas = ExtResource("1_a6lfk")
 region = Rect2(384, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wjq33"]
-atlas = ExtResource("1_e22bc")
+atlas = ExtResource("1_a6lfk")
 region = Rect2(448, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5m66t"]
-atlas = ExtResource("2_odcva")
+atlas = ExtResource("2_eqak4")
 region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p1r45"]
-atlas = ExtResource("2_odcva")
+atlas = ExtResource("2_eqak4")
 region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ainem"]
-atlas = ExtResource("2_odcva")
+atlas = ExtResource("2_eqak4")
 region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4eq3b"]
-atlas = ExtResource("2_odcva")
+atlas = ExtResource("2_eqak4")
 region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dplgn"]
-atlas = ExtResource("2_odcva")
+atlas = ExtResource("2_eqak4")
 region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_krwc7"]
-atlas = ExtResource("2_odcva")
+atlas = ExtResource("2_eqak4")
 region = Rect2(320, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m3of0"]
-atlas = ExtResource("2_odcva")
+atlas = ExtResource("2_eqak4")
 region = Rect2(384, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qdnay"]
-atlas = ExtResource("2_odcva")
+atlas = ExtResource("2_eqak4")
 region = Rect2(448, 0, 64, 64)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_wykte"]
+[resource]
 animations = [{
+"frames": [],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mmc3r")
@@ -127,8 +132,3 @@ animations = [{
 "name": &"Walk",
 "speed": 7.0
 }]
-
-[node name="SfEnemyRed" type="AnimatedSprite2D" unique_id=1342094471]
-position = Vector2(-1, 17)
-sprite_frames = SubResource("SpriteFrames_wykte")
-animation = &"Shoot"

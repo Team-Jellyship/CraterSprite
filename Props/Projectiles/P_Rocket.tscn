@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://mvrenn0b6mpk"]
+
+[ext_resource type="Script" uid="uid://cjxelv1wmdsss" path="res://Props/Projectiles/Scripts/Projectile.cs" id="1_reicr"]
+[ext_resource type="Shader" uid="uid://cg3uln3xwrvyj" path="res://Shared/Shaders/Sh_SpriteColor.gdshader" id="2_rey04"]
+[ext_resource type="Script" uid="uid://tc8qovoervv1" path="res://Props/Scripts/RemoteSplitscreenTransform.cs" id="4_fdafd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v0r3h"]
+shader = ExtResource("2_rey04")
+shader_parameter/color = Vector4(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_o6bxk"]
+radius = 0.1
+height = 0.1
+
+[node name="Projectile" type="Node2D" unique_id=1015776207]
+script = ExtResource("1_reicr")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=949882656]
+material = SubResource("ShaderMaterial_v0r3h")
+position = Vector2(0, -8)
+scale = Vector2(74.083916, 74.08392)
+mesh = SubResource("SphereMesh_o6bxk")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=163529842]
+process_physics_priority = 1
+script = ExtResource("4_fdafd")

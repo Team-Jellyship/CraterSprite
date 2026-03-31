@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://j34uu8xtxm3d"
-path="res://.godot/imported/green soldier shoot.png-5a5ac84f4a79eb41e9b68c375c24f60a.ctex"
+uid="uid://dcdmexl63jkjp"
+path="res://.godot/imported/e_landdust.png-1a86832d33f77d3676dd8b9847c1f4e4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Characters/Enemies/Sprites/green soldier shoot.png"
-dest_files=["res://.godot/imported/green soldier shoot.png-5a5ac84f4a79eb41e9b68c375c24f60a.ctex"]
+source_file="res://Characters/Players/Sprites/e_landdust.png"
+dest_files=["res://.godot/imported/e_landdust.png-1a86832d33f77d3676dd8b9847c1f4e4.ctex"]
 
 [params]
 

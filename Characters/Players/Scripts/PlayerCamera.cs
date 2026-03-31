@@ -16,7 +16,7 @@ public partial class PlayerCamera : Camera2D
 
     public Rect2 GetCameraBounds()
     {
-        var targetPosition = GetTargetPosition() + Offset;
+        var targetPosition = GetScreenCenterPosition() + Offset;
         var size = GetViewportRect().Size / Zoom;
         return new Rect2(targetPosition - size / 2.0f, size);
     }

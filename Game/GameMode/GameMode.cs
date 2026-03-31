@@ -17,6 +17,7 @@ public partial class GameMode : Node
 	public StatusEffectList statusEffects { get; private set; }
 	public Match3RecipeTable recipes { get; private set; }
 	public Node worldRoot { get; private set; }
+	public Node2D sharedRoot { get; private set; }
 	public Control menuRoot { get; private set; }
 	
 	// Serialized settings, because this is a singleton
@@ -83,6 +84,7 @@ public partial class GameMode : Node
 
 		var currentScene = GetTree().GetCurrentScene();
 		_sceneEntryPoint = currentScene.GetNode("%WorldRoot");
+		sharedRoot = currentScene.GetNode<Node2D>("%SharedRoot");
 		menuRoot = currentScene.GetNode<Control>("%MenuRoot");
 
 		if (_sceneEntryPoint == null)
@@ -234,6 +236,11 @@ public partial class GameMode : Node
 	// Cleanup level contextual objects
 	private void UnloadLevel()
 	{
+		foreach (var node in sharedRoot.GetChildren())
+		{
+			node.Free();
+		}
+		
 		worldRoot?.Free();
 		spawnLocations.Clear();
 	}

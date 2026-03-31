@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1w2icyqt7bbw"
-path="res://.godot/imported/red soldier shoot.png-c3eba3082562b68cc42e48f87ed3a74b.ctex"
+uid="uid://bjpfayoo3cy13"
+path="res://.godot/imported/e_pivotdustt.png-835d84e61b1c5dc4c59b5487e6d0e092.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Characters/Enemies/Sprites/red soldier shoot.png"
-dest_files=["res://.godot/imported/red soldier shoot.png-c3eba3082562b68cc42e48f87ed3a74b.ctex"]
+source_file="res://Characters/Players/Sprites/e_pivotdustt.png"
+dest_files=["res://.godot/imported/e_pivotdustt.png-835d84e61b1c5dc4c59b5487e6d0e092.ctex"]
 
 [params]
 

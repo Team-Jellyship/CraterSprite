@@ -9,6 +9,7 @@ namespace CraterSprite
 		[Export] private KinematicCharacter _character;
 		[Export] private PlayerState _playerState;
 		[Export] private ProjectileLauncher _gun;
+		[Export] private SpecialProjectileLauncher _rocketLauncher;
 		
 		public void BindInput(int deviceIndex)
 		{
@@ -24,6 +25,7 @@ namespace CraterSprite
 			InputManager.instance.RegisterCallback("crouch", InputEventType.Released, _ => _character.Uncrouch(), deviceIndex,this);
 			
 			InputManager.instance.RegisterCallback("fire", InputEventType.Pressed, _ => _gun.FireProjectile(), deviceIndex, this);
+			InputManager.instance.RegisterCallback("fire2", InputEventType.Pressed, _ => _rocketLauncher.FireProjectile(), deviceIndex, this);
 			InputManager.instance.RegisterCallback("aim_up", InputEventType.Pressed, _ => _gun.SetAimVertical(true), deviceIndex, this);
 			InputManager.instance.RegisterCallback("aim_up", InputEventType.Released, _ => _gun.SetAimVertical(false), deviceIndex, this);
 			InputManager.instance.RegisterCallback("aim_diagonal", InputEventType.Pressed, _ => _gun.SetAimDiagonal(true), deviceIndex, this);

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgxb0riowxae8"
-path="res://.godot/imported/green soldier proj.png-903915aa2852efc8ff6fa94867810927.ctex"
+uid="uid://c172wq0fty5af"
+path="res://.godot/imported/green soldier.png-ccbdc3da9cae692116c792058fa0e151.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Characters/Enemies/Sprites/green soldier proj.png"
-dest_files=["res://.godot/imported/green soldier proj.png-903915aa2852efc8ff6fa94867810927.ctex"]
+source_file="res://Characters/Enemies/Walker/Sprites/green soldier.png"
+dest_files=["res://.godot/imported/green soldier.png-ccbdc3da9cae692116c792058fa0e151.ctex"]
 
 [params]
 

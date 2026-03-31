@@ -1,6 +1,7 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://cxyklmxnx0sr2"]
 
 [ext_resource type="Texture2D" uid="uid://d1bt7pi565bd5" path="res://Characters/Players/Sprites/p1 key poses.png" id="1_h5v5b"]
+[ext_resource type="Texture2D" uid="uid://x5psy3w3lvui" path="res://Characters/Players/Sprites/diesprites.png" id="1_yham5"]
 [ext_resource type="Texture2D" uid="uid://m4c3a8wi6rwb" path="res://Characters/Players/Sprites/walk Player 1 diag .png" id="2_vbpax"]
 [ext_resource type="Texture2D" uid="uid://bqjf74ksehqxo" path="res://Characters/Players/Sprites/walk Player 1 up .png" id="3_0nw5h"]
 [ext_resource type="Texture2D" uid="uid://b56qesu0ojc66" path="res://Characters/Players/Sprites/p2 key poses.png" id="4_6e051"]
@@ -9,6 +10,14 @@
 [ext_resource type="Texture2D" uid="uid://cpotswwd43klb" path="res://Characters/Players/Sprites/walk Player 2 up.png" id="7_v64dv"]
 [ext_resource type="Texture2D" uid="uid://b867snufdq5fu" path="res://Characters/Players/Sprites/walk Player 1.png" id="8_f73sb"]
 [ext_resource type="Texture2D" uid="uid://d4j7cmnutpim7" path="res://Characters/Players/Sprites/wallposes.png" id="9_hyh3t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i50b3"]
+atlas = ExtResource("1_yham5")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ws8a"]
+atlas = ExtResource("1_yham5")
+region = Rect2(64, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2uvpf"]
 atlas = ExtResource("1_h5v5b")
@@ -284,6 +293,17 @@ region = Rect2(128, 0, 64, 64)
 
 [resource]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i50b3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ws8a")
+}],
+"loop": true,
+"name": &"Die",
+"speed": 5.0
+}, {
 "frames": [],
 "loop": true,
 "name": &"default",

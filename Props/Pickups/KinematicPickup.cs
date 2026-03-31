@@ -1,4 +1,5 @@
 ﻿using System;
+using CraterSprite.Game.GameMode;
 using Godot;
 
 namespace CraterSprite.Props;
@@ -48,7 +49,10 @@ public partial class KinematicPickup : StaticBody2D
     
     public override void _Draw()
     {
-        DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, _velocity * 0.25f, new Color(1.0f, 0.0f, 0.0f));
+        if (GameMode.instance.showingDebug)
+        {
+            DebugHelpers.Drawing.DrawArrow(this, Vector2.Zero, _velocity * 0.25f, new Color(1.0f, 0.0f, 0.0f));
+        }
     }
 
     public void AddImpulse(Vector2 impulse)

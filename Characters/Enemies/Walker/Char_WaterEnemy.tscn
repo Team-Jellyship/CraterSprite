@@ -1,16 +1,25 @@
 [gd_scene format=3 uid="uid://3w7dcvisb2no"]
 
 [ext_resource type="PackedScene" uid="uid://fjgqtatonlq6" path="res://Characters/Enemies/Walker/Char_WalkingEnemy.tscn" id="1_mb7md"]
-[ext_resource type="Shader" uid="uid://cg3uln3xwrvyj" path="res://Shared/Shaders/Sh_SpriteColor.gdshader" id="2_sqnvn"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_420mx"]
-shader = ExtResource("2_sqnvn")
-shader_parameter/color = Vector4(0, 0, 1, 1)
+[ext_resource type="AnimationLibrary" uid="uid://w4nffqb4yqin" path="res://Characters/Enemies/Walker/Animations/AL_EnemyGreen.res" id="2_mli7a"]
+[ext_resource type="SpriteFrames" uid="uid://ck62pdyw25ka5" path="res://Characters/Enemies/Walker/Animations/SF_EnemyGreen.tres" id="2_wgwbi"]
+[ext_resource type="AnimationNodeBlendTree" uid="uid://dkaro1opncsih" path="res://Characters/Enemies/Walker/Animations/ABT_EnemyGreen.tres" id="3_64p8s"]
 
 [node name="WaterEnemy" unique_id=203046980 instance=ExtResource("1_mb7md")]
+_maxSpeed = 0.0
 
-[node name="Sprite2D" parent="." index="0" unique_id=370477374]
-material = SubResource("ShaderMaterial_420mx")
+[node name="Stats" parent="." index="0" unique_id=802010356]
+matchType = 3
 
-[node name="Stats" parent="." index="1" unique_id=802010356]
-matchType = 2
+[node name="Gun" parent="." index="6" unique_id=941353924]
+_offset = 16.0
+
+[node name="EnemySprite" parent="." index="10" unique_id=1606058384]
+sprite_frames = ExtResource("2_wgwbi")
+flip_h = false
+
+[node name="AnimationTree" parent="." index="11" unique_id=103707440]
+tree_root = ExtResource("3_64p8s")
+
+[node name="AnimationPlayer" parent="." index="12" unique_id=82175347]
+libraries/EnemyGreen = ExtResource("2_mli7a")
