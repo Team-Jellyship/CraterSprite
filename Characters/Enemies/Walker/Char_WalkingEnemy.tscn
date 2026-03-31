@@ -339,30 +339,38 @@ debug_color = Color(0.9733754, 0, 0.4378033, 0.41960785)
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_7yner")
 
-[node name="AIController" type="Node2D" parent="." unique_id=1312789790 node_paths=PackedStringArray("_gun", "_character", "_playerDetection", "_groundCast")]
+[node name="AIController" type="Node2D" parent="." unique_id=1312789790 node_paths=PackedStringArray("_gun", "_character", "_playerDetection", "_playerTurnDetection", "_groundCast")]
 script = ExtResource("5_i4w1b")
 _gunTeamFilter = 3
 _gun = NodePath("../Gun")
 _character = NodePath("..")
 _playerDetection = NodePath("../PlayerRay")
+_playerTurnDetection = NodePath("../PlayerTurnRay")
 _groundCast = NodePath("../GroundRay")
 _floorEdgeResponse = 1
 
 [node name="Node2D" type="Node2D" parent="." unique_id=112846174]
 
 [node name="Gun" type="Node2D" parent="." unique_id=941353924 node_paths=PackedStringArray("_kinematicOwner")]
+position = Vector2(0, -2)
 script = ExtResource("6_jr4rn")
 _projectile = ExtResource("7_1nmws")
 _projectileSpeed = 100.0
 _kinematicOwner = NodePath("..")
-_offset = 16.0
+_offset = 8.0
 facingDirection = Vector2(2, 0)
 
 [node name="GroundRay" type="RayCast2D" parent="." unique_id=1912750747]
 target_position = Vector2(20, 20)
 
 [node name="PlayerRay" type="RayCast2D" parent="." unique_id=1442245475]
-target_position = Vector2(50, 0)
+target_position = Vector2(75, 0)
+collision_mask = 16
+collide_with_areas = true
+
+[node name="PlayerTurnRay" type="RayCast2D" parent="." unique_id=1767600951]
+position = Vector2(0, 4)
+target_position = Vector2(25, 0)
 collision_mask = 16
 collide_with_areas = true
 

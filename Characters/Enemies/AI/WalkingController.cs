@@ -23,6 +23,7 @@ public partial class WalkingController : AiController
     [Export] private ProjectileLauncher _gun;
     [Export] private KinematicCharacter _character;
     [Export] private RayCast2D _playerDetection;
+    [Export] private RayCast2D _playerTurnDetection;
     [Export] private RayCast2D _groundCast;
 
     [Export] private FloorEdgeResponse _floorEdgeResponse;
@@ -70,7 +71,7 @@ public partial class WalkingController : AiController
         // Godot's raycast can return null when it doesn't hit anything, so it's faster than trying to cast.
         // Also, make sure to check again if the character is on the wall, because otherwise the player will
         // be able to force the enemy into the wall, where it will no longer trigger the event from above.
-        if (_playerDetection.GetCollider() != null || _character.IsOnWall())
+        if (_character.IsOnWall() || ShouldShootTarget(_playerTurnDetection.GetCollider()))
         {
             Flip();
         }
@@ -104,7 +105,8 @@ public partial class WalkingController : AiController
         
         // FacingDirection is really just carrying the sign of our controller's direction, i.e., negative is left, positive is right,
         // so we can avoid branching and just multiply everything instead
-        _playerDetection.SetTargetPosition(new Vector2(50.0f * _facingDirection, 0.0f));
+        _playerTurnDetection.SetTargetPosition(new Vector2(25.0f * _facingDirection, 0.0f));
+        _playerDetection.SetTargetPosition(new Vector2(75.0f * _facingDirection, 0.0f));
         _groundCast.SetTargetPosition(new Vector2(20.0f * _facingDirection, 20));
         _gun.facingDirection = new Vector2(_facingDirection, 0.0f);
         
