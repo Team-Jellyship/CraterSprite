@@ -916,12 +916,12 @@ _filter = 7
 _damage = -1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraAttach/CameraKillZone" unique_id=1671477932]
-position = Vector2(0, 192)
+position = Vector2(0, 224)
 shape = SubResource("RectangleShape2D_ebcvw")
 debug_color = Color(0.9470236, 3.5616756e-06, 0.5873681, 0.41960785)
 
 [node name="Spawner" type="Node2D" parent="CameraAttach" unique_id=1995583679]
-position = Vector2(0, -112)
+position = Vector2(0, -192)
 script = ExtResource("12_tkb72")
 _enemySpawnTable = ExtResource("13_mcxtw")
 _enemySpawnTime = 5.0
