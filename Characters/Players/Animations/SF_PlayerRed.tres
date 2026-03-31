@@ -1,10 +1,19 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://dngxbr6dw7xke"]
 
+[ext_resource type="Texture2D" uid="uid://x5psy3w3lvui" path="res://Characters/Players/Sprites/diesprites.png" id="1_skmxd"]
 [ext_resource type="Texture2D" uid="uid://b56qesu0ojc66" path="res://Characters/Players/Sprites/p2 key poses.png" id="4_8cv2n"]
 [ext_resource type="Texture2D" uid="uid://d4j7cmnutpim7" path="res://Characters/Players/Sprites/wallposes.png" id="4_o2a18"]
 [ext_resource type="Texture2D" uid="uid://5n2bo6d7vjvf" path="res://Characters/Players/Sprites/walk Player 2.png" id="5_vlfl0"]
 [ext_resource type="Texture2D" uid="uid://bcc78rhp0nyh4" path="res://Characters/Players/Sprites/walk Player 2 diag.png" id="6_qaor1"]
 [ext_resource type="Texture2D" uid="uid://cpotswwd43klb" path="res://Characters/Players/Sprites/walk Player 2 up.png" id="7_ejjle"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h5v5b"]
+atlas = ExtResource("1_skmxd")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vbpax"]
+atlas = ExtResource("1_skmxd")
+region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yrwpp"]
 atlas = ExtResource("4_8cv2n")
@@ -151,6 +160,17 @@ animations = [{
 "frames": [],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h5v5b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vbpax")
+}],
+"loop": true,
+"name": &"die",
 "speed": 5.0
 }, {
 "frames": [{
