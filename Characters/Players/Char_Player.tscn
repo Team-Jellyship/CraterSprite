@@ -964,5 +964,8 @@ _startMirrored = true
 [connection signal="OnClicked" from="." to="PlayerStats" method="ToggleShowStats"]
 [connection signal="OnCrouched" from="." to="Hurtbox" method="SetOff"]
 [connection signal="OnUncrouched" from="." to="Hurtbox" method="SetOn"]
+[connection signal="OnAimDirectionChanged" from="Gun" to="AnimationTree" method="SetAimDirection"]
+[connection signal="OnFired" from="Gun" to="Gun/TrailFx" method="Spawn"]
+[connection signal="OnFired" from="Gun" to="Gun/GunSfx" method="play" binds= [0.0]]
 [connection signal="OnStunEnd" from="PlayerStats" to="Hurtbox" method="Retrigger"]
 [connection signal="OnTakeDamage" from="PlayerStats" to="." method="ApplyKnockbackDefault"]

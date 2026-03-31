@@ -55,8 +55,8 @@ public partial class PlayerState : CharacterStats
 	public override void TakeDamage(float damageAmount, CharacterStats source, bool canBeBlocked)
 	{
 		if (canBeBlocked && source is { canBeJumpedOn: true } &&
-		    Owner is KinematicCharacter { Velocity.Y: > 0.0f } ownerKinematicCharacter &&
-		    !ownerKinematicCharacter.IsOnFloor())
+			Owner is KinematicCharacter { Velocity.Y: > 0.0f } ownerKinematicCharacter &&
+			!ownerKinematicCharacter.IsOnFloor())
 		{
 			ownerKinematicCharacter.Hop();
 			source.TakeDamage(_stompDamage, this, false);

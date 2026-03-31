@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Godot;
 
 namespace CraterSprite;
@@ -35,4 +35,3 @@ public partial class GameModeSettings : Resource
 	}
 	public List<AudioStream> songsList = [];
 }
-
