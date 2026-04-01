@@ -922,10 +922,12 @@ debug_color = Color(0.9470236, 3.5616756e-06, 0.5873681, 0.41960785)
 [node name="Spawner" type="Node2D" parent="CameraAttach" unique_id=1995583679]
 position = Vector2(0, -192)
 script = ExtResource("12_tkb72")
+_spawnMultiplier = 5.0
 _enemySpawnTable = ExtResource("13_mcxtw")
-_enemySpawnTime = 5.0
+_enemySpawnTime = 2.0
 _maxEnemyCount = 10
 _otherSpawnTable = ExtResource("14_7s676")
+_otherSpawnTime = 4.0
 
 [node name="Region0" parent="CameraAttach/Spawner" unique_id=474231788 instance=ExtResource("13_tkb72")]
 position = Vector2(-80, 0)
