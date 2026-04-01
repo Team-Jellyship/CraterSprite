@@ -21,4 +21,5 @@ victoryScreen = ExtResource("7_fb1ho")
 lossScreen = ExtResource("4_0vpuv")
 rematchScreen = ExtResource("6_fb1ho")
 playerDefaultSpriteFrames = Array[SpriteFrames]([ExtResource("6_e3q80"), ExtResource("7_cmdf2")])
+songs = null
 metadata/_custom_type_script = "uid://biq0rnlq4cvem"

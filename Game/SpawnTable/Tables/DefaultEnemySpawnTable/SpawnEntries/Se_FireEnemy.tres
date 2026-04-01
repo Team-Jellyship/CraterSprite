@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="SpawnEntry" format=3 uid="uid://bcbxjdsraojm3"]
 
-[ext_resource type="PackedScene" uid="uid://cybtj76g4n71w" path="res://Characters/Enemies/Char_FireEnemy.tscn" id="1_t28i7"]
+[ext_resource type="PackedScene" path="res://Characters/Enemies/Walker/Char_FireEnemy.tscn" id="1_t28i7"]
 [ext_resource type="Script" uid="uid://cmhp0o8rvai1x" path="res://Game/SpawnTable/SpawnEntry.cs" id="2_tl682"]
 
 [resource]

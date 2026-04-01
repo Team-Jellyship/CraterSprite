@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="SpawnEntry" format=3 uid="uid://crtjwcti4phvi"]
 
-[ext_resource type="PackedScene" uid="uid://3w7dcvisb2no" path="res://Characters/Enemies/Char_WaterEnemy.tscn" id="1_v5hkl"]
+[ext_resource type="PackedScene" path="res://Characters/Enemies/Walker/Char_WaterEnemy.tscn" id="1_v5hkl"]
 [ext_resource type="Script" uid="uid://cmhp0o8rvai1x" path="res://Game/SpawnTable/SpawnEntry.cs" id="2_outgl"]
 
 [resource]
