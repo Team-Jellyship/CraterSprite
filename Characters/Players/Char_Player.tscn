@@ -819,11 +819,12 @@ _wallJumpStrength = 425.0
 _wallJumpAngle = 45.0
 _restoreJumpOnHitWall = false
 
-[node name="Controller" type="Node" parent="." unique_id=505377627 node_paths=PackedStringArray("_character", "_playerState", "_gun")]
+[node name="Controller" type="Node" parent="." unique_id=505377627 node_paths=PackedStringArray("_character", "_playerState", "_gun", "_rocketLauncher")]
 script = ExtResource("4_1fpnh")
 _character = NodePath("..")
 _playerState = NodePath("../PlayerStats")
 _gun = NodePath("../Gun")
+_rocketLauncher = NodePath("../Rocket")
 
 [node name="Rocket" type="Node2D" parent="." unique_id=1211035103 node_paths=PackedStringArray("_kinematicOwner")]
 position = Vector2(0, -8)
@@ -841,6 +842,7 @@ _projectile = ExtResource("3_570sx")
 _projectileSpeed = 200.0
 _kinematicOwner = NodePath("..")
 _offset = 12.0
+_offsetVerticalFacing = 8.0
 facingDirection = Vector2(-1, 0)
 
 [node name="TrailFx" type="Node2D" parent="Gun" unique_id=133643237]
