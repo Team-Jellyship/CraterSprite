@@ -4,9 +4,9 @@
 [ext_resource type="AnimationLibrary" uid="uid://w4nffqb4yqin" path="res://Characters/Enemies/Walker/Animations/AL_EnemyGreen.res" id="2_mli7a"]
 [ext_resource type="SpriteFrames" uid="uid://ck62pdyw25ka5" path="res://Characters/Enemies/Walker/Animations/SF_EnemyGreen.tres" id="2_wgwbi"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://dkaro1opncsih" path="res://Characters/Enemies/Walker/Animations/ABT_EnemyGreen.tres" id="3_64p8s"]
+[ext_resource type="SpriteFrames" uid="uid://dl06fpd0gobm1" path="res://Characters/Enemies/Walker/Animations/SF_EnemyGreenDeath.tres" id="5_tbvky"]
 
 [node name="WaterEnemy" unique_id=203046980 instance=ExtResource("1_mb7md")]
-_maxSpeed = 0.0
 
 [node name="Stats" parent="." index="0" unique_id=802010356]
 matchType = 3
@@ -16,10 +16,12 @@ _offset = 16.0
 
 [node name="EnemySprite" parent="." index="10" unique_id=1606058384]
 sprite_frames = ExtResource("2_wgwbi")
-flip_h = false
 
 [node name="AnimationTree" parent="." index="11" unique_id=103707440]
 tree_root = ExtResource("3_64p8s")
 
 [node name="AnimationPlayer" parent="." index="12" unique_id=82175347]
 libraries/EnemyGreen = ExtResource("2_mli7a")
+
+[node name="EnemyDeathFx" parent="." index="13" unique_id=845134300]
+_particleSprite = ExtResource("5_tbvky")

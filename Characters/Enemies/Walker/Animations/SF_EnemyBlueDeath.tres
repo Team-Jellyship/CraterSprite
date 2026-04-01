@@ -1,0 +1,67 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://cqvbcxy1nsbi5"]
+
+[ext_resource type="Texture2D" uid="uid://diefubylssy0j" path="res://Characters/Enemies/Sprites/E_Death_blue.png" id="1_c4p3g"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kdre7"]
+atlas = ExtResource("1_c4p3g")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_st1kb"]
+atlas = ExtResource("1_c4p3g")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kgiq8"]
+atlas = ExtResource("1_c4p3g")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jnj0w"]
+atlas = ExtResource("1_c4p3g")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rmhhv"]
+atlas = ExtResource("1_c4p3g")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fhim2"]
+atlas = ExtResource("1_c4p3g")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nf5tf"]
+atlas = ExtResource("1_c4p3g")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pj3xk"]
+atlas = ExtResource("1_c4p3g")
+region = Rect2(448, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kdre7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_st1kb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kgiq8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jnj0w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rmhhv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fhim2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nf5tf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pj3xk")
+}],
+"loop": false,
+"name": &"default",
+"speed": 12.0
+}]
