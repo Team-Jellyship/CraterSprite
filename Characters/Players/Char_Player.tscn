@@ -959,6 +959,8 @@ _particleSprite = ExtResource("18_rqh2m")
 _offset = Vector2(-16, -8)
 _startMirrored = true
 
+[node name="TakeDamageFx" type="Node2D" parent="." unique_id=2057491866]
+
 [connection signal="MoveDirectionChanged" from="." to="Gun/TrailFx" method="DirectionChanged"]
 [connection signal="MoveDirectionChanged" from="." to="AnimationTree" method="SetWalkDirection"]
 [connection signal="MoveDirectionChanged" from="." to="TurnaroundFx" method="DirectionChanged"]
